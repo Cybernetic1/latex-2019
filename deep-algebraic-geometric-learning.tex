@@ -23,6 +23,28 @@ The polynomials are constructed with layers.
 
 They can be learned via back-prop, because differentiable.
 
+\begin{equation}
+\begin{tikzcd}[column sep = 10em, row sep = huge]
+\begin{tabular}{c}logic\\formulas\end{tabular} \arrow[r, "syntactic\\transformations", align=center] \arrow[d, swap, "embed ", align=center]
+& \begin{tabular}{c}logic\\formulas\end{tabular} \arrow[d, "\ embed", align=center] \\
+\begin{tabular}{c}points in\\vector space\end{tabular} \arrow[r, "neural\\network", align=center] & \begin{tabular}{c}points in\\vector space\end{tabular}
+\end{tikzcd}
+\end{equation}
 
+\begin{equation}
+\begin{tikzcd}[column sep = 17em, row sep = large]
+\begin{tabular}{c}logic\\formulas\end{tabular} \arrow[r, "select $\circ$ match $\circ$ apply ( rules )", align=center] \arrow[d, swap, ""]
+& \begin{tabular}{c}logic\\formulas\end{tabular} \arrow[d, ""] \\
+\begin{tabular}{c}points in\\vector space\end{tabular} \arrow[r, "neural\\network", align=center] & \begin{tabular}{c}points in\\vector space\end{tabular}
+\end{tikzcd}
+\end{equation}
+
+\begin{equation}
+\begin{tikzcd}[column sep = large, row sep = large]
+\mbox{polynomials} \arrow[r, "syntactic"] \arrow[d, swap, ""]
+& \mbox{polynomials} \arrow[d, ""] \\
+\mbox{points} \arrow[r, "NN"] & \mbox{points}
+\end{tikzcd}
+\end{equation}
 
 \end{document}
