@@ -1,0 +1,417 @@
+\input{../YKY-preamble}
+
+\title{Operational semantics and compilation of production systems \\
+--- Fages and Lissajoux's 1992 paper on the Rete algorithm}
+
+\author{Francois Fages and R\'{e}mi Lissajoux \\
+translated by YKY (Yan King Yin) \\ {\footnotesize general.intelligence@gmail.com}}
+
+\begin{document}
+
+	\setlength{\parindent}{0pt}
+	\setlength{\parskip}{2.8ex plus0.8ex minus0.8ex}
+	
+	\maketitle
+	
+\begin{abstract}
+We present an operational semantics, in the formalism of inferences rules a la
+Plotkin, for production systems like OPS5 [For81]. We show how these programming
+languages can be compiled from their operational semantics. We describe how sequential
+and parallel versions of the Rete algorithm [For82] are formulated and their
+implementations proved. We show that simple modifications of the formal system described
+we obtain the Treat algorithm [Mir90] and other optimisations of Rete.
+\end{abstract}
+
+\textbf{Keywords:} production systems, compilation, operational semantics, rule based languages
+
+\section{Introduction}
+
+The development of expert systems has contributed to the emergence of the pure concept
+declarative programming software, which can be summarized by Robert Kowalski:
+\begin{equation}
+\mbox{Algorithm = Logic + Control}
+\nonumber
+\end{equation}
+Rule programming is the best example of this programming style.
+Unlike a program written in a procedural or functional language in
+which the sequence of instructions is explicit, a single rule base
+the logical part of the processing, the sequencing of the instructions is defined
+separately and is based on general techniques for finding a solution. The
+tools generating expert systems are languages ​​(or overlanguages) of pro-
+declarative grammar. The use of these tools makes it possible to develop effectively
+applications and benefit from powerful compilation techniques. The fact that
+these techniques ensure excellent performance on standard processors is
+a decisive point for their integration into conventional computer systems,
+The relative failure of dedicated machine projects or massively parallel machines
+for the expert systems shows that the problem is of a purely
+software.
+
+In fact, rule-based languages now make it possible to reach
+(in terms of execution time) allowing the use of these languages
+in "real-time" applications (see [FL91]). These results are due as much to
+The technological evolution of equipment that has improved the techniques of
+lation. The performance report between the original version of Ops5 (developed
+Carnegie Melion University, OpS5 is the ancestor of a number of rule-based languages
+existing to date [For81)) and the latest version completed [GFK 88] is of two orders 
+of magnitude (\& equal machine) [ML91].
+
+To develop and master these compilation techniques more and more
+complex, it is necessary to have a good understanding of these languages. That's what
+allows to achieve a semantic study of language, be it semantics
+which formalizes the execution of a program, or logical semantics
+which characterizes in an abstract way the result of the execution.
+
+Our effort tends to give a complete semantic analysis of the production systems
+(of the OPS5 family), and more particularly of the XRete language! ([FL91, Tho91a,
+Tho91b, Fag87] used for writing real-time embedded merge applications
+data interpretation or interpretation (SF88) XRete combines the use of rules
+of production and rules of deduction whose logical semantics are described by
+elsewhere [FL91, Fag90b, Fag90a].
+
+The formalization of operational semantics makes it possible to describe mathematically
+running programs, defining and validating compilation algorithms
+or study for example their parallelization, The purpose of this article is to give
+a complete operational semantics of production systems and to derive from them
+effective Timplémentation via the Rete algorithm used. Such an approach provides
+a proof of the compiler that performs these transformations in practice. We show
+also that the Treat algorithm proposed by D. Miranker as an alternative to
+Rete [Mir90] can be defined using the same method by a simple modification
+of the formal system presented, This method is sufficiently general to be used
+both for parallel and sequential implementations. On the other hand, we
+will see that the optimizations of Rete generally proposed (hash-code, permutation
+single and multi-schema tests [GD84]) are easily defined in this formalism.
+
+The plan is as follows: in a first part we briefly present the
+languages \& rules of production, and give their operational semantics.
+We then derive by successive refinements from this operational semantics
+an algorithm (Rete [For82]) that implements it; we give proof
+correction of this algorithm, in its sequential and parallel versions. We
+let's end with a description of the different existing and possible implementations
+of these languages.
+
+\section{Operational semantics of production systems}
+
+\subsection{Production systems}
+
+A production system, denoted $\langle W, RB \rangle$, consists of a \textbf{rule-base} $RB$,
+also called program, and a base of facts or objects $W$, also called \textbf{working memory}.
+
+The ensemble of facts / objects will be identified in this article with the
+\textbf{Herbrand base} $B_H$ (ie. all closed atomic propositions)
+formed on an alphabet of symbols of constants, functions, and first-order predicates.
+
+A production rule is a triple:
+\begin{equation}
+\pi \rightarrow \alpha, \rho
+\nonumber
+\end{equation}
+where $\pi$ expresses a condition on the facts-base, $\alpha$ represents a series of facts \textbf{added} and
+$\rho$ a series of facts \textbf{removed}.  More precisely $\pi, \alpha$ and $\rho$ can be identified with sequels
+of literals of first-order logic, that is, atomic propositions
+(called \textbf{schemas}), or the negation of atomic propositions, which may contain
+variables. A production rule has the following form:
+\begin{equation}
+A_1, ..., A_k, \neg B_1, .., \neg B_l \rightarrow C_1, ... C_m, \neg D_1, ..., \neg D_n
+\nonumber
+\end{equation}
+with the generally supplementary restriction that the variables of the schemas $B_j, 
+C_j, D_j$ appear in the $A_i$'s.
+
+"Negation by default" means to take $\neg A$ true if no instantiation of $A$ is
+in the facts-base. An \textbf{instantiation} of a rule is a $k$-tuple of \textbf{working memory elements}, or WMEs,
+$(o_1, ..., o_k)$ satisfying the left hand side of the rule,
+that is to say, there exists a substitution $\sigma$ of the variables
+of the rule verifying $A_i \sigma = o_i$, for $1 \le i \le k$,
+and $\neg B_j \sigma$, for $1 \le j \le l$.  The negation on the right side of the rule
+represents the action of deleting a fact ($\neg D_i \sigma$) from working memory.
+
+The production rules allow expressing very general transformations
+fact base while retaining an attractive declarative character. for example
+the simplest sorting algorithm that can be imagined: iteratively
+couples of badly ordered elements, written directly with a single rule of
+production:
+\begin{verbatim}
+rule tri
+?x : (elem indice=?i val=?v)
+?y : (elem indice=?j &> ?i val=?w &< ?v)
+->
+modify (?x indice=?j)
+modify (?y indice=?i)
+endrule
+\end{verbatim}
+where variables are prefixed with ? (XRete syntax), the filtering in schemas is done
+by the name of the attributes, and "modify" is equivalent to an addition of the fact followed by deletion.
+When no more rules are triggerable, the stable state
+obtained (the fixed point of the program) corresponds to a sorted configuration. The different
+exchange sorting algorithms are obtained by specifying the triggering order
+rules by a priority mechanism for example. It is remarkable that one
+in this way obtain optimal complexity sorting algorithms on average
+in $O(n  \log {n})$ where $n$ is the number of elements to be sorted, applying the techniques
+described in this article (see section 4.2.1).
+
+The various control strategies of the triggering order of the production rules
+(the strategies \textit{lex, mea} [For81], static priorities, dynamics, meta-rules [Tho91a],
+etc ...) are not covered in this article. We consider the production systems
+as non-deterministic systems.
+
+\subsection{Inference Cycle}
+
+The content of the working memory represents the state of the system at a given moment
+of computation, as the value of the variables represents the state of the execution of a program in a classical language. The rules are analogous to the ``program'' which
+defines the changes made to the working memory. The formal definition of
+inference cycle requires formally defining the filtering phase, i.e.
+searching for rule instantiations.
+
+A condition of the rule $\pi$ consists of a sequence of literals $L$. So we have
+$\pi = \pi' . L$ or $\pi = true$.  We define the relation of \textbf{satisfaction} of a condition $\pi$ on
+$W$ by a \textbf{partial instantiation} $(o_1, ..., o_k)$, denoted $(W, o_1, ..., o_k) \vDash \pi$, by the
+following system:
+\begin{eqnarray}
+& W \vDash true \\
+& \displaystyle \frac{(W, o_1, ..., o_{k-1}) \vDash \pi \quad o_k \in W \quad p(o_1, ... , o_k)}
+{(W, o_1, ..., o_k) \vDash \pi . P} \\
+& \displaystyle \frac{(W, o_1, ..., o_k) \vDash \pi \quad \neg \exists o \in W \quad p(o_1, ... , o_k, o)}
+{(W, o_1, ..., o_k) \vDash \pi . P}
+\end{eqnarray}
+where $p(o_1, ..., o_j)$ denotes the conjunction of tests on $(o_1, ..., o_j)$ appearing in the
+schema $P$.
+
+A \textbf{instantiation} of rule of $\langle W, RB \rangle$ is a pair $(R, (o_1, ..., o_{ar(R)}))$ with
+$R \in RB(o_1, ..., o_n) \in W^n$ such that $(W, o_1, ..., o_n) \vDash \pi(R)$.  Each instantiation of rule
+defines a transition on the working memory.
+\begin{equation}
+W \rightarrow_{(R, (o_1, ... , o_n))} (W \ \rho(R, o_1, ..., o_n)) \cup \alpha(R, o_1, ..., o_n)
+\nonumber
+\end{equation}
+
+The non-deterministic transition associated with the rule base $RB$, denoted by $\rightarrow$,
+constitutes the \textbf{cycle of inference}. It is defined by:
+\begin{equation}
+\frac{R \in RB (W, o_1, ..., o_n) \vDash \pi(R) \quad W \rightarrow_{(R, (o_1, ..., o_n))} W'}
+{RB \vdash W \rightarrow W'}
+\end{equation}
+Figure 1 schematically shows the inference cycle.
+
+Figure 1:
+
+Filtering
+\begin{equation}
+\pi(R)(W, o_1, ..., o_n) = true
+\nonumber
+\end{equation}
+
+Selection SEL
+\begin{equation}
+(R, (o_1, ..., o_n))
+\nonumber
+\end{equation}
+
+Trigger
+\begin{equation}
+W \rightarrow_{(R, (o_1, ..., o_n))} W'
+\nonumber
+\end{equation}
+
+\subsection{Operational Semantics}
+
+The operational semantics of a program $\langle W, RB \rangle$ is an \textbf{ensemble of stable states}
+defined as the ensemble of terminal states for the relation $\rightarrow$, that is to say:
+\begin{eqnarray}
+|| \langle W, RB \rangle || = \{ W_s \in \mathcal{P} (B_H) | RB \vdash W \rightarrow^* W_s \nonumber \\
+\mbox{and } \quad RB \vdash W_s \rightarrow W' \Rightarrow W_s = W' \} \nonumber
+\end{eqnarray}
+where the relation $\rightarrow^*$ is the transitive reflexive closure of the relation $\rightarrow$:
+\begin{eqnarray}
+& RB \vdash W \rightarrow^* W \nonumber \\
+& \displaystyle \frac{RB \vdash W \rightarrow^* W' \quad RB \vdash W' \rightarrow W''}
+{RB \vdash W \rightarrow^* W''} \nonumber
+\end{eqnarray}
+
+\section{Compilation}
+
+\subsection{Rete algorithm: construction of the Rete graph}
+
+The Rete [For82] algorithm is an efficient algorithm that calculates all
+stances of rules incrementally. It was developed for OPS5. It is based on two
+principles:
+
+\begin{enumerate}
+	
+	\item Memorization: it is assumed that the number of modifications made
+	to the working memory at each inference cycle is small compared to the
+	size of the working memory. This assumption is verified in practice in
+	many rule bases [GF83].  Therefore, all instantiations
+	of rules in cycle $n$ is relatively little different from its state in cycle $n - 1$.
+	So Rete's idea is to calculate only the modifications of the set of
+	rule instantiations from one cycle to another. For this, the intermediate calculations (the
+	partial rule instantiations) are stored.  
+	
+	\item Sharing: two rules can have some of their common conditions.
+	The calculation relating to this sub-condition is factored between the two rules.
+	
+\end{enumerate}
+
+Rete has been widely used for the efficient implementation of rule-based languages.
+
+We derive from Rules 2 and 3 a formal presentation of this algorithm.
+
+First, the predicate $p(o_1, ..., o_j, o)$ associated with scheme $P$ in rules 2 and 3
+can be broken down into two parts:
+\begin{equation}
+p(o_1, ..., o_j, o) \equiv q(o) \wedge r(o_1, ..., o_j, o)
+\end{equation}
+where $q(o)$ denotes the conjunction of the \textbf{mono-schema tests} on $o$ appearing in
+the schema $P$, and $r(o1, ..., oj, o)$ denotes the conjunction of \textbf{multi-schema tests} between
+$(o1, ..., oj)$ and $o$ appearing in the schema $P_i$.  The decomposition of the test $p$ in $q$
+and $r$ does not make any logical sense, but it permits to reduce the combination of
+the search for $n$-tuples $(o_1, ..., o_j, o)$ that satisfy $p$ because we restrict the search for $o$
+on objects verifying $q$.
+
+This allows us to transform rules 2 and 3 into:
+\begin{equation}
+\frac{(W, o_1, ..., o_{k-1}) \vDash \pi \quad r(o_1, ..., o_k) \quad q(o_k)}
+{(W, o_1, ..., o_k) \vDash \pi . P}
+\end{equation}
+
+\begin{equation}
+\frac{(W, o_1, ..., o_{k}) \vDash \pi \quad \neg \exists o \in W \quad q(o) \wedge r(o_1, ..., o_k, o)}
+{(W, o_1, ..., o_k) \vDash \pi . \neg P}
+\end{equation}
+The incremental character of the Rete algorithm comes from the storage of the $n$-tuples (respectively objects) that verifies the tests $\pi$ (respectively $q$) in the \textbf{left tails} $lm$ (or respectively \textbf{right tails} $rm$).
+
+So, for a condition:
+\begin{eqnarray}
+\pi = P_1, ..., P_n \nonumber
+\end{eqnarray}
+the following left memories $lm$\footnote{$\beta$ memories in the terminology of OPS5} and right memories $rm$\footnote{$\alpha$ memories in OPS5? (YKY: footnote is unreadable)} are defined:
+
+\textbf{Definition 1}
+
+\begin{equation}
+lm_i (E) = \{ (o_1, ..., o_{k_i}) \in E^{k_i} | ((o_1, ..., o_k), E ) \vDash \pi_i \} = E / \pi_i
+\nonumber
+\end{equation}
+
+\begin{equation}
+rm_i (E) = \{ o \in E | q_{i+1}(o) \} = E / q_{i+1}
+\nonumber
+\end{equation}
+
+Rules 1, 5 and 6 naturally become:
+\begin{equation}
+\frac{(o_1, ..., o_{k-1}) \in lm_{i-1} (W) \quad o_k \in rm_{i-1} (W) \quad r_{i-1}(o_1, ..., o_k)}
+{(o_1, ..., o_k) \in lm_i (W)}
+\end{equation}
+for a positive schema and $i \neq 1$,
+\begin{equation}
+\frac{(o_1, ..., o_{k}) \in lm_{i-1} (W) \quad \neg \exists o \in rm_{i-1} (W) r_{i-1}(o_1, ..., o_k, o)}
+{(o_1, ..., o_k) \in lm_i (W)}
+\end{equation}
+for a negative schema and $i \neq 1$, and:
+\begin{equation}
+lm_1 (W) = rm_0 (W)
+\end{equation}
+
+We now define the ensemble $rulem$ that contains the triggerable rule instantiations.
+
+\begin{equation}
+rulem(R, W) = \{ (R, (o_1, ..., o_n)) | (o_1, ..., o_n) \in lm_n(W) \}
+\end{equation}
+
+We can now write rule 4 in:
+\begin{equation}
+\frac{(o_1, ..., o_{k}) \in rulem (R) \quad W \rightarrow_{(R, (o_1, ..., o_k))} W' \quad R \in RB }
+{W \rightarrow W'}
+\end{equation}
+
+The Rete algorithm uses a graph structure.
+
+At each left tail $lm$ and $rm$ is associated a node of the graph identified by the tail
+to which it is attached.
+
+On the other hand, we associate with each of the rules 7 and 8 a node called \textbf{junction}. The
+junctions corresponding to rule 7 are said to be positive; those corresponding to Rule 8
+are said to be negative. At each of these nodes are associated three tails: the left tail
+$lm_{i-1} (W)$, the right tail $rm_{i-1} (W)$ and the resultant tail $lm_i (W)$.
+
+By connecting the nodes joining the nodes of the associated cells with an arc, we obtain a
+graph. Orienting the junction arcs to the resultant tails and left and right tails
+towards the junctions, we obtain an oriented graph (figure 2).
+
+Figure 2. (Oriented rete graph)
+
+Calculation of $\pi(o_1, ..., O_n)$:
+
+\subsection{Rete algorithm: execution of the graph}
+
+Formally, Rete associates an agent with each node of its graph. Schematically,
+this agent corresponding to a junction is responsible for maintaining the contents of the
+resultant tail $lm_i$ depending on the evolution of the left tails $lm_{i-1}$ and $rm_{i-1}$.
+
+These agents communicate by sending messages, called tokens, of the form
+$<[+ -], e>$. The element $e$ is either an object or an $n$-tuple. The sign + or - means
+we want to add or remove the element. It corresponds to the two basic actions
+defined in the right parts of rules.
+
+The agents communicate with each other by synchronous communications. Bows
+of the graph are the communication channels of these messages. The communications
+are in the direction of the orientation of the arcs.
+
+We assume that there is a special Root agent responsible for receiving and distributing
+messages received from the outside I In retracts an object $o$ from the working memory sends
+[... unreadable ...]
+
+We give the operational semantics of these agents.
+
+For each agent, the rule is of the form
+\begin{equation}
+m? \stackrel{a}{\rightarrow} ms!
+\end{equation}
+where $m?$ is the message (token) received, $ms!$ the list of tokens sent in response and
+$a$ the eventual action executed.
+
+\subsubsection{Right tails $rm$}
+
+\subsubsection{Left tails $lm$}
+
+\subsubsection{Positive junctions}
+
+\subsubsection{Negative junctions}
+
+\subsubsection{Tail of rule}
+
+\subsection{Sequential execution}
+
+\subsection{Discrimination tree}
+
+\subsection{Sharing}
+
+\subsubsection{Junctions}
+
+\subsubsection{Discrimination}
+
+\subsubsection{Genralization and example}
+
+\subsection{The \textit{Treat} algorithm}
+
+\section{Implementation}
+
+\subsection{Sequential implementation}
+
+\subsection{Optimizations}
+
+\subsubsection{Sharing of local memories}
+
+\subsubsection{Testing mono-schemas in junctions}
+
+\subsection{Parallel implementation}
+
+\subsection{Junction trees}
+
+\subsection{Lazy rete}
+
+\subsubsection{Other approaches to filtering}
+
+\section{Conclusions}
+
+\end{document}
