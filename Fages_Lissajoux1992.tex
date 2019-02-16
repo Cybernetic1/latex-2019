@@ -173,8 +173,8 @@ following system:
 & \displaystyle \frac{(W, o_1, ..., o_k) \vDash \pi \quad \neg \exists o \in W \quad p(o_1, ... , o_k, o)}
 {(W, o_1, ..., o_k) \vDash \pi . P}
 \end{eqnarray}
-where $p(o_1, ..., o_j)$ denotes the conjuncture of tests on $(o_1, ..., o_j)$ appearing in the
-schema $P$.
+where $p(o_1, ..., o_j)$ denotes the conjunction of tests on $(o_1, ..., o_j)$ appearing in the
+\textbf{schema} $P$.
 
 A \textbf{instantiation} of rule of $\langle W, RB \rangle$ is a pair $(R, (o_1, ..., o_{ar(R)}))$ with
 $R \in RB(o_1, ..., o_n) \in W^n$ such that $(W, o_1, ..., o_n) \vDash \pi(R)$.  Each instantiation of rule
@@ -206,7 +206,7 @@ Selection SEL
 \nonumber
 \end{equation}
 
-Trigger
+Applying
 \begin{equation}
 W \rightarrow_{(R, (o_1, ..., o_n))} W'
 \nonumber
@@ -256,13 +256,13 @@ Rete has been widely used for the efficient implementation of rule-based languag
 We derive from equations (2) and (3) a formal presentation of this algorithm.
 
 First, the \textbf{predicate} $p(o_1, ..., o_j, o)$ associated with schema $P$ in equations (2) and (3)
-can be broken down into two parts:
+can be \uline{broken down into two parts}:
 \begin{equation}
 p(o_1, ..., o_j, o) \equiv q(o) \wedge r(o_1, ..., o_j, o)
 \nonumber
 \end{equation}
-where $q(o)$ denotes the conjuncture of the \textbf{mono-schema tests} on $o$ appearing in
-the schema $P$, and $r(o_1, ..., o_j, o)$ denotes the conjuncture of \textbf{multi-schema tests} between
+where $q(o)$ denotes the conjunction of the \textbf{mono-schema tests} on $o$ appearing in
+the schema $P$, and $r(o_1, ..., o_j, o)$ denotes the conjunction of \textbf{multi-schema tests} between
 $(o_1, ..., o_j)$ and $o$ appearing in the schema $P_i$.  The decomposition of the test $p$ into $q$
 and $r$ does not make any logical sense, but it permits to reduce the combination of
 the search for $n$-tuples $(o_1, ..., o_j, o)$ that satisfy $p$ because we restrict the search for $o$
@@ -278,13 +278,13 @@ This allows us to transform equations (2) and (3) into:
 \frac{(W, o_1, ..., o_{k}) \vDash \pi \quad \neg \exists o \in W \quad q(o) \wedge r(o_1, ..., o_k, o)}
 {(W, o_1, ..., o_k) \vDash \pi . \neg P}
 \end{equation}
-The incremental character of the Rete algorithm comes from the storage of the $n$-tuples (respectively objects) that verifies the tests $\pi$ (respectively $q$) in the \textbf{left memory} $lm$ (or respectively \textbf{right memory} $rm$).
+The incremental character of the Rete algorithm comes from the storage of the $n$-tuples (respectively objects) that verifies the tests $\pi$ (respectively $q$) in the \textbf{left memory} $lm$ (respectively the \textbf{right memory} $rm$).
 
 So, for a condition:
 \begin{eqnarray}
 \pi = P_1, ..., P_n \nonumber
 \end{eqnarray}
-the following left memories $lm$\footnote{$\beta$-nodes in the terminology of OPS5} and right memories $rm$\footnote{$\alpha$-nodes in OPS5? [YKY: footnote is unreadable]} are defined:
+the following left and right memories $lm$ and $rm$ are defined\footnote{$lm$ is called $\beta$-memories in the terminology of OPS5. $rm$ is called $\alpha$-memories (?) [YKY: second footnote is unreadable]}:
 
 \textbf{Definition 1}
 
@@ -327,17 +327,14 @@ We can now write equation (4) as:
 
 The Rete algorithm uses a graph structure.
 
-At each left node $lm$ and $rm$ is associated a node of the graph identified by the node
-to which it is attached.
+For each left and right \textbf{pile} $lm$ and $rm$ is associated a node of the graph identified by the pile to which it is attached.
 
 On the other hand, we associate with each of the equations (7) and (8) a node called \textbf{juncture}.
 The junctures corresponding to equation (7) are said to be positive; those corresponding to equation (8)
-are said to be negative.  At each of these nodes are associated three \textbf{memories}: the \textbf{left} memory
-$lm_{i-1} (W)$, the \textbf{right} memory $rm_{i-1} (W)$ and the \textbf{resultant} memory $lm_i (W)$.
+are said to be negative.  At each of these nodes are associated three \textbf{piles}: the \textbf{left} pile $lm_{i-1} (W)$, the \textbf{right} pile $rm_{i-1} (W)$ and the \textbf{resultant} pile $lm_i (W)$.
 
-By connecting the nodes joining the memories of the associated cells with an arc, we obtain a
-graph. Orienting the juncture arcs to the resultant memories and left and right memories
-towards the junctures, we obtain an oriented graph (figure 2).
+By connecting with an arc the nodes joining the nodes that the piles are associated with, we obtain a
+graph.  By orienting the arcs of the junctures towards the resultant piles, and the left and right piles towards the junctures, we obtain an oriented graph (figure 2).
 
 Figure 2. (Oriented rete graph)
 
