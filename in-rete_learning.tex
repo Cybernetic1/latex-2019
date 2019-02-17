@@ -4,7 +4,6 @@
 \newcommand{\ovalB}{\; \vcenter{\hbox{\includegraphics[decodearray={1.0 1 0.4 1 0.4 1}]{../oval.png}}} \;}
 \newcommand{\ovalC}{\; \vcenter{\hbox{\includegraphics[decodearray={0.9 1 0.8 1 0.4 1}]{../oval.png}}} \;}
 
-
 \title{Learning inside the Rete algorithm}
 
 \author{YKY (Yan King Yin) \\ {\footnotesize general.intelligence@gmail.com}}
@@ -65,7 +64,34 @@ In other words, we would like to \textbf{compile} the rule conditions $\ovalA$ i
 \end{equation}
 The actions $\ovalB$ of the rules do not figure in the decision process.
 
+\subsection{How the Rete graph is constructed}
 
+$\alpha$-nodes:
+\begin{equation}
+\overbrace{\ovalA}^{\alpha_1} \wedge \overbrace{\ovalA}^{\alpha_2} \wedge \overbrace{\ovalA}^{\alpha_3} .... \rightarrow \ovalB
+\end{equation}
+
+$\beta$-nodes:
+\begin{equation}
+\overbrace{ \overbrace{ \overbrace{ \ovalA }^{\beta_1} \wedge \ovalA}^{\beta_2} \wedge \ovalA}^{\beta_3} .... \rightarrow \ovalB
+\end{equation}
+
+
+\section{Relation to deep learning}
+
+A typical \textbf{neural network} is:
+\begin{eqnarray}
+\mbox{\footnotesize \textbf{weights} matrix} \tikzmark{ww} \quad \quad \mbox{\footnotesize total \# layers} \tikzmark{LL} \nonumber \\
+\nonumber \\
+F(\vec{x}) = \sigmoid(W_1 \tikzmark{wa} \sigmoid(W_2 \tikzmark{wb} ... \sigmoid( W_L \tikzmark{wc} \tikzmark{L} \; \vec{x} )))
+\begin{tikzpicture}[overlay,remember picture]
+\draw (ww.center) +(-34pt,-2pt) -- ([shift={(-10pt,10pt)}] wa.center);
+\draw (ww.center) +(-34pt,-2pt) -- ([shift={(-10pt,10pt)}] wb.center);
+\draw (ww.center) +(-34pt,-2pt) -- ([shift={(-10pt,10pt)}] wc.center);
+\draw (LL.center) +(-15pt,-3pt) -- ([shift={(-2pt,6pt)}] L.center);
+\end{tikzpicture}
+\end{eqnarray}
+Its set of \textbf{parameters} is $\Theta = \{ W_{i, j}^{\ell} \} \in \mathbb{R}^m$, where $m$ = \# weights.
 
 \end{document}
 
