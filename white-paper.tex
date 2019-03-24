@@ -1,0 +1,57 @@
+\input{../YKY-preamble}
+
+\title{\cc{}{Genifer 7.0 --- white paper}}
+\author{\cc{甄景贤}{Yan King Yin} {\footnotesize general.intelligence@gmail.com}}
+
+\begin{document}
+
+	\setlength{\parindent}{0pt}
+	\setlength{\parskip}{2.8ex plus0.8ex minus0.8ex}
+	
+	\maketitle
+	
+%	\tableofcontents
+
+%\begin{abstract}
+%\end{abstract}
+
+Top-level architecture = reinforcement learning.  This is explained in the my paper \textit{Wandering in the Labyrinth of Thinking}.
+
+Inside the RL model:
+\begin{itemize}
+	\item state = mental state = set of logic propositions
+	\item environment = state space = mental space
+	\item actions = logic rules
+\end{itemize}
+
+Basically, an action = a logic rule is of the form:
+\begin{equation}
+\label{eqn:action}
+\mathsf{xxx} \wedge \mathsf{xxx} \wedge .... \Rightarrow \mathsf{xxx}
+\end{equation}
+where $\mathsf{xxx}$ denotes a logic \textbf{proposition}.
+
+Each proposition is a composition of 3 atomic concepts (think of these as word vectors as in Word2Vec):
+\begin{equation}
+\mbox{proposition} = \mathsf{xxx} = \mathsf{x} \cdot \mathsf{x} \cdot \mathsf{x}.
+\end{equation}
+$\mathsf{x} \in \mathbb{R}^n$ where $n$ is the dimension of a single word-vector (or atomic concept).
+
+An \textbf{action} is the conclusion of a rule, ie, the right-hand side of (\ref{eqn:action}).
+
+We use a ``free'' neural network (ie, standard feed-forward NN) to approximate the set of all rules.
+
+The \textbf{input} of the NN would be the state vector:
+\begin{equation}
+\mathsf{xxx}_1 \wedge \mathsf{xxx}_2 \wedge .... \mathsf{xxx}_m
+\end{equation}
+where we fix the number of conjunctions to be $m$.
+
+The \textbf{output} of the NN would be the \textbf{probability} of an action:
+\begin{equation}
+p(\mathsf{xxx}).
+\end{equation}
+
+Note that we don't just want the action itself, we need the \textbf{probability distribution} over these actions.  The \textbf{Bellman update} of reinforcement learning should update the probability distribution over such actions.
+
+\end{document}
