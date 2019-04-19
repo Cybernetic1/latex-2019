@@ -1,6 +1,6 @@
 \input{../YKY-preamble}
 
-\title{Meaning of the quantum state $\Psi$}
+\title{Classical interpretation of the quantum state $\Psi$}
 \author{\cc{甄景贤}{Yan King Yin} {\footnotesize general.intelligence@gmail.com}}
 
 \begin{document}
@@ -108,11 +108,11 @@ Let's try the energy operator using the same technique as above:
 
 This does not look like coincidence.
 
-\section{Relation to Feymann's path integral}
+\section{Relation to Feynman's path integral}
 
 The exponentiation idea (\ref{eqn-exponentiation}) is already borne out by Feynman's \textbf{path integral} formulation:  $S$ is the classical action which is a sum of infinitesimal elements, and the exponentiation causes it to become a product, hence the \textbf{Trotter product formula}.
 
-\section{The propagator of $\Psi$}
+\subsubsection{The propagator of $\Psi$}
 
 It has been known that the time-evolution of $\Psi$ can be described by the \textbf{propagator} $U(t)$:
 \begin{equation}
@@ -123,6 +123,22 @@ From the perspective of our new idea, the propagator is expressed this way preci
 S_t = S_0 - H \Delta t
 \end{equation}
 where $H$ is the classical Hamiltonian.  So it all makes sense.
+
+In Feynman's thesis (circa 1942), he only observed the time-propagator of $\Psi$ without identifying $\Psi$ with $\exp S$:
+\begin{equation}
+\vcenter{\hbox{\includegraphics[scale=0.5]{Feynman-thesis-1.png}}} \nonumber
+\end{equation}
+
+Later in the same thesis, Feynman derived Schr\"odinger's equation from the classical harmonic oscillator, using the variational technique:
+\begin{equation}
+\vcenter{\hbox{\includegraphics[scale=0.5]{Feynman-thesis-2.png}}} \nonumber
+\end{equation}
+but he seems unaware, at least around 1942, of the possibility of using (\ref{eqn-exponentiation}) directly.
+
+Also, in Dirac's 1932 paper, \textit{The Lagrangian in Quantum Mechanics}, he also mentioned the propagator without equating $\Psi$ with the exponentiated action:
+\begin{equation}
+\vcenter{\hbox{\includegraphics[scale=0.5]{Dirac-1932.png}}} \nonumber
+\end{equation}
 
 \section{Switching between $\Psi$ and $S$}
 
@@ -136,17 +152,21 @@ I think we can understand the exponentiation of (\ref{eqn-exponentiation}) as tr
 
 The significance is that, after such a transformation, the quantum Schrodinger equation can be exactly identified with its classical counterpart, Hamilton-Jacobi equation.
 
-In most textbooks, $\Psi$ is interpreted as the quantum ``state'', and as the ``complex probability amplitude'' which yields the real probability via:
-\begin{equation}
-\mathbb{E} [ x ] = \int dx \; | \Psi(x, t) |^2 
-\end{equation}
-but I think this view may be misleading, and $\Psi$ should instead be interpreted as the ``multiplicative action''.
-
 In other words, if there is a classical action $S$ satisfying the Hamilton-Jacobi equation, then there would be a function $\Psi$ satisfying the Schr\"odinger equation.  However, the inverse function of (\ref{eqn-exponentiation}) is not unique.
 
 Recall that a complex number, of unit length, in polar form is $e^{i \theta} = \cos \theta + i \sin \theta$.  So if $\Psi = e^{i S / \hbar}$ this means that $| \Psi |$ is automatically \textbf{normalized} to 1.  Moreover, $S$ behaves like a phase ``angle'' that causes $\Psi$ to \textbf{rotate} in the complex plane.  Also $\hbar = h / 2 \pi$, so the interpretation of $S / \hbar$ is that the Planck constant is the \textit{unit} upon which $S$ causes $\Psi$ to rotate;  in other words, $h$ is the \textit{quantum}.
 
 The upshot is that the inverse function $S = - i \hbar \log \Psi$ will always yield a \textbf{real} value $\in \mathbb{R}$.  Thus the corresponding Hamilton-Jacobi equation is always valid.
+
+\section{Probabilistic interpretation?}
+
+In the Copenhagen interpretation, $\Psi$ is regarded as the quantum ``state'', and as the ``complex probability amplitude'' which yields the real probability via:
+\begin{equation}
+\mathbb{E} [ x ]
+= \langle x \rangle
+= \int dx \; | \Psi(x, t) |^2 .
+\end{equation}
+How might we re-interpret this interpretation in the new light?
 
 \section{How does quantization arise?}
 
@@ -183,9 +203,9 @@ In the quantum version (\ref{time-independent-Schrodinger}), we assumed that $\P
 
 If we take the inverse $S = - i \hbar \log \Psi$ we get back the classical action $S$ which may not be oscillatory.  This $S$ would be a spatial function compatible with the classical Lagrangian $L = T - V$.  
 
-[ To-do: Plot the spatial function $S(x, y, z)$ derived from $\Psi(x, y, z)$ for various systems such as the harmonic oscillator and the hydrogen atom. ]
+\section{Relation to the Bell inequality?}
 
-[ To-do: Explain the probabilistic interpretation if possible.  Explain second quantization? ]
+Much of what we call ``quantum weirdness'' is abstracted by the Bell inequality.  Can one derive the Bell inequality from the Schr\"odinger equation?  Or, the Bell inequality depends also on the axioms of quantum mechanics?  This is an interesting question....
 
 \section{Conclusion}
 
@@ -197,7 +217,7 @@ Quantum mechanics does \textit{not} contradict classical mechanics.  Quantum mec
 	\end{center}
 \end{minipage}
 \begin{minipage}{0.6\textwidth}
-YKY is an independent researcher from Hong Kong.  His main focus is on AGI (artificial general intelligence).  Through his research in AI, he came into contact with the Hamilton-Jacobi-Bellman equation, which describes dynamic programming (reinforcement learning).  He has a long-time interest in the foundations of quantum mechanics.
+YKY is an independent researcher from Hong Kong.  His main focus is on AGI (artificial general intelligence).  Through his research in AI, he came into contact with the Hamilton-Jacobi-Bellman equation, which describes dynamic programming (reinforcement learning).  He has a long-time, though amateur, interest in the foundations of quantum mechanics.
 \end{minipage}%
 
 \nocite{Faria2010}
