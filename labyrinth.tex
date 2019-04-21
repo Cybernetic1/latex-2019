@@ -59,7 +59,7 @@
 \newcommand{\vect}[1]{\boldsymbol{#1}}
 \newcommand*\sigmoid{\vcenter{\hbox{\includegraphics{sigmoid.png}}}}
 \newcommand*\KB{\vcenter{\hbox{\includegraphics{KB-symbol.png}}}}
-\newcommand*\bbTheta{\vcenter{\hbox{\includegraphics{../bbTheta.png}}}}
+\newcommand*\bbTheta{\vcenter{\hbox{\includegraphics[scale=0.75]{../bbTheta.png}}}}
 \newcommand*\rectifier{\vcenter{\hbox{\includegraphics{rectifier.png}}}}
 \newcommand{\dashh}{\textemdash~}
 \newcommand{\english}[1]{\rmfamily \textit{``#1''}\rmfamily}
@@ -97,7 +97,7 @@ reinforcement learning, deep learning, and logic structure}}
 
 \begin{abstract}
 % 这篇是背景，介绍一个基於 \textbf{增强学习} 和 \textbf{深度学习} 的极简约的 cognitive architecture，它在数学上是一个Hamiltonian 系统，而其 Lagrangian 对应於智能系统的「奖励」或「欲望」的价值。 经典逻辑 AI 的技巧可以搬到这个 setting 之下，而连续时间化之后，可以用上微分几何的技巧。 传统的「逻辑 AI 知识表述」被新的表述法取代，后者的结构是由神经网络的深度学习「诱导」出来的。
-The bottleneck algorithm in AGI is the inductive learning of knowledge.  The importance of this algorithm in our AI era is like what the steam engine was to the industrial revolution.  This paper has 3 main contributions:  1) Outline of a minimalist AGI architecture; 2) Hamiltonian control for deep reinforcement learning; 3) A ``carousel'' working memory architecture that is commutative over propositions.
+The bottleneck algorithm in AGI is the inductive learning of knowledge.  The importance of this algorithm in our AI era is like what the steam engine was to the industrial revolution.  This paper: 1) outlines a minimalist AGI architecture; 2) defines the Lagrangian and Hamiltonian for it, thus opening new algorithms based on control theory; 4) defines a logic structure for AGI systems; 5) imposes the logic structure on the control system, as an inductive bias to speed up learning.
 % The system consists of an iterative function whose role is analogous to the consequence operator ($\vdash$) in logic, and is approximated by a deep neural network (this is the key efficiency-boosting step).
 %Its continuous limit can be described by differential geometry.  The old-fashioned logic-based knowledge representation with discrete propositions is abandoned in favor of a representation induced by deep neural learning.
 % The problem of general intelligence can be described and solved in the logic-based AI paradigm, but the main obstacle is that learning is too slow.  The logic-based knowledge representation with discrete propositions is abandoned in favor of a neural-based ``amorphous'' representation induced from the top down, using a deep neural network (DNN).  The DNN acts iteratively on a state space (the ``mental state''), forming a dynamical system.  This system is in turn controlled by reinforcement learning, ``navigating'' the space of mental states as in a maze.
@@ -125,17 +125,18 @@ We propose an AGI architecture:
 	\begin{itemize}
 		\item The external environment is turned ``inward''
 		\item State space = mental space
+		\item \textbf{Policy-gradient} and \textbf{Hamiltonian} methods are employed to speed up learning (\S\ref{sec:control-theory} - \S\ref{sec:policy-gradient})
 	\end{itemize}
 	\item \textbf{Logic} structure is imposed on the \textbf{knowledge representation} (KR)
 		\begin{itemize}
 		\item State transitions are given by logic rules = actions in RL
+		\item The logic state $\vect{x}$ is decomposable into propositions (\S\ref{sec:LBAI-structure})
 		\end{itemize}
 	\item The set of logic rules is approximated by a deep-learning neural network (\textbf{deep NN})
 		\begin{itemize}
+		\item Just the most basic kind of feed-forward neural network is required
 		\item Logic conjunctions are \textbf{commutative}, so working-memory elements can be presented in any order (\S\ref{sec:commutative-structure})
-		\item \textbf{Policy-gradient} and \textbf{Hamiltonian} methods are employed to speed up learning (\S\ref{sec:control-theory} - \S\ref{sec:policy-gradient})
 		\item \textbf{Stochastic} actions are represented by \textbf{Gaussian kernels} (radial basis functions) (\S\ref{sec:Gaussian-kernels}), thus partly avoiding the curse of dimensionality
-		\item Just the most basic kind of feed-forward neural network is required .
 	\end{itemize}
 \end{enumerate}
 
@@ -200,7 +201,7 @@ This is the cartoon version of our architecture:
 
 Traditionally, RL deals with acting in an \textit{external} environment; value / utility is assigned to \textit{external} states.  In this view, the \textit{internal} mental state of the agent may change without any noticeable change externally:
 \begin{equation}
-\vcenter{\hbox{\includegraphics[scale=0.6]{save-princess.png}}}
+\vcenter{\hbox{\includegraphics[scale=0.5]{save-princess.png}}}
 \end{equation}
 % The usefulness of RL (ie, the Bellman update technique) makes me wonder if it'd be advantageous to invert the perspective to consider the internal mental landscape instead.  Then, an internal state would have higher utility when it has been visited by many successful ``thinking'' trajectories.
 
@@ -216,7 +217,9 @@ In our architecture, $\vect{F}$ can implemented as a simple feed-forward neural 
 \begin{equation}
 \vcenter{\hbox{\includegraphics[scale=0.5]{genifer-model-00.png}}}
 \end{equation}
-However, this naive idea has to be modified by \S\ref{sec:commutative-structure}.
+However, this naive idea has to be modified by the logic structures in \S\ref{sec:LBAI-structure} and \S\ref{sec:commutative-structure}.
+
+Note that parts of the state $\vect{x}$ would be reserved and directly connect to the \textbf{input} and \textbf{output} of the AGI system.
 
 %In this minimal architecture there is no \textbf{episodic memory}, but this does not seem to be a bottleneck problem. %\textit{The structure of memory} \cite{YanMemory}.
 
@@ -590,7 +593,7 @@ a precise transition from the classical H-J equation to the \emp{Schr\"{o}dinger
 & \quad \displaystyle i \hbar \frac{\partial \Psi}{\partial t} = H \Psi \quad \boxed{\mbox{Schr\"{o}dinger}} .
 \end{tikzcd}
 \end{equation} 
-This implies that the Schr\"{o}dinger equation is an alternative way of expressing the optimality condition for RL!
+This implies that the Schr\"{o}dinger equation is an alternative way of expressing the optimality condition for RL!  It is also known that the Schr\"{o}dinger equation in \textit{imaginary time} becomes the \textbf{diffusion equation} and is related to stochastic processes (\textit{cf} \cite{Strocchi2008} Ch.6); This may lead to new algorithms.
 
 %We can also express $J$ using the quantum-mechanical notation:
 %\begin{equation}
@@ -687,6 +690,7 @@ Note that we don't just want the action itself, we need the \textbf{probabilitie
 %where $\sigmoid$ is a sigmoid-shaped non-linear function, applied component-wise to the vectors.
 
 \subsection{Structure of a logic-based AI system}
+\label{sec:LBAI-structure}
 
 Besides the intrinsic structure of a logic, the AI system has a structure in the sense that it must perform the following operations iteratively, in an endless loop:
 \begin{equation}
@@ -701,7 +705,7 @@ Besides the intrinsic structure of a logic, the AI system has a structure in the
 		\vect{x} &\mapsto& \vect{r} 
 		\end{eqnarray}
 	--- In categorical logic, matching is seen as finding the \textbf{co-equalizer} of 2 terms which returns a \textbf{substitution} \cite{Goguen1989} \cite{Lawvere1963} \cite{Lawvere2003} \cite{Jacobs1999}.  The substitution is implicit in our formulation and would be \textit{absorbed} into the neural network in our architecture.  \\
-	--- Matching should be performed over the entire \textbf{working memory} = the state $\vect{x}$ which contains $k$ literals.  This is combinatorially time-consuming.  The celebrated \textbf{\textit{Rete}} algorithm turns the set of rules into a tree-like structure which is efficient for solving (\ref{eqn:matching}).
+	--- Matching should be performed over the entire \textbf{working memory} = the state $\vect{x}$ which contains $k$ literals.  This is combinatorially time-consuming.  The celebrated \textbf{\textit{Rete}} algorithm \cite{Rete-algorithm} turns the set of rules into a tree-like structure which is efficient for solving (\ref{eqn:matching}).
 	\item \textbf{Rule application} --- the rule is applied to the current state $\vect{x}$ to produce a new literal proposition $\delta \vect{x}$:
 		\begin{eqnarray}
 		\boxed{\mbox{Apply}} \quad
@@ -726,14 +730,14 @@ In order to apply control theory, we need to calculate entities such as $\dot{\v
 	\item The state $\vect{x} \in \mathbb{X}$ is a set (seen as a list) of propositions, thus also inherits a vector-space embedding.
 	\item However, it is well-known that \textbf{syntactic} distance can be very different from \textbf{semantic} distance (sentences that appear similar may differ drastically in meaning).  From the point of view of logic, the 2 metrics \uline{must not be confused}.
 	\item It is also well-known that the semantic distance (ie, how many logic steps are required to deduce one logic state from another) is related to \textbf{Kolmogorov complexity} \cite{Li2008} and is \textit{incomputable}, which however can be \textit{approximated}.  It is my belief that all AGI systems must approximate this metric in one way or another.
-	\item For each time step, the state $\vect{x}$ should move by one logic rule $\vect{u} \equiv \dot{\vect{x}}$; If a proposition has merely moved via syntactic similarity, this is not considered ``real'' movement in the dynamical / control theoretic sense.  Each logic step is $1$ unit of semantic distance.
+	\item For each time step, the state $\vect{x}$ should move by one logic rule $\vect{u} \equiv \dot{\vect{x}}$; If a proposition has merely moved via syntactic similarity, this is not considered ``genuine'' movement in the dynamical / control theoretic sense.  Each logic step is $1$ unit of semantic distance.
 	\item In our architecture, logic rules are parametrized by $\Theta \in \mathbb{R}^N$ which are the weights of a neural network $\vect{F}$.  Thus, rules exist in a \textbf{continuum}.  
 	\item The output of a rule is a new proposition $\delta \vect{x} \in \mathbb{P}$ which is also embedded in vector space.
 	\item Therefore, at each time step, a point $\vect{x}$ in state space $\mathbb{X}$ is only allowed to move \textit{via} the continuum of rules parametrized by $\Theta \in \bbTheta$, which is different from the neighborhood of $\vect{x}$ based on similarity:
 	\begin{equation}
 	\vcenter{\hbox{\includegraphics[scale=0.5]{gluing-by-teleportation.png}}}
 	\end{equation}
-	(Now the neighborhood of $\vect{x}_{t+1}$ is a subset $\subset \bbTheta$ which coincides with $\mathbb{X}$ and replaces it)
+	(Now the neighborhood of $\vect{x}_{t+1}$ is a subset $\subset \bbTheta$ which replaces $\mathbb{X}$)
 	\item In short, what we have here is \uline{discrete-time dynamics occurring in continuous space}.
 	\item The objective function $J$ rewards correct answers while penalizing logic path lengths, thus forcing the system to acquire intelligence. This knowledge is represented in the function $\vect{F}$ parametrized by $\Theta$.  It is intuitively obvious that $\vect{F}$ contains an implicit approximation of Kolmogorov complexity.
 \end{itemize}
@@ -741,11 +745,11 @@ In order to apply control theory, we need to calculate entities such as $\dot{\v
 \subsection{Commutative structure of logic conjunctions}
 \label{sec:commutative-structure}
 
-The logic conjuction $\wedge$ is \textbf{commutative}:
+One basic characteristic of (classical) logic is that the conjuction $\wedge$ is \textbf{commutative}:
 \begin{equation}
 \mathsf{P} \wedge \mathsf{Q} \quad \Leftrightarrow \quad \mathsf{Q} \wedge \mathsf{P} .
 \end{equation}
-If we want to use a neural network to model the deduction operator $\vdash: \mathbb{P}^k \rightarrow \mathbb{P}$, where $\mathbb{P}$ is the space of literal propositions, then this function should be \textbf{symmetric} in its input arguments.
+This restriction may significantly reduce the size of the search space.  If we use a neural network to model the deduction operator $\vdash: \mathbb{P}^k \rightarrow \mathbb{P}$, where $\mathbb{P}$ is the space of literal propositions, then this function should be \textbf{symmetric} in its input arguments.
 
 I have considered a few solutions to this problem, including an algebraic trick to build ``symmetric'' neural networks (but it suffers from combinatorial inefficiency), and using Fourier transform to get a ``spectral'' representation of the state, which remained rather vague and did not materialize.
 
@@ -761,7 +765,7 @@ This architecture has the advantage of being simple and may be biologically plau
 
 I believe in the maxim: \textit{Whatever can be done in time can be done in space}.  The diagram (\ref{eqn:carousel-diagram}), when unfolded in time, can be expressed in this functional form:
 \begin{equation}
-F(\mathsf{P}_0, ..., \mathsf{P}_n) = f(\mathsf{P}_n, f(\mathsf{P}_{n-1}, f(..., f(\mathsf{P}_0, \emptyset)))) .
+F_{\mathrm{sym}}(\mathsf{P}_0, ..., \mathsf{P}_n) = f(\mathsf{P}_n, f(\mathsf{P}_{n-1}, f(..., f(\mathsf{P}_0, \emptyset)))) .
 \end{equation}
 It may be possible to solve the functional equation to eliminate the recurrent structure.
 
@@ -892,7 +896,7 @@ Judging from the dimensions, such a neural network is well feasible with current
 
 \section*{Acknowledgements}
 
-The author would like to thank the following people for invaluable discussions over many years:  Ben Goertzel, Pei Wang (王培), Abram Demski, Russell Wallace, SeH, Juan Carlos Kuri Pinto, Jonathan Yan, Xiao Da (肖达), Dmitri Tkatch, and others.  Also thanks to all the university professors and researchers in Hong Kong (especially in the math departments, and their guests), strangers who taught me things on Zhihu.com (知乎), Quora.com, and StackOverflow.
+I would like to thank the following people for invaluable discussions over many years:  Ben Goertzel, Pei Wang (王培), Abram Demski, Russell Wallace, SeH, Juan Carlos Kuri Pinto, Jonathan Yan, Xiao Da (肖达), Dmitri Tkatch, and others.  Also thanks to all the university professors and researchers in Hong Kong (especially in the math departments, and their guests), strangers who taught me things on Zhihu.com (知乎), Quora.com, and StackOverflow.
 
 \bibliographystyle{plain} % or number or aaai ...
 \bibliography{../AGI-book}
