@@ -82,7 +82,9 @@
 \normalsize{-- a minimalist cognitive architecture combining\\
 reinforcement learning, deep learning, and logic structure}}
 \titlerunning{Wandering in the Labyrinth of Thinking}
-\author{\usebox{\MyName} (King-Yin Yan)
+\author{
+%\usebox{\MyName} 
+甄景贤 (King-Yin Yan) \quad Dmitri Tkatch \quad 肖达 (Xiao Da) \quad Juan Carlos Kuri Pinto
 % \\ \footnotesize{General.Intelligence@Gmail.com}
 }
 \institute{General.Intelligence@Gmail.com}
@@ -97,7 +99,7 @@ reinforcement learning, deep learning, and logic structure}}
 
 \begin{abstract}
 % 这篇是背景，介绍一个基於 \textbf{增强学习} 和 \textbf{深度学习} 的极简约的 cognitive architecture，它在数学上是一个Hamiltonian 系统，而其 Lagrangian 对应於智能系统的「奖励」或「欲望」的价值。 经典逻辑 AI 的技巧可以搬到这个 setting 之下，而连续时间化之后，可以用上微分几何的技巧。 传统的「逻辑 AI 知识表述」被新的表述法取代，后者的结构是由神经网络的深度学习「诱导」出来的。
-The bottleneck algorithm in AGI is the inductive learning of knowledge.  The importance of this algorithm in our AI era is like what the steam engine was to the industrial revolution.  This paper: 1) outlines a minimalist AGI architecture; 2) defines the Lagrangian and Hamiltonian for it, thus opening new algorithms based on control theory; 4) defines a logic structure for AGI systems; 5) imposes the logic structure on the control system, as an inductive bias to speed up learning.
+The bottleneck algorithm in AGI is the inductive learning of knowledge.  The importance of this algorithm in our AI era is like what the steam engine was to the industrial revolution.  This paper: 1) outlines a minimalist AGI architecture; 2) defines a logic structure for AGI systems; 3) imposes the logic structure on the control system, as inductive bias to speed up learning.
 % The system consists of an iterative function whose role is analogous to the consequence operator ($\vdash$) in logic, and is approximated by a deep neural network (this is the key efficiency-boosting step).
 %Its continuous limit can be described by differential geometry.  The old-fashioned logic-based knowledge representation with discrete propositions is abandoned in favor of a representation induced by deep neural learning.
 % The problem of general intelligence can be described and solved in the logic-based AI paradigm, but the main obstacle is that learning is too slow.  The logic-based knowledge representation with discrete propositions is abandoned in favor of a neural-based ``amorphous'' representation induced from the top down, using a deep neural network (DNN).  The DNN acts iteratively on a state space (the ``mental state''), forming a dynamical system.  This system is in turn controlled by reinforcement learning, ``navigating'' the space of mental states as in a maze.
@@ -123,20 +125,19 @@ We propose an AGI architecture:
 \begin{enumerate}
 	\item with \textbf{reinforcement learning} (RL) as top-level framework
 	\begin{itemize}
-		\item The external environment is turned ``inward''
 		\item State space = mental space
-		\item \textbf{Policy-gradient} and \textbf{Hamiltonian} methods are employed to speed up learning (\S\ref{sec:control-theory} - \S\ref{sec:policy-gradient})
+		% \item Standard RL techniques can be employed to speed up learning (\S\ref{sec:policy-gradient})
 	\end{itemize}
 	\item \textbf{Logic} structure is imposed on the \textbf{knowledge representation} (KR)
 		\begin{itemize}
 		\item State transitions are given by logic rules = actions in RL
-		\item The logic state $\vect{x}$ is decomposable into propositions (\S\ref{sec:LBAI-structure})
+		\item The logic state $\vect{x}$ is decomposable into \textbf{propositions} (\S\ref{sec:LBAI-structure})
 		\end{itemize}
-	\item The set of logic rules is approximated by a deep-learning neural network (\textbf{deep NN})
+	\item The set of logic rules is approximated by a deep neural network
 		\begin{itemize}
-		\item Just the most basic kind of feed-forward neural network is required
+		\item Just the most basic kind of feed-forward neural network (FFNN) is required
 		\item Logic conjunctions are \textbf{commutative}, so working-memory elements can be presented in any order (\S\ref{sec:commutative-structure})
-		\item \textbf{Stochastic} actions are represented by \textbf{Gaussian kernels} (radial basis functions) (\S\ref{sec:Gaussian-kernels}), thus partly avoiding the curse of dimensionality
+		\item \textbf{Stochastic} actions are represented by \textbf{Gaussian kernels} (radial basis functions) (\S\ref{sec:logic-actions}), thus partly avoiding the curse of dimensionality
 	\end{itemize}
 \end{enumerate}
 
@@ -194,9 +195,6 @@ This is the cartoon version of our architecture:
 \vcenter{\hbox{\includegraphics[scale=0.5]{architecture-cartoon.png}}}
 \end{equation}
 
-%=======================================================================================
-\end{comment}
-
 \subsection{``Introspective'' view of reinforcement learning}
 
 Traditionally, RL deals with acting in an \textit{external} environment; value / utility is assigned to \textit{external} states.  In this view, the \textit{internal} mental state of the agent may change without any noticeable change externally:
@@ -204,6 +202,9 @@ Traditionally, RL deals with acting in an \textit{external} environment; value /
 \vcenter{\hbox{\includegraphics[scale=0.5]{save-princess.png}}}
 \end{equation}
 % The usefulness of RL (ie, the Bellman update technique) makes me wonder if it'd be advantageous to invert the perspective to consider the internal mental landscape instead.  Then, an internal state would have higher utility when it has been visited by many successful ``thinking'' trajectories.
+
+%=======================================================================================
+\end{comment}
 
 \subsection{Actions = cognitive state-transitions = ``thinking''}
 
@@ -213,19 +214,72 @@ Our system consists of two main algorithms:
 	\item Transitioning from $\vect{x}$ to $\vect{x}'$.  This corresponds to ``thinking'' under the guidance of the static knowledge $\vect{F}$.
 \end{enumerate}
 
-In our architecture, $\vect{F}$ can implemented as a simple feed-forward neural network (where ``deep'' simply means ``many layers''):
+In our architecture, $\vect{F}$ can be implemented as a simple feed-forward neural network (where ``deep'' simply means ``many layers''):
 \begin{equation}
 \vcenter{\hbox{\includegraphics[scale=0.5]{genifer-model-00.png}}}
+\label{eqn0}
 \end{equation}
-However, this naive idea has to be modified by the logic structures in \S\ref{sec:LBAI-structure} and \S\ref{sec:commutative-structure}.
+Since a recurrent NN is Turing-complete, this can be viewed as a minimalist AGI.  But its learning may be too slow without further \textbf{inductive bias} (\textit{cf} the ``no free lunch'' theorem \cite{Wikipedia-no-free-lunch}) --- so we will further modify $\vect{F}$ by imposing the logic structure of reasoning on it (\S\ref{sec:LBAI-structure} and \S\ref{sec:commutative-structure}).
+% However, this naive idea has to be modified by the logic structures in \S\ref{sec:LBAI-structure} and \S\ref{sec:commutative-structure}.
+
+In principle, every state is potentially \textbf{reachable} from every other state, if a logic rule exists between them.  Now we use a deep FFNN to represent the set of all logic rules.  This is a key efficiency-boosting step, because \uline{deep neural networks allows to use a polynomial number of parameters to represent an exponential number of mappings}.
 
 Note that parts of the state $\vect{x}$ would be reserved and directly connect to the \textbf{input} and \textbf{output} of the AGI system.
 
 %In this minimal architecture there is no \textbf{episodic memory}, but this does not seem to be a bottleneck problem. %\textit{The structure of memory} \cite{YanMemory}.
 
+%\subsection{Constrained vs unconstrained dynamics}
+%\label{sec:unconstrained-dynamics}
+
+%In traditional reinforcement learning (left view), the system chooses an action $\vect{a}$, and the transition function $\vect{F}$ gives the probability of reaching each state $\vect{x}$ given action $\vect{a}$.  In our model (right view), all possible cognitive states are potentially \textbf{reachable} from any other state, and therefore the action $\vect{a}$ coincides with the next state $\vect{x}'$.
+
+%In our formulation, every state is potentially \textbf{reachable} by some logic rule, this corresponds to the picture on the right:
+%\begin{equation}
+%\vcenter{\hbox{\includegraphics[scale=0.6]{Q-learning-2-views.png}}}
+%\end{equation}
+
+%Under this view, the control rule (\ref{eqn:control-rule}) simplifies to:
+%\begin{equation}
+%\dot{\vect{x}} = \vect{f}(\vect{x}, \vect{u}, t) = \vect{u}(t) .
+%\end{equation}
+
+%==================================================================================
+\begin{comment}
+and then the Lagrangian multiplier $\vect{\lambda} \equiv \vect{p}$ follows from (\ref{eqn:def-Hamiltonian}) and (\ref{eqn:variational-calculus}) to be:
+\begin{equation}
+\label{eqn:momentum}
+\vect{\lambda}^* \equiv  \vect{p}^* = \frac{\partial L(t, \vect{x}^*, \vect{u}^*)}{\partial \vect{u}} = \frac{\partial L}{\partial \dot{\vect{x}}}
+\end{equation}
+which recovers the classical definition of \textbf{momemtum}.
+
+Remember, the control-theoretic problem begins with the definition of the Lagrangian $L$ as a function of $(\vect{x}(t), \dot{\vect{x}}(t), t)$, where $\dot{\vect{x}} = \vect{u}$ in our unconstrained case.  In this setup, the concept of ``mass'' is unnecessary, but $L$ must be a function of $\dot{\vect{x}}$ (thus $\vect{u}$), or else the variational problem becomes trivial.  A crucial fact is that $L(\vect{x}(t), \vect{u}(t))$ is the same as $R(\vect{x} | \vect{a})$, ie, the \textbf{reward} obtained at state $\vect{x}$ after performing action $\vect{a}$.
+
+The general procedure is to solve for the control $\vect{u}$ via the variational principle (\ref{eqn:variational-calculus}).  This leads to first solving for $\vect{p}$ via the \textbf{Euler-Lagrange equation}:
+\begin{equation}
+\frac{\partial L}{\partial \vect{x}} = \frac{d}{dt} \frac{\partial L}{\partial \dot{\vect{x}}} = \dot{\vect{p}} 
+\end{equation}
+which is basically Newton's $\vect{F} = m \vect{a}$.  Then we can solve for $\vect{u}$ via (\ref{eqn:momentum}).
+
+\textbf{Symplectic} integrators preserve qualitatively the geometry of Hamiltonian flows. For example, the phase-space trajectory of a pendulum is a closed loop, but some integration methods such as \textbf{Runge-Kutta} may give trajectories that move towards the origin or diverge to $\infty$.
+
+For more advanced theories on \textit{discrete} mechanics and control, \textit{cf} \cite{Marsden2001}, \cite{Lall2006}, \cite{Stern2008}, \textit{etc}.
+
+%With the substitution $\Psi = e^{i U / \hbar}$ into the HJB equation, one can obtain the
+%\emp{Schr\"{o}dinger equation}:
+%\begin{equation}
+%\boxed{\mbox{Schr\"{o}dinger}} \quad
+%i \hbar \frac{\partial \Psi}{\partial t} = \hat{H} \Psi
+%\end{equation}
+%which means techiques in quantum mechanics can be applied to solve our AGI problem.
+
+%==================================================================================
+\end{comment}
+
 \subsection{Comparison with AIXI \cite{Wikipedia-AIXI}}
 
 AIXI's environmental setting is the same as ours, but its agent's internal model is a universal Turing machine, and the optimal action is chosen by maximizing potential rewards over all programs of the UTM.  In our (minimal) model, the UTM is \uline{constrained} to be a neural network, where the NN's \textbf{state} is analogous to the UTM's \textbf{tape}, and the optimal weights (program) are found via Bellman optimality.
+
+\begin{comment}
 
 \subsection{Control-theoretic setting}
 \label{sec:control-theory}
@@ -251,6 +305,8 @@ A \emp{control system} is a dynamical system added with the control vector $\vec
 \dot{\vect{x}}(t) = \vect{f}(\vect{x}(t), {\color{red} \vect{u}(t)}, t) .
 \end{equation}
 The goal of control theory is to find the optimal $\vect{u}^*(t)$ function, such that the system moves from the initial state $\vect{x}_0$ to the terminal state $\vect{x_\bot}$.
+
+\end{comment}
 
 \begin{comment}
 A typical control-theory problem is described by:
@@ -363,6 +419,9 @@ Under the reinforcement learning framework, intelligence is decomposed into \tex
 \end{itemize}
 %==================================================================================
 \end{comment}
+
+%=======================================================================================
+\begin{comment}
 
 \subsection{Lagrangians and Hamiltonians}
 \label{sec:Langrangians-Hamiltonians}
@@ -482,6 +541,9 @@ From the author's limited knowledge of control theory, it seems we currently don
 
 % This correspondence between these 3 theories is explained in detail in Daniel Liberzon's book \cite{Liberzon2012}.  
 
+%==================================================================================
+\end{comment}
+
 \begin{comment}
 %==================================================================================
 An interesting insight from control theory is that our system is a Hamiltonian dynamical system in a broad sense.
@@ -513,49 +575,16 @@ Physically, the unit of $\vect{f}$ is velocity, while the unit of $L$ is energy,
 %==================================================================================
 \end{comment}
 
-\subsection{Constrained vs unconstrained dynamics}
-\label{sec:unconstrained-dynamics}
+\begin{comment}
 
-%In traditional reinforcement learning (left view), the system chooses an action $\vect{a}$, and the transition function $\vect{F}$ gives the probability of reaching each state $\vect{x}$ given action $\vect{a}$.  In our model (right view), all possible cognitive states are potentially \textbf{reachable} from any other state, and therefore the action $\vect{a}$ coincides with the next state $\vect{x}'$.
-In our formulation, every state is potentially \textbf{reachable} by some logic rule, this corresponds to the picture on the right:
-\begin{equation}
-\vcenter{\hbox{\includegraphics[scale=0.6]{Q-learning-2-views.png}}}
-\end{equation}
-Under this view, the control rule (\ref{eqn:control-rule}) simplifies to:
-\begin{equation}
-\dot{\vect{x}} = \vect{f}(\vect{x}, \vect{u}, t) = \vect{u}(t)
-\end{equation}
-and then the Lagrangian multiplier $\vect{\lambda} \equiv \vect{p}$ follows from (\ref{eqn:def-Hamiltonian}) and (\ref{eqn:variational-calculus}) to be:
-\begin{equation}
-\label{eqn:momentum}
-\vect{\lambda}^* \equiv  \vect{p}^* = \frac{\partial L(t, \vect{x}^*, \vect{u}^*)}{\partial \vect{u}} = \frac{\partial L}{\partial \dot{\vect{x}}}
-\end{equation}
-which recovers the classical definition of \textbf{momemtum}.
-
-Remember, the control-theoretic problem begins with the definition of the Lagrangian $L$ as a function of $(\vect{x}(t), \dot{\vect{x}}(t), t)$, where $\dot{\vect{x}} = \vect{u}$ in our unconstrained case.  In this setup, the concept of ``mass'' is unnecessary, but $L$ must be a function of $\dot{\vect{x}}$ (thus $\vect{u}$), or else the variational problem becomes trivial.  A crucial fact is that $L(\vect{x}(t), \vect{u}(t))$ is the same as $R(\vect{x} | \vect{a})$, ie, the \textbf{reward} obtained at state $\vect{x}$ after performing action $\vect{a}$.
-
-The general procedure is to solve for the control $\vect{u}$ via the variational principle (\ref{eqn:variational-calculus}).  This leads to first solving for $\vect{p}$ via the \textbf{Euler-Lagrange equation}:
-\begin{equation}
-\frac{\partial L}{\partial \vect{x}} = \frac{d}{dt} \frac{\partial L}{\partial \dot{\vect{x}}} = \dot{\vect{p}} 
-\end{equation}
-which is basically Newton's $\vect{F} = m \vect{a}$.  Then we can solve for $\vect{u}$ via (\ref{eqn:momentum}).
-
-\textbf{Symplectic} integrators preserve qualitatively the geometry of Hamiltonian flows. For example, the phase-space trajectory of a pendulum is a closed loop, but some integration methods such as \textbf{Runge-Kutta} may give trajectories that move towards the origin or diverge to $\infty$.
-
-For more advanced theories on \textit{discrete} mechanics and control, \textit{cf} \cite{Marsden2001}, \cite{Lall2006}, \cite{Stern2008}, \textit{etc}.
-
-%With the substitution $\Psi = e^{i U / \hbar}$ into the HJB equation, one can obtain the
-%\emp{Schr\"{o}dinger equation}:
-%\begin{equation}
-%\boxed{\mbox{Schr\"{o}dinger}} \quad
-%i \hbar \frac{\partial \Psi}{\partial t} = \hat{H} \Psi
-%\end{equation}
-%which means techiques in quantum mechanics can be applied to solve our AGI problem.
-
-\subsection{Policy gradient}
+\subsection{Policy gradient and Actor-Critic}
 \label{sec:policy-gradient}
 
-In recent years, the \textbf{policy gradient} method and its variants (\textit{eg} Actor-Critic) has made spectacular success in deep reinforcement learning (DRL).  Basically, the \textbf{stochastic} policy $\pi(\vect{a} | \vect{x})$ is expressed as a function parametrized by $\Theta$ and is updated via:
+To solve the RL problem, 2 main options are value-iteration (Q-learning) and policy-iteration.
+
+In Q-learning, we try to learn the action-value function $Q(\vect{a}|\vect{x}) \rightarrow \mathbb{R}$.  The policy is obtained by choosing $\displaystyle \arg \max_{\vect{a}} Q(\vect{a}|\vect{x})$ at each step.  
+
+In recent years, the \textbf{policy gradient} method and its variants (\textit{eg} Actor-Critic \cite{Barto1983} \cite{Sutton1984}) has made spectacular success in deep reinforcement learning (DRL).  Basically, the \textbf{stochastic} policy $\pi(\vect{a} | \vect{x})$ is expressed as a function parametrized by $\Theta$ and is updated via:
 \begin{equation}
 \Theta \stackrel{+}{=} \eta \; \nabla_{\Theta} \widetilde{V}
 \end{equation}
@@ -570,6 +599,8 @@ The gradient of $\widetilde{V}$ can be derived as this formula familiar to pract
 \end{equation}
 Current deep-learning RL literature seems to focus on using the reward (\textit{ie}, Lagrangian), so they have objective functions like the form in (\ref{eqn:policy-gradient}), which is cumbersome as the total value $V$ is itself a summation inside another summation over all trajectories.  Gradient descent $\nabla_{\vect{u}}$ against the Hamiltonian $H$ may be computationally more efficient.
 
+\end{comment}
+
 % \subsection{Discrete mechanics and control theory}
 
 % According to \cite{Marsden2001}, a formulation of discrete mechanics also begins with the definition of the Lagrangian, but instead of defining on the tangent bundle $T\mathbb{X}$, it is defined on $\mathbb{X} \times \mathbb{X}$, where $\mathbb{X}$ is the configuration manifold, and the discrete velocity $\dot{\vect{x}}$ is seen as $\vect{x}_{t+1} - \vect{x}_t$.
@@ -579,6 +610,9 @@ Current deep-learning RL literature seems to focus on using the reward (\textit{
 %D_2 L_d (\vect{x}_{t - 1}, \vect{x}_t, h) + D_1 L_d (\vect{x}_t, \vect{x}_{t + 1}, h) = 0
 %\end{equation}
 %where $D_1$ and $D_2$ denote partial differentiation w.r.t. the first and second arguments of $L_d$ (the discrete Lagrangian), respectively, and $h$ is a time step.  The paper \cite{Stern2008} offers a way to solve for the trajectory of $\vect{x}_t, \vect{p}_t$.  We have not worked out the details of this solution, but we note that the use of \textbf{symplectic} integrators is reputed to preserve qualitatively the geometry of Hamiltonian flows.
+
+%=======================================================================================
+\begin{comment}
 
 \subsection{Connection with quantum mechanics}
 \label{sec:quantum}
@@ -602,6 +636,9 @@ This implies that the Schr\"{o}dinger equation is an alternative way of expressi
 
 %All these ``physical'' ideas flow automatically from our definition of \textbf{rewards}, without the need to introduce them artificially.  But these ideas seem not immediately useful to our project, unless we are to explore \textbf{continuous-time} models.
 
+%==================================================================================
+\end{comment}
+
 %\subsection{Prior art: other cognitive architectures}
 
 %The minimalist architecture based on reinforcement learning has been proposed by Itimar Ariel from Israel, in 2012 \cite{Arel2012}, and I also independently proposed in 2016 (precursor of this paper).  The prestigious researcher of signal processing, Simon Haykin, recently also used the ``RL + memory'' design, cf. his 2012 book \textit{Cognitive dynamic systems} \cite{Haykin2012}. Vladimir Anashin in the 1990's also proposed this kind of cognitive architecture \cite{Anashin2009}.  There may exist more precedents, eg: \cite{Ivancevic2006}.
@@ -610,7 +647,8 @@ This implies that the Schr\"{o}dinger equation is an alternative way of expressi
 
 \subsection{Logic is needed as an inductive bias}
 
-The transition function $\vect{F}$ appearing in (\ref{eqn0}) is ``free'' without further restrictions.  The learning of $\vect{F}$ may be slow without further \textbf{induction bias}, \textit{cf} the ``no free lunch'' theorem \cite{Wikipedia-no-free-lunch}.  But we know that the transition function is analogous to $\vdash$, the logic consequence or entailment operator.  So we want to impose this logic structure on $\vect{F}$.
+% The transition function $\vect{F}$ appearing in (\ref{eqn0}) is ``free'' without further restrictions.  The learning of $\vect{F}$ may be slow without further \textbf{induction bias}, \textit{cf} the ``no free lunch'' theorem \cite{Wikipedia-no-free-lunch}.  
+We know that the transition function $\vect{F}$ is analogous to $\vdash$, the logic consequence or entailment operator.  So we want to impose this logic structure on $\vect{F}$.
 
 By logic structure we mean that $\vect{F}$ would act like a \textbf{knowledge base} $\KB$ containing a large number of logic \textbf{rules}, as in the setting of classical logic-based AI.
 
@@ -695,6 +733,7 @@ Note that we don't just want the action itself, we need the \textbf{probabilitie
 Besides the intrinsic structure of a logic, the AI system has a structure in the sense that it must perform the following operations iteratively, in an endless loop:
 \begin{equation}
 \vcenter{\hbox{\includegraphics[scale=0.5]{classical-AI-architecture.png}}}
+\label{fig:LBAI}
 \end{equation}
 \begin{itemize}
 	\item \textbf{Matching} --- the $\KB$ of rules is matched against the current state $\vect{x}$, resulting in a (stochastically selected, \textit{eg} based on $\epsilon$-greedy) rule:
@@ -720,9 +759,11 @@ Besides the intrinsic structure of a logic, the AI system has a structure in the
 \end{itemize}
 All these operations are represented by functions parametrized by some variables $\Theta$ and they must be made \textit{differentiable} for gradient descent.
 
+\begin{comment}
+
 \subsection{Topological / metric structure of the domain $\mathbb{X}$}
 
-In order to apply control theory, we need to calculate entities such as $\dot{\vect{x}}$ and $\displaystyle \frac{\partial L}{\partial \dot{\vect{x}}}$.  For this, the domain $\mathbb{X}$ needs to have some kind of differentiable structure.  So we proceed as follows:
+In order to apply reinforcement learning, we need to calculate the gradient $\displaystyle \nabla_{\Theta} V(\vect{x}(t))$.  For this, the domain $\mathbb{X}$ needs to have some kind of differentiable structure.  So we proceed as follows:
 \begin{itemize}
 	\item Time steps are discrete.  Using continuous time increases the computational burden seemingly without any benefits.
 	\item Atomic concepts $\mathsf{C}$'s are embedded in a vector space, thanks to the technique of \textbf{Word2Vec} \cite{Word2Vec}.  We assume that such a ``concept embedding'' is sensible without further explaining its justification.
@@ -742,7 +783,10 @@ In order to apply control theory, we need to calculate entities such as $\dot{\v
 	\item The objective function $J$ rewards correct answers while penalizing logic path lengths, thus forcing the system to acquire intelligence. This knowledge is represented in the function $\vect{F}$ parametrized by $\Theta$.  It is intuitively obvious that $\vect{F}$ contains an implicit approximation of Kolmogorov complexity.
 \end{itemize}
 
-\subsection{Commutative structure of logic conjunctions}
+\end{comment}
+
+
+\subsection{Commutativity of logic conjunctions}
 \label{sec:commutative-structure}
 
 One basic characteristic of (classical) logic is that the conjuction $\wedge$ is \textbf{commutative}:
@@ -753,9 +797,11 @@ This restriction may significantly reduce the size of the search space.  If we u
 
 I have considered a few solutions to this problem, including an algebraic trick to build ``symmetric'' neural networks (but it suffers from combinatorial inefficiency), and using Fourier transform to get a ``spectral'' representation of the state, which remained rather vague and did not materialize.
 
-As of this writing I have settled on the ``carousel'' solution:  All the propositions in working memory will enter into a loop, and the reasoning operator \uline{acts on a hidden state $\vect{H} = {\color{green}\bullet}$ and one proposition $\mathsf{P}_i = {\color{red}\bullet}$ at a time}:
+As of this writing
+\footnote{Convolutional NNs are only \textit{translation}-invariant.  The Transformer \cite{Vaswani2017} architecture is \textit{equivariant} under permutations (meaning permuted inputs give permuted outputs), but it implicitly contains a recurrence similar to ours.}
+I have settled on the ``carousel'' solution:  All the propositions in working memory will enter into a loop, and the reasoning operator \uline{acts on a hidden state $\vect{H} = {\color{green}\bullet}$ and one proposition $\mathsf{P}_i = {\color{red}\bullet}$ at a time}:
 \begin{equation}
-\label{eqn:carousel-diagram}
+\label{fig:carousel}
 \vcenter{\hbox{\includegraphics[scale=0.5]{carousel.png}}}
 \end{equation}
 
@@ -763,11 +809,12 @@ Notice that the working memory $\vect{x}$ is itself a hidden state, so $\vect{H}
 
 This architecture has the advantage of being simple and may be biologically plausible (the human brain's working memory).  
 
-I believe in the maxim: \textit{Whatever can be done in time can be done in space}.  The diagram (\ref{eqn:carousel-diagram}), when unfolded in time, can be expressed in this functional form:
+I believe in the maxim: \textit{Whatever can be done in time can be done in space}.  The diagram (\ref{fig:carousel}), when unfolded in time, can be expressed in this functional form:
 \begin{equation}
-F_{\mathrm{sym}}(\mathsf{P}_0, ..., \mathsf{P}_n) = f(\mathsf{P}_n, f(\mathsf{P}_{n-1}, f(..., f(\mathsf{P}_0, \emptyset)))) .
+\vect{F}_{\mathrm{sym}}(\mathsf{P}_0, ..., \mathsf{P}_k) = \vect{f}(\mathsf{P}_k, \vect{f}(\mathsf{P}_{k-1}, \vect{f}(..., \vect{f}(\mathsf{P}_0, \vec{\emptyset})))) .
 \end{equation}
-It may be possible to solve the functional equation to eliminate the recurrent structure.
+%It may be possible to solve the functional equation to eliminate the recurrent structure.   
+$\vect{F}_{\mathrm{sym}}$ means that the function is invariant under the action of the symmetric group $\mathfrak{S}_k$ over propositions.  Such symmetric NNs have been proposed in \cite{Gens2014} and \cite{Bie2019}.
 
 \begin{comment}
 A simple fact:  If $\vect{F}(\vect{p},\vect{q})$ is any function, then
@@ -817,31 +864,47 @@ Notice that our NN would \textit{input} from the spectral representation and \te
 With this approach, the geometric shapes of (\ref{eqn:cylindric-shapes}) and (\ref{eqn:diagonal-shapes}) would be distorted in very complicated ways.  It remains to be verified whether NNs can learn this task effectively.
 \end{comment}
 
-\subsection{Probability distribution over actions}
-\label{sec:Gaussian-kernels}
+\subsection{Logic actions}
+\label{sec:logic-actions}
 
-All the ``knowledge'' of the agent is contained in the \textbf{policy} function $\pi$:
-\begin{eqnarray}
-\pi: \mathbb{X} \times \mathbb{A} &\rightarrow& [0,1] \in \mathbb{R} \nonumber \\
-(\vect{x},\vect{a}) &\mapsto& P(\vect{a} \;|\; \vect{x})
-\end{eqnarray}
-where $\mathbb{X}$ = state space, $\mathbb{A}$ = action space, $P(\cdot)$ = conditional probability.
+The output of a logic rule is a proposition $\delta \vect{x} \in \mathbb{P}$, the space of propositions.  This is a continuous space (due to the use of Word2Vec embeddings).
 
-In reinforcement learning in general, the function space of $\pi$ is of shape:
-\begin{equation}
-\pi : \mathbb{X} \rightarrow \mathbb{R} (\mathbb{A}) = \mathbb{R}^{\mathbb{A}} .
-\end{equation}
-For example, if $\mathbb{A}$ has finitely 10 discrete actions, $\mathbb{R}(\mathbb{A})$ would be $\mathbb{R}^{10}$.  For logic-based agents, $\mathbb{A}$ would be the set of all logic rules, thus very large.  It would be worse if $\mathbb{A}$ is continuously-valued, as when we embed logic rules in vector space.
+From the perspective of reinforcement learning, we are performing an action $\vect{a}$ (the logic rule) from the current state $\vect{x}$.  The neural network in (\ref{fig:carousel}) is a parametrized function $\vect{F}_{\Theta}$ that accepts $\vect{x}$ and outputs $\delta \vect{x}$.  We want to \textbf{gradient-descent} on $\Theta$ to get the optimal set of actions, ie, a \textbf{policy}.
 
-So we may use \textbf{Gaussian kernels} (\textit{ie}, radial basis functions) to approximate $\pi(\vect{a} | \vect{x})$:
-\begin{equation}
-P(\vect{a} | \vect{x}) \approx \hat{P}(\vect{a} | \vect{x}) := \frac{1}{N \sigma} \sum_{i = 1}^{N} \Phi \left( \frac{\vect{a} - \vect{a}_i}{\sigma} \right)
-\end{equation}
-where $\Phi(\vect{\xi})$ is the Gaussian kernel $\frac{1}{\sqrt{2 \pi}} e^{- \vect{\xi}^2 / 2}$. 
+To solve the RL problem, 2 main options are: \textbf{value-iteration} (\textit{eg} Q-learning) and \textbf{policy-iteration}.
 
-For each state $\vect{x}$, our NN outputs a probabilistic \textit{choice} of $c$ actions.  So we only need to maintain $c$ ``peaks'' given by Gaussian kernels.  Each peak is determined by its mean $\vect{a}_i$ and variance $\sigma$.  Both parameters are to be learned.
+In \textbf{Q-learning}, we try to learn the action-value function $Q(\vect{a}|\vect{x}) \rightarrow \mathbb{R}$.  The policy is obtained by choosing $\displaystyle \arg \max_{\vect{a}} Q(\vect{a}|\vect{x})$ at each step.  In our logic setting, the action space $\mathbb{A} \ni \vect{a}$ is continuous.  As is well known, if we use an NN to represent $Q(\vect{a}|\vect{x})$, the evaluation of $\displaystyle \arg \max_{\vect{a}}$ would be rather awkward, which is why $Q$-learning is widely seen as ill-suited for continuous actions.
 
-An action $\vect{a} \in \mathbb{A}$ is a logic rule that takes the state $\vect{x}$ to a proposition $\mathsf{P}$, \textit{ie}, $\mathbb{A} = \mathbb{X} \rightarrow \mathbb{P}$.  When a rule is applied to a state, it becomes a proposition, so the space of \textit{applied} actions $\mathbb{A}(\vect{x})$ in our case is equivalent to $\mathbb{P}$.
+It is much easier for the NN to directly output (a fixed number of) stochastic actions, thus avoiding the \textit{curse of dimensionality}.  Such a function is a \textbf{stochastic policy} $\pi(\vect{a}|\vect{x})$.
+
+%All the ``knowledge'' of our agent would be contained in the policy function $\pi$:
+%\begin{eqnarray}
+%\pi: \mathbb{X} \times \mathbb{A} &\rightarrow& [0,1] \in \mathbb{R} \nonumber \\
+%(\vect{x},\vect{a}) &\mapsto& P(\vect{a} \;|\; \vect{x})
+%\end{eqnarray}
+%where $\mathbb{X}$ = state space, $\mathbb{A}$ = action space, $P(\cdot)$ = conditional probability.
+
+%In reinforcement learning in general, the function space of $\pi$ is of shape:
+%\begin{equation}
+%\pi : \mathbb{X} \rightarrow \mathbb{R} (\mathbb{A}) = \mathbb{R}^{\mathbb{A}} .
+%\end{equation}
+%For example, if $\mathbb{A}$ has finitely 10 discrete actions, $\mathbb{R}(\mathbb{A})$ would be $\mathbb{R}^{10}$.  For logic-based agents, $\mathbb{A}$ would be the set of all logic rules, thus very large.  It would be worse if $\mathbb{A}$ is continuously-valued, as we embed propositions in vector space.
+
+In other words, we can use a fixed number of Gaussian kernels (radial basis functions) to approximate the conditional probability distribution of $\pi$ over $\mathbb{A}$.  
+%So we may use \textbf{Gaussian kernels} (\textit{ie}, radial basis functions) to approximate $\pi(\vect{a} | \vect{x})$:
+%\begin{equation}
+%P(\vect{a} | \vect{x}) \approx \hat{P}(\vect{a} | \vect{x}) := \frac{1}{N \sigma} \sum_{i = 1}^{N} \Phi \left( \frac{\vect{a} - \vect{a}_i}{\sigma} \right)
+%\end{equation}
+%where $\Phi(\vect{\xi})$ is the Gaussian kernel $\frac{1}{\sqrt{2 \pi}} e^{- \vect{\xi}^2 / 2}$. 
+For each state $\vect{x}$, our NN outputs a probabilistic \textit{choice} of $c$ actions.  So we only need to maintain $c$ ``peaks'' given by Gaussian kernels.  Each peak is determined by its mean $\delta \vect{x}_i$ and variance $\sigma$.  Both parameters are to be learned.
+
+The size of the FFNN in (\ref{fig:carousel}) seems well within the capacity of current hardware.
+
+\begin{comment}
+\subsection{Size of the neural network}
+
+% An action $\vect{a} \in \mathbb{A}$ is a logic rule that takes the state $\vect{x}$ to a proposition $\mathsf{P}$, \textit{ie}, $\mathbb{A} = \mathbb{X} \rightarrow \mathbb{P}$.  
+When a rule is applied to a state, it becomes a proposition, so the space of \textit{applied} actions $\mathbb{A}(\vect{x})$ in our case is equivalent to $\mathbb{P}$.
 
 % Also, after our ``Fourier trick'', $\mathbb{X} = \mathbb{R}^{3dk}$ becomes $\widehat{\mathbb{X}} = \mathbb{R}^{3d}$ as the number of conjunctions $k$ is absorbed into $\widehat{\mathbb{X}}$.
 
@@ -858,6 +921,11 @@ Each applied action $\vect{a}(\vect{x}) \in \mathbb{P}$ is of the form $\Atom_1 
 \quad = \quad \mathbb{R}^{3d + h} \rightarrow \mathbb{R}^{(3d + 1)c + h} .
 \end{eqnarray}
 Judging from the dimensions, such a neural network is well feasible with current hardware.
+\end{comment}
+
+\subsection{Forgetting uninteresting propositions}
+
+In (\ref{fig:LBAI}) and (\ref{fig:carousel}), some propositions need to be forgotten based on some measure of \textbf{interestingness}.  One way to measure interestingness is through the value function of a state, $V(\vect{x})$, where $\vect{x}$ consists of propositions $\vect{p}_i$.  Suppose that $V(\vect{x})$ is learned by a neural network, then it may be possible to extract (backwards) the weight by which a proposition $\vect{p}_i$ contributed to the value $V$.  For this to work, the function $V(\vect{x})$ should be deliberately \textbf{regularized} so that it would \textit{generalize broadly}.  Notice that $V(\vect{x})$ would also be \textit{symmetric} in the $\vect{p}_i$'s  so it would have the architecture of (\ref{fig:carousel}).  $V(\vect{x})$ is very similar to $Q(\vect{a}|\vect{x})$ but should be learned separately because they serve different purposes.
 
 % \subsection{Algorithm}
 
@@ -888,7 +956,7 @@ Judging from the dimensions, such a neural network is well feasible with current
 %\end{itemize}
 
 \begin{itemize}
-	\item Eliminate the recurrent structure of the ``carousel''
+	\item Replace the recurrent NN architecture with symmetric NNs
 	\item In this minimal architecture there is no \textbf{episodic memory} or \textbf{meta-reasoning} ability, but these can be added to the architecture and are not bottleneck problems.  For example, meta-reasoning can be added via turning the input to introspection.
 	 %\textit{The structure of memory} \cite{YanMemory}.
 	\item Implementation of the system is currently under way.
@@ -896,7 +964,7 @@ Judging from the dimensions, such a neural network is well feasible with current
 
 \section*{Acknowledgements}
 
-I would like to thank the following people for invaluable discussions over many years:  Ben Goertzel, Pei Wang (王培), Abram Demski, Russell Wallace, SeH, Juan Carlos Kuri Pinto, Jonathan Yan, Xiao Da (肖达), Dmitri Tkatch, and others.  Also thanks to all the university professors and researchers in Hong Kong (especially in the math departments, and their guests), strangers who taught me things on Zhihu.com (知乎), Quora.com, and StackOverflow.
+I would like to thank the following people for invaluable discussions over many years:  Ben Goertzel, Pei Wang (王培), Abram Demski, Russell Wallace, SeH, Jonathan Yan, and others.  Also thanks to all the university professors and researchers in Hong Kong (especially in the math departments, and their guests), strangers who taught me things on Zhihu.com (知乎), Quora.com, and StackOverflow.
 
 \bibliographystyle{plain} % or number or aaai ...
 \bibliography{../AGI-book}
