@@ -58,10 +58,11 @@
 
 \usepackage{graphicx} % Allows including images
 \usepackage{verbatim} % comments
-\usepackage{tikz-cd}  % commutative diagrams
-\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
-\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
-\usepackage{amssymb}  % \leftrightharpoons
+% \usepackage{tikz-cd}  % commutative diagrams
+% \newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
+% \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+% \usepackage{amssymb}  % \leftrightharpoons
+\usepackage{wasysym} % frownie face
 
 \newcommand{\vect}[1]{\boldsymbol{#1}}
 \newcommand*\sigmoid{\vcenter{\hbox{\includegraphics{sigmoid.png}}}}
@@ -305,9 +306,10 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 \begin{frame}
 \frametitle{Turing 机}
-	Turing 机 = 有限自动机 + 无限长 的 读／写\textbf{磁带}
+	Turing 机 = 有限自动机 + 无限长 的 \textbf{记忆磁带} （每个 state 可以 读／写一个 字符）\\
 	\begin{equation}
-	\vcenter{\hbox{\includegraphics[scale=0.5]{../AGI-16/Turing-machine.png}}}
+	\label{fig:Turing-machine}
+	\includegraphics[scale=0.6]{../AGI-16/Turing-machine.png}
 	\end{equation}
 \end{frame}
 
@@ -326,13 +328,17 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 	\item 他考虑过 神经网络 作为学习机器
 	\item 也考虑过 进化算法 (evolutionary algorithms)
 	\item 而当时 1940s 还未有电脑 --- 电脑是他发明的！
-	\item {\color{red}他求出所有\textbf{可计算性}的形式，从而将AI的问题 \textbf{限制} 在一框框内} 
+	\item {\color{red}他求出所有\textbf{可计算函数}的形式，从而将AI的问题 \textbf{限制} 在一框框内} 
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{回路 神经网络}
-
+	其实一个 RNN 可以看成类似 (\ref{fig:Turing-machine}) 的结构：
+	\begin{equation}
+	\includegraphics[scale=0.6]{RNN-as-Turing-machine.png}
+	\end{equation}
+	所以 RNN 也是一种 Turing 机
 \end{frame}
 
 \section[经典逻辑 AI 系统 的基本结构]{经典逻辑 AI 系统 的 \newline 基本结构}
@@ -350,21 +356,74 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 \begin{frame}
 \frametitle{逻辑 的 种类繁多}
-\includegraphics[scale=0.4]{../2018/world-of-logical-structures.png}
+\Wider[2em]{
+\includegraphics[scale=0.45]{../2018/world-of-logical-structures.png}}
 \end{frame}
 
-%\subsection{Plan A: co-operative co-evolution (COCO)}
+\begin{frame}
+\frametitle{命题逻辑 vs 谓词逻辑}
+\begin{itemize}
+	\item 最重要是 搞清 \textbf{命题逻辑} 和 一阶 \textbf{谓词逻辑} 的区别
+	\item 命题逻辑：$P_1 =$ 「昨天下雨」 \\ \hspace{3cm} $P_2 =$「今天下雨」\\
+		命题 没有 \textbf{内部结构}
+	\item 谓词逻辑：$P_3 =$ 下雨(北京,前天)
+	\item 谓词 有 \textbf{代入}(substitution) 的复杂性
+\end{itemize}
+\end{frame}
 
-%\subsection{Plan B: hybrid neural + graph}
+\begin{frame}
+\frametitle{经典 逻辑 AI 架构}
+这个架构很重要，就像 蒸汽机 时代 的 Carnot cycle（卡诺循环）：
+\begin{equation}
+\label{fig:LBAI-architecture}
+\vcenter{\hbox{\includegraphics[scale=0.5]{LBAI-architecture.png}}}
+\end{equation}
+\end{frame}
 
-%\subsection{Plan C: geometric models}
+\begin{frame}
+\frametitle{何谓 logic rule？}
+\begin{itemize}
+	\item 举例： 爱一个人 但他不爱你 则失恋
+	\begin{equation}
+	\heartsuit(x,y) \wedge \neg \heartsuit(y,x) \Rightarrow \frownie{}(x)
+	\end{equation}
+	\item 这是一条 rule，变量 $x,y$ 需要 \textbf{代入} 适当的个体，例如 $\{x / \mbox{John}, y / \mbox{Mary} \}$
+	\item 寻找 代入 的算法叫 \textbf{matching}  或 \textbf{unify}
+\end{itemize}
+\end{frame}
 
-%\subsection{Plan D: ``quantum'' Hilbert-space operators}
+\begin{frame}
+\frametitle{SOAR cognitive architecture}
+\Wider[1em]{
+\begin{itemize}
+	\item SOAR 是一个著名的 \textbf{认知架构}
+	\item 基本上 它根据 working memory 寻找 可以\textbf{发动}的 rules，如图(\ref{fig:LBAI-architecture})
+	\item 它用 \textbf{Rete} 算法 快速地搜寻 可用的 rules，这是经典 AI 里的重要算法（\textit{rete} 在拉丁文的意思是「网状」）
+	\item 很多中国AI后起之秀，只熟悉当下最流行的算法，稍为扯远一点就不懂，视野不够广阔
+\end{itemize}
+}
+\end{frame}
 
-%\section{}
-%\frame{\sectionpage}
+\begin{frame}
+\frametitle{我的理论}
+\Wider[2em]{
+\begin{itemize}
+	\item 在我的理论里，rules 和 matching 机制，都 \textbf{纳入} 到 神经网路 里
+	\item 神经网络 这件武器，它的优点是 可以 逼近 很复杂的 mappings，它是现时最强的 机器学习 方法
+	\item 我将 逻辑结构 放松 (relax)，务求做到足够的 归纳偏好 即可
+	\item 这理论中最重要的元件，是 symmetric 神经网络
+\end{itemize}
+}
+\end{frame}
 
-%\cite{Jacobs1999}
+\begin{frame}
+\frametitle{Symmetric 神经网络}
+\Wider[2em]{
+\begin{itemize}
+	\item 
+\end{itemize}
+}
+\end{frame}
 
 \begin{comment}
 
