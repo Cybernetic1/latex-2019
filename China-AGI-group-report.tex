@@ -1,5 +1,5 @@
 \documentclass[17pt]{beamer}
-\usepackage{xeCJK}
+\usepackage[CJKspace]{xeCJK}
 %\usepackage{newtxtext,newtxmath}	% use Times Roman font
 %\usefonttheme{serif}
 \usefonttheme{professionalfonts}
@@ -44,7 +44,7 @@
 %\usecolortheme{dove}
 %\usecolortheme{fly}
 %\usecolortheme{lily}
-%\usecolortheme{orchid}
+\usecolortheme{orchid}
 %\usecolortheme{rose}
 %\usecolortheme{seagull}
 %\usecolortheme{seahorse}
@@ -55,6 +55,16 @@
 %\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
 \setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
 }
+
+\setbeamertemplate{section page}
+{
+	\begingroup
+	\begin{beamercolorbox}[sep=12pt,center]{section title}
+		\usebeamerfont{section title}\insertsection\par
+	\end{beamercolorbox}
+	\endgroup
+}
+
 
 \usepackage{graphicx} % Allows including images
 \usepackage{verbatim} % comments
@@ -126,10 +136,67 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 %\part{title}
 
 \section{什么是 inductive bias？「没有免费午餐」}
+\frame{\sectionpage}
 
+\begin{frame}
+\frametitle{机器学习 的 目的}
+\begin{itemize}
+	\item 机器学习 的 目的，是在某些「学习机器」的 \textbf{空间} 中，搜寻 符合要求的某些机器
+	\item 例如在所有给定大小的神经网络中，搜寻符合 \textbf{目标函数} 的那些神经网络的 weights
+\end{itemize}
+\end{frame}
 
+\begin{frame}
+\frametitle{AI Winter}
+\begin{itemize}
+	\item 一般来说，AI 的 樽颈问题 就是 \textbf{搜寻空间} 太大，导致 学习 太慢
+	\item 历史上「AI 寒冬」出现的原因，是因为 \textbf{基於逻辑} 的学习方法，导致 搜寻空间 的 组合数量爆炸，而没有很好的 heuristic（算法窍门）
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Inductive bias (归纳偏好)}
+\begin{itemize}
+	\item 每种学习方法都有它的 \textbf{归纳偏好}
+\end{itemize}
+\end{frame}
 
 \section{神经网络 的 力量 来自什么？}
+
+\begin{frame}
+\frametitle{一粒神经元}
+\begin{itemize}
+	\item 一粒神经元 就是 一个 dot product 接著 一个 非线性函数：
+	\begin{equation}
+	\sigmoid \langle \vect{x}, \vect{w} \rangle
+	\end{equation}	
+	\item 这非线性函数 可以有很多种，例如：
+	\begin{equation}
+	\sigmoid (\xi) = \frac{1}{1 + e^{- \xi}}
+	\end{equation}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{一层神经元}
+\begin{itemize}
+	\item 一层神经元 是 一个 matrix multiplication：
+	\begin{equation}
+	\sigmoid( \; W \cdot \vect{x} \; )
+	\end{equation}	
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{一个神经网络}
+\begin{itemize}
+	\item 一个神经网络 是很多 层 的函数 composition $f \circ f$：
+	\begin{equation}
+	[ \sigmoid W ]^L \; \vect{x}
+	\end{equation}	
+\end{itemize}
+\end{frame}
+
 
 \begin{frame}
 \frametitle{Neural network}
@@ -166,58 +233,13 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \section{Turing 机 与 逻辑 的 宇宙性}
 
 \begin{frame}
-\frametitle{Intelligent agent}
-\begin{itemize}
-	\item The state vector $\vect{x}_t$ of the neural network traces out a \textbf{trajectory} in configuration space, which is analogous to a ``maze'' with \textbf{rewards} ({\color{red} $\bullet$}) inside it:
-	\begin{equation}
-	\vcenter{\hbox{\includegraphics[scale=0.7]{maze-trajectory.png}}}
-	\end{equation}
-
-	\item We regard the state $\vect{x}_t$ as the \textbf{mental state} of an intelligent agent, the rewards are given externally by a teacher to reward intelligent behavior.
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Hamiltonian control}
-\begin{itemize}
-	\item \textbf{Lagrangian} $L(\vec{x})$ = \textit{instantaneous} reward at state $x$:
-	\begin{equation}
-	J = \int L(\vec{x}) dt
-	\end{equation}
-	\item The \textbf{Hamiltonian} is defined as:
-	\begin{equation}
-	H = L + \frac{\partial J}{\partial \vec{x}} \vec{f}
-	\end{equation}
-	\item \textbf{Pontryagin maximum principle}:
-	\begin{equation}
-	\label{Pontryagin-max-principle}
-	H^* = \inf_u H \quad \mbox{or} \quad \nabla_{\vec{u}} H^* := \frac{\partial H^*}{\partial \vec{u}} = 0
-	\end{equation}
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Optimization over logic formulas}
-\begin{itemize}
-	\item The operation of the system is as follows:
-	\begin{equation}
-	\vcenter{\hbox{\includegraphics[scale=0.5]{abstract-dynamic-programming.png}}}
-	\end{equation}
-	\item $\vec{u}$ coincides with $\vec{f}$, its purpose is to \textbf{rewrite} $\vec{x}$:
-	\begin{equation}
-	\vec{f}(\vec{x},\vec{u}) \equiv \vec{u}(\vec{x})
-	\end{equation}
-\end{itemize}
-\end{frame}
-
-\begin{frame}
 \frametitle{Optimization over logic formulas (2)}
 \begin{itemize}
 	\item For example, the logic rule ```love and not loved back $\Rightarrow$ unhappy'' performs the rewriting of the following sub-graph:
 	\begin{equation}
-	\vcenter{\hbox{\includegraphics[scale=0.4]{heartbreak-precond.png}}}
+%	\vcenter{\hbox{\includegraphics[scale=0.4]{heartbreak-precond.png}}}
 	\quad \mapsto \quad
-	\vcenter{\hbox{\includegraphics[scale=0.4]{heartbreak-postcond.png}}}
+%	\vcenter{\hbox{\includegraphics[scale=0.4]{heartbreak-postcond.png}}}
 	\end{equation}
 	\item This is the \textbf{state transition} $\vec{u}: \vec{x} \mapsto \vec{x}'$, which can also be regarded as the \textbf{logical inference} $\vec{u}: \vec{v} \vdash \vec{x}'$, where $\vec{u}$ is the rewriting function or logic rule.
 \end{itemize}
@@ -285,7 +307,7 @@ via \textit{direct} substitution of equal terms.
 \end{comment}
 
 \begin{frame}
-We're looking for Tensorflow developers to implement a prototype.
+We're looking for developers to implement a prototype.
 
 \vspace*{1cm}
 \Large{\centerline{Thank you}}
