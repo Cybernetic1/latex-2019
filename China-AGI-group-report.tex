@@ -44,7 +44,7 @@
 %\usecolortheme{dove}
 %\usecolortheme{fly}
 %\usecolortheme{lily}
-\usecolortheme{orchid}
+%\usecolortheme{orchid}
 %\usecolortheme{rose}
 %\usecolortheme{seagull}
 %\usecolortheme{seahorse}
@@ -56,14 +56,14 @@
 \setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
 }
 
-\setbeamertemplate{section page}
-{
-	\begingroup
-	\begin{beamercolorbox}[sep=12pt,center]{section title}
-		\usebeamerfont{section title}\insertsection\par
-	\end{beamercolorbox}
-	\endgroup
-}
+%\setbeamertemplate{section page}
+%{
+%	\begingroup
+%	\begin{beamercolorbox}[sep=12pt,center]{section title}
+%		\usebeamerfont{section title}\insertsection\par
+%	\end{beamercolorbox}
+%	\endgroup
+%}
 
 
 \usepackage{graphicx} % Allows including images
@@ -135,7 +135,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 %\part{title}
 
-\section{什么是 inductive bias？「没有免费午餐」}
+\section{什么是 归纳偏好？ \\「没有免费午餐」}
 \frame{\sectionpage}
 
 \begin{frame}
@@ -158,13 +158,18 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \frametitle{Inductive bias (归纳偏好)}
 \begin{itemize}
 	\item 每种学习方法都有它的 \textbf{归纳偏好}
+	\item 换言之，在 搜寻空间 里预先 划分 某些部分 是不会搜索的
+	\item 所以 偏好 令学习更快
+	\item 但如果 偏好 太强，连 答案 所在的空间也删除了 \\
+	``Throw the baby out with the water''
 \end{itemize}
 \end{frame}
 
-\section{神经网络 的 力量 来自什么？}
+\section{神经网络 的 力量 \\来自什么？}
+\frame{\sectionpage}
 
 \begin{frame}
-\frametitle{一粒神经元}
+\frametitle{神经网络的结构}
 \begin{itemize}
 	\item 一粒神经元 就是 一个 dot product 接著 一个 非线性函数：
 	\begin{equation}
@@ -178,70 +183,113 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \end{frame}
 
 \begin{frame}
-\frametitle{一层神经元}
+\frametitle{神经网络的结构}
 \begin{itemize}
-	\item 一层神经元 是 一个 matrix multiplication：
+	\item 一层神经元 是 一个 矩阵 乘法：
 	\begin{equation}
 	\sigmoid( \; W \cdot \vect{x} \; )
 	\end{equation}	
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{一个神经网络}
-\begin{itemize}
-	\item 一个神经网络 是很多 层 的函数 composition $f \circ f$：
+	\item 一个神经网络 是很多 层 的函数 composition $(f \circ f)$：
 	\begin{equation}
 	[ \sigmoid W ]^L \; \vect{x}
 	\end{equation}	
 \end{itemize}
 \end{frame}
 
-
 \begin{frame}
-\frametitle{Neural network}
+\frametitle{神经网络 的 特性}
 \begin{itemize}
-	\item A neural network is a generic function with a large number of \textbf{parameters} called \textbf{weights}:
-	\begin{eqnarray}
-	& \mbox{\footnotesize \textbf{weight} matrix } \tikzmark{weightMatrix} \mbox{\footnotesize for each layer} \quad \quad \mbox{\footnotesize total \# of layers} \tikzmark{numLayers} \nonumber \\
-	\nonumber \\
-	& \vect{x}_{t+1} = \vect{F}(\vect{x}) = \sigmoid(W_1 \tikzmark{wa} \sigmoid(W_2 \tikzmark{wb} ... \sigmoid( W_L \tikzmark{wc} \tikzmark{L} \; \vect{x} )))
-	\begin{tikzpicture}[overlay,remember picture]
-	\draw (weightMatrix.center) +(17pt,-5pt) -- ([shift={(-10pt,10pt)}]wa.center);
-	\draw (weightMatrix.center) +(21pt,-5pt) -- ([shift={(-10pt,10pt)}]wb.center);
-	\draw (weightMatrix.center) +(33pt,-5pt) -- ([shift={(-10pt,10pt)}]wc.center);
-	\draw (numLayers.center) +(-20pt,-5pt) -- ([shift={(-2pt,6pt)}]L.center);
-	\end{tikzpicture}
-	\end{eqnarray}
-
-	\item $\sigmoid$ is the \textbf{sigmoid} function applied \textit{component-wise} to the vector $\vect{x}$:
-	\begin{equation}
-	\sigmoid (x) = \frac{1}{1 + e^{-x}}
-	\end{equation}
-	
-	\item Neural networks are \textbf{parametrized} (vector-valued) \textbf{functions}, and they are \textbf{universal function approximators}.
+	\item 神经网络 是一个有很多 \textbf{参数} 的 函数
+	\item 它是 \textbf{万能的 函数 近似器} [Cybenko 1989]
+	\item 定理 的 证明 可追溯到 Weirstrauss 定理，即: 任意连续函数 可以用 多项式 近似
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{``Unreasonable'' effectiveness of neural networks}
+\frametitle{神经网络 的威力来自「深度」}
 \begin{itemize}
-	\item If $\sigmoid$ is replaced by polynomial, degree of the composite function increases \textbf{exponentially} as \# layers increase
+	\item 例如，假设 $\sigmoid$ 是 3次多项式
+	\item 每增加一层 神经网络，等如
+	\begin{equation}
+	 (\mbox{多项式} \circ \mbox{多项式})
+	\end{equation}
+	\item 故，总体 的 多项式 次数 = $3^L$
+	\item 换句话说 整体次数 呈 \textbf{指数式增长}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{神经网络 的威力来自「深度」}
+\begin{itemize}
+	\item \textbf{代数基本定理}：多项式 \textbf{次数} = 曲线 跨过 $x=0$ 多少次
+	\begin{equation}
+	\vcenter{\hbox{\includegraphics[scale=0.4]{../2018/zero-crossings.png}}}
+	\end{equation}
+	\item 高维： 曲面 对 分类空间 分割成 多少块
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{神经网络 的威力来自「深度」}
+\begin{itemize}
+	\item 这和 VC-dimension 道理一样 [Vapnik–Chervonenkis 1971] 
+	\item VC-dimension = 函数 能将 空间 分割成多少块
+	\item 多层 神经网络 的 VC-dim 是 $O(N \log N)$ 其中 N  是 网络参数 的总个数，但证明用的是不连续的 阀函数
+	\item 我估计 VC-dim 会是 指数增长的，但未有证明
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{神经网络 的威力来自「深度」}
+\begin{itemize}
+	\item VC-dim \textbf{指数增长} 的意义，表示 神经网络 能 代表 一个 非常复杂的 \textbf{函数家族}
+	\item 而 神经网络 的参数个数 相对地 很少，可以在 电脑上实现
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{卷积 神经网络 的 启示}
+\begin{itemize}
+	\item Yann LeCun 在 1989 发明了 ConvNet，彻底改革了 机器视觉领域，最近得了 Turing 奖
+	\begin{equation}
+	\nonumber
+	\vcenter{\hbox{\includegraphics[scale=0.25]{Yann-LeCun.jpg}}}
+	\end{equation}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{卷积 神经网络 的 启示}
+\begin{itemize}
+	\item CNN 将普通 NN 的 点积 用 卷积 代替：
+	\begin{equation}
+	\boxed{\mbox{点积}} \quad \sigmoid \langle \vect{x}, \vect{w} \rangle \rightsquigarrow \sigmoid( f * g ) \quad \boxed{\mbox{卷积}}
+	\end{equation}
+	\item 而 卷积 具有 \textbf{平移 不变性}，有利於 视觉：
+	\begin{equation}
+	T_x(f) * g = T_x( f * g )
+	\end{equation}
+	\item 这是一种 \textbf{归纳偏好}，令 学习 更快
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{卷积 神经网络 的 启示}
+\begin{itemize}
+	\item 其实 \textbf{视觉} 需要的是 \textbf{仿射} (affine) 不变性，它包括 平移、旋转、放大缩小 等
+	\item 但 似乎 单单是 平移不变性 所带来的 \textbf{学习加速}，已足以令 CNN 在 2012 年超越了人类水平
+	\item 可见，\textbf{归纳偏好} 在 深度学习 里 仍然是很有用的
 \end{itemize}
 \end{frame}
 
 \section{Turing 机 与 逻辑 的 宇宙性}
+\frame{\sectionpage}
 
 \begin{frame}
-\frametitle{Optimization over logic formulas (2)}
+\frametitle{有限自动机}
 \begin{itemize}
-	\item For example, the logic rule ```love and not loved back $\Rightarrow$ unhappy'' performs the rewriting of the following sub-graph:
-	\begin{equation}
-%	\vcenter{\hbox{\includegraphics[scale=0.4]{heartbreak-precond.png}}}
-	\quad \mapsto \quad
-%	\vcenter{\hbox{\includegraphics[scale=0.4]{heartbreak-postcond.png}}}
-	\end{equation}
-	\item This is the \textbf{state transition} $\vec{u}: \vec{x} \mapsto \vec{x}'$, which can also be regarded as the \textbf{logical inference} $\vec{u}: \vec{v} \vdash \vec{x}'$, where $\vec{u}$ is the rewriting function or logic rule.
+	\item 通常用一个 tuple 定义（从略）：
+	
 \end{itemize}
 \end{frame}
 
