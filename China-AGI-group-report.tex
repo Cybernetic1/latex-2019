@@ -285,7 +285,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \begin{itemize}
 	\item 通常用一个 tuple 定义（从略），例如：
 	\begin{equation}
-	\vcenter{\hbox{\includegraphics[scale=0.5]{finite-state-machine.png}}}
+	\vcenter{\hbox{\includegraphics[scale=0.7]{finite-state-machine.png}}}
 	\end{equation}
 	\item 这个 FSA \textbf{接受} "ab", "abab", "ababab..." 等
 \end{itemize}
@@ -305,13 +305,53 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 \begin{frame}
 \frametitle{Turing 机}
+	Turing 机 = 有限自动机 + 无限长 的 读／写\textbf{磁带}
+	\begin{equation}
+	\vcenter{\hbox{\includegraphics[scale=0.5]{../AGI-16/Turing-machine.png}}}
+	\end{equation}
+\end{frame}
+
+\begin{frame}
+\frametitle{Turing 机}
 \begin{itemize}
-	\item Turing 机 = 有限自动机 + 无限长 的 读／写\textbf{磁带}
+	\item 亦即是说： 有限自动机 + 无限读写带 = 可以计算任何函数 (Church-Turing 假设)
+	\item Turing 机 等价於 $\lambda$-calculus、combinatory logic、cellular automata、game of life、recurrent 神经网络、等
 \end{itemize}
 \end{frame}
 
-\section[经典逻辑 AI 系统 的基本结构]{\texorpdfstring{经典逻辑 AI 系统 的 \linebreak[0] 基本结构}{经典逻辑 AI 系统 的 基本结构}}
+\begin{frame}
+\frametitle{Alan Turing (1912-1954)}
+\begin{itemize}
+	\item Turing 是一个远超越於时代的人
+	\item 他考虑过 神经网络 作为学习机器
+	\item 也考虑过 进化算法 (evolutionary algorithms)
+	\item 而当时 1940s 还未有电脑 --- 电脑是他发明的！
+	\item {\color{red}他求出所有\textbf{可计算性}的形式，从而将AI的问题 \textbf{限制} 在一框框内} 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{回路 神经网络}
+
+\end{frame}
+
+\section[经典逻辑 AI 系统 的基本结构]{经典逻辑 AI 系统 的 \newline 基本结构}
 \frame{\sectionpage}
+
+\begin{frame}
+\frametitle{John McCarthy (1927-2011)}
+\begin{itemize}
+	\item 「AI 之父」
+	\item 1956年 在 Dartmouth 第一次举行「人工智能」会议
+	\item 开创了 使用 \textbf{数理逻辑} 作为 AI 的 \textbf{知识表述} (knowledge representation)
+	\item 晚年研究 \textbf{改写系统} (rewriting systems)，是一种更一般的逻辑
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{逻辑 的 种类繁多}
+\includegraphics[scale=0.4]{../2018/world-of-logical-structures.png}
+\end{frame}
 
 %\subsection{Plan A: co-operative co-evolution (COCO)}
 
@@ -320,25 +360,6 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 %\subsection{Plan C: geometric models}
 
 %\subsection{Plan D: ``quantum'' Hilbert-space operators}
-
-\begin{frame}
-\frametitle{Relation algebra}
-Given that:
-\begin{equation}
-\mbox{Father} \circ \mbox{Father} = \mbox{Grandfather}
-\end{equation}
-we can deduce:
-\begin{eqnarray}
-\mbox{john Father paul} \\
-\mbox{paul Father pete} \\
-\Rightarrow \mbox{john Father $\circ$ Father pete} \\
-\Rightarrow \mbox{john Grandfather pete}
-\end{eqnarray}
-via \textit{direct} substitution of equal terms.
-\begin{itemize}
-	\item  Relation algebra appears very \textit{natural} and similar to human thinking
-\end{itemize}
-\end{frame}
 
 %\section{}
 %\frame{\sectionpage}
