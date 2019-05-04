@@ -56,16 +56,6 @@
 \setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
 }
 
-%\setbeamertemplate{section page}
-%{
-%	\begingroup
-%	\begin{beamercolorbox}[sep=12pt,center]{section title}
-%		\usebeamerfont{section title}\insertsection\par
-%	\end{beamercolorbox}
-%	\endgroup
-%}
-
-
 \usepackage{graphicx} % Allows including images
 \usepackage{verbatim} % comments
 \usepackage{tikz-cd}  % commutative diagrams
@@ -81,13 +71,13 @@
 \makeatother
 
 %---------------------------- make slide margin narrower --------------------------------
-%\newcommand\Wider[2][3em]{%
-%	\makebox[\linewidth][c]{%
-%		\begin{minipage}{\dimexpr\textwidth+#1\relax}
-%			\raggedright#2
-%		\end{minipage}%
-%	}%
-%}
+\newcommand\Wider[2][3em]{%
+	\makebox[\linewidth][c]{%
+		\begin{minipage}{\dimexpr\textwidth+#1\relax}
+			\raggedright#2
+		\end{minipage}%
+}%
+}
 
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
@@ -135,7 +125,10 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 %\part{title}
 
-\section{什么是 归纳偏好？ \\「没有免费午餐」}
+\section[什么是 归纳偏好？「没有免费午餐」]
+{\texorpdfstring{什么是 归纳偏好？
+\break 「没有免费午餐」}
+{什么是 归纳偏好？「没有免费午餐」}}
 \frame{\sectionpage}
 
 \begin{frame}
@@ -165,7 +158,9 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \end{itemize}
 \end{frame}
 
-\section{神经网络 的 力量 \\来自什么？}
+\section[神经网络 的 力量来自什么？]
+{\texorpdfstring{神经网络 的 力量 \break 来自什么？}
+{神经网络 的 力量来自什么？}}
 \frame{\sectionpage}
 
 \begin{frame}
@@ -288,23 +283,35 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \begin{frame}
 \frametitle{有限自动机}
 \begin{itemize}
-	\item 通常用一个 tuple 定义（从略）：
-	
+	\item 通常用一个 tuple 定义（从略），例如：
+	\begin{equation}
+	\vcenter{\hbox{\includegraphics[scale=0.5]{finite-state-machine.png}}}
+	\end{equation}
+	\item 这个 FSA \textbf{接受} "ab", "abab", "ababab..." 等
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{The problem with predicate logic}
-\begin{equation}
-\forall x,y,z. \; \mbox{father}(x,y) \wedge \mbox{father}(y,z) \rightarrow \mbox{grandfather}(x,z)
-\end{equation}
+\frametitle{有限自动机}
+\Wider[1em]{
 \begin{itemize}
-	\item This involves \textbf{variable substitutions} which are troublesome to handle with neural networks. \\
-	(The difficulty seems to come from the cylindric-algebraic structure of predicate logic:  if a formula have variables $x_1, x_2, x_3, ...$, we would need to consider the domain $D \times D \times D \times ...$ where $D \ni x_i$)
+	\item 有限自动机 可以接受 $\mbox{a}^m \mbox{b}^n$ 这种字串，$m$ 和 $n$ 不同
+	\item 但它不能接受 $\mbox{a}^k \mbox{b}^k$ 这种字串，因为它里面没有办法「记住」$k$ 是多少次
+	\item FSA 能够接受的 \textbf{语言}，称作 \textbf{regular languages}
+	\item Noam Chomsky 在 1950s 定义，他是计算机科学家 + 语言学家，现在主要谈政治，从左派角度批评美国资本主义
+\end{itemize}
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Turing 机}
+\begin{itemize}
+	\item Turing 机 = 有限自动机 + 无限长 的 读／写\textbf{磁带}
 \end{itemize}
 \end{frame}
 
-\section{经典逻辑 AI 系统 的 基本结构}
+\section[经典逻辑 AI 系统 的基本结构]{\texorpdfstring{经典逻辑 AI 系统 的 \linebreak[0] 基本结构}{经典逻辑 AI 系统 的 基本结构}}
+\frame{\sectionpage}
 
 %\subsection{Plan A: co-operative co-evolution (COCO)}
 
@@ -333,6 +340,8 @@ via \textit{direct} substitution of equal terms.
 \end{itemize}
 \end{frame}
 
+%\section{}
+%\frame{\sectionpage}
 
 %\cite{Jacobs1999}
 
