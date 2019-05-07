@@ -126,9 +126,8 @@ For \textbf{vision}, we need invariance under translations as well as rotations,
 
 Now we turn to the topic of symbolic \textbf{logic}, my research focus.  Suppose the input is a list of vectors $(\vect{v}_1, \vect{v}_2, ... , \vect{v}_K)$.  We want neural networks that are invariant under \textbf{permutations} of the vectors $\vect{v}_i$; in other words, invariant under the action of the symmetric group $\mathfrak{S}_K$.
 
-Such a requirement would impose some constraints on the weights of the neural network.  For a long time, I thought it would be impossible to realize such constraints in a neural network.  But thanks to Domingos and Gens's 2014 idea
-\footnote{Robert Gens and Pedro Domingos 2014, \textit{Deep symmetry networks}, NIPS'14, proceedings of the 27th international conference on Neural Information Processing Systems, v2, 2537-2545.}
-, that inspired me to propose a solution.
+Such a requirement would impose some constraints on the weights of the neural network.  For a long time, I thought it would be impossible to realize such constraints in a neural network, but I wasn't aware that the other researchers have investigated the problem and gotten significant results.  For example Domingos and Gens's 2014 idea
+\footnote{Robert Gens and Pedro Domingos 2014, \textit{Deep symmetry networks}, NIPS'14, proceedings of the 27th international conference on Neural Information Processing Systems, v2, 2537-2545.}.
 
 Note that Pedro Domingos also has a research interest in logic-based learning (with neural networks), and he is the author of the book \textit{The Master Algorithm: How the Quest for the Ultimate Learning Machine Will Remake Our World}.
 \begin{equation}
