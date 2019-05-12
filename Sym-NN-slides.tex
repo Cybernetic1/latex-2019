@@ -86,7 +86,7 @@
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 
-\title[AGI theory]{My AGI theory explained} % The short title appears at the bottom of every slide, the full title is only on the title page
+\title[AGI theory]{Some basic notions in AGI \\ \& my theory} % The short title appears at the bottom of every slide, the full title is only on the title page
 
 \author{YKY 甄景贤} % Your name
 \institute[] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
@@ -151,8 +151,8 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \frametitle{Inductive bias}
 \begin{itemize}
 	\item Every learning algorithm has its \textbf{inductive bias}
-	\item In other words, some regions of the search space would not be searched
-	\item Thus bias makes learning faster
+	\item That is to say, some regions of the search space would \textbf{not} be searched
+	\item Bias makes learning faster
 	\item But if bias is too strong, the space containing the solution would be cut off \\
 	``Throw the baby out with the water''
 \end{itemize}
@@ -162,8 +162,8 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \frametitle{``No free lunch'' theorem}
 \fontsize{16}{15}\selectfont
 \begin{itemize}
-	\item When search space has no \textit{a priori} structure, any inductive bias must be {\color{red}\textbf{good at some problems while bad at others}};  the meaning of ``no free lunch''
-	\item For example, vision has the invariance of 3D Euclidean geometry, thus the human visual cortex may have inductive bias for this invariance
+	\item When search space has no \textit{a priori} structure, any inductive bias would be {\color{red}\textbf{good at some problems while bad at others}} --- ``no free lunch''
+	\item For example, vision has the structure of 3D Euclidean geometry, thus the human visual cortex may have inductive bias for this invariance
 	\item Or, human cognition has ``logical'' structure, using this inductive bias may accelerate machine learning of human intelligence
 \end{itemize}
 \end{frame}
@@ -202,7 +202,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 	\begin{equation}
 	\sigmoid( \; W \cdot \vect{x} \; )
 	\end{equation}	
-	\item A neuron network is the function composition $(f \circ f)$ of many {\color{red}layers}:
+	\item A neural \textbf{network} is the function \textbf{composition} $(f \circ f)$ of many layers:
 	\begin{equation}
 	[ \sigmoid W ]^L \; \vect{x}
 	\end{equation}	
@@ -212,7 +212,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \begin{frame}
 \frametitle{Properties of neural networks}
 \begin{itemize}
-	\item A neural network is a function with many {\color{red}\textbf{parameters}}
+	\item An NN is a function with many {\color{red}\textbf{parameters}}
 	\item It is a \textbf{universal function approximator} [Cybenko 1989]
 	\item Its proof can be traced to Weierstrauss's approximation theorem (1885): any continuous function can be uniformly approximated by polynomials
 	\item But the proof is {\color{red}independent of depth}
@@ -235,36 +235,36 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \begin{frame}
 \frametitle{Power of NNs comes from depth}
 \begin{itemize}
-	\item \textbf{代数基本定理}：多项式 \textbf{次数} = 曲线 跨过 $x=0$ 多少次
+	\item \textbf{Fundamental theorem of algebra}: polynomial \textbf{degree} = zero-crossings of curve with $x=0$
 	\begin{equation}
 	\vcenter{\hbox{\includegraphics[scale=0.4]{../2018/zero-crossings.png}}}
 	\end{equation}
-	\item 高维： 曲面 对 分类空间 {\color{red}分割成 多少块}
+	\item In higher dimensions: {\color{red}how many pieces} does a surface carve up the space
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Power of NNs comes from depth}
 \begin{itemize}
-	\item 这和 VC-dimension 道理一样 [Vapnik–Chervonenkis 1971] 
-	\item VC-dimension = 函数 能将 空间 分割成多少块
-	\item 多层 神经网络 的 VC-dim 是 $O(N \log N)$ 其中 $N$ 是 网络参数 的总个数，但证明用的是不连续的 阀函数
-	\item 我估计 VC-dim 会是 指数增长的，但未有证明
+	\item Same idea as \textbf{VC-dimension} [Vapnik–Chervonenkis 1971] 
+	\item VC-dim = max \# pieces the ambient space is \textit{shattered} by a family of functions
+	\item My conjecture: VC-dim of multi-layer NN grows exponentially as \# layers
+	\item Contradicts with current bound = $O(W \log W)$ where $W$ = total \# parameters; I will investigate further
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Power of NNs comes from depth}
 \begin{itemize}
-	\item VC-dim {\color{red}\textbf{指数增长}} 的意义，表示 神经网络 能 代表 一些 非常复杂的 \textbf{函数家族}
-	\item 而 神经网络 的参数个数 相对地 很少，可以在 电脑上实现
+	\item The {\color{red}\textbf{exponential growth}} of VC-dim means that NNs can represent highly complex \textbf{families} of functions
+	\item and with a relatively small \# of parameters, which can be implemented on a computer
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Revelation from convolution networks}
+\frametitle{Revelation from convolutional NNs}
 \begin{itemize}
-	\item Yann LeCun 在 1989 发明了 ConvNet，触发了 机器视觉 的革命，最近得了 Turing 奖
+	\item Yann LeCun in 1989 invented \textbf{ConvNets}, which revolutionized machine vision, and got him a Turing Award
 	\begin{equation}
 	\nonumber
 	\vcenter{\hbox{\includegraphics[scale=0.25]{Yann-LeCun.jpg}}}
@@ -273,26 +273,27 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \end{frame}
 
 \begin{frame}
-\frametitle{Revelation from convolution networks}
+\frametitle{Revelation from convolutional NNs}
+\fontsize{15}{15}\selectfont
 \begin{itemize}
-	\item CNN 将普通 NN 的 点积 用 卷积 代替：
+	\item CNN replaces the conventional \textbf{dot product} with the \textbf{covolutional product}:
 	\begin{equation}
-	\boxed{\mbox{点积}} \quad \sigmoid \langle \vect{x}, \vect{w} \rangle \rightsquigarrow \sigmoid( f * g ) \quad \boxed{\mbox{卷积}}
+	\boxed{\mbox{dot product}} \quad \sigmoid \langle \vect{x}, \vect{w} \rangle \rightsquigarrow \sigmoid( f * g ) \quad \boxed{\mbox{convolution}}
 	\end{equation}
-	\item 而 卷积 具有 {\color{red}\textbf{平移 不变性}}，有利於 视觉：
+	\item The convolution has {\color{red}\textbf{translation invariance}}, which is suitable for vision:
 	\begin{equation}
 	T_x(f) * g = T_x( f * g )
 	\end{equation}
-	\item 这是一种 \textbf{归纳偏好}，令 学习 更快
+	\item This is an \textbf{inductive bias}, which makes learning faster
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Revelation from convolution networks}
+\frametitle{Revelation from convolutional NNs}
 \begin{itemize}
-	\item 其实 \textbf{视觉} 需要的是 \textbf{仿射} (affine) 不变性，它包括 平移、旋转、放大缩小 等
-	\item 但 似乎 单单是 平移不变性 所带来的 \textbf{学习加速}，已足以令 CNN 在 2012 年超越了人类水平
-	\item 可见，\textbf{归纳偏好} 在 深度学习 里 仍然是很有用的
+	\item Actually \textbf{vision} obeys \textbf{affine} invariance, \textit{ie}: translations, rotations, dilations, ...
+	\item It seems that merely translational invariance yields enough \textbf{acceleration} such that CNNs surpassed human vision performance in 2012
+	\item Thus we see that \textbf{inductive bias} is still useful in deep learning
 \end{itemize}
 \end{frame}
 
@@ -302,11 +303,11 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \begin{frame}
 \frametitle{Finite state machines}
 \begin{itemize}
-	\item 有限自动机 通常用一些 tuple 定义（从略），例如：
+	\item Finite state machines are usually defined by tuples (skipped here), \textit{eg}:
 	\begin{equation}
 	\vcenter{\hbox{\includegraphics[scale=0.7]{finite-state-machine.png}}}
 	\end{equation}
-	\item 这个 自动机 {\color{red}\textbf{接受}} ``a'', ``aba'', ``ababa...'' 等 字串
+	\item This automata {\color{red}\textbf{accepts}} strings like ``a'', ``aba'', ``ababa...''
 \end{itemize}
 \end{frame}
 
@@ -314,17 +315,17 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \frametitle{Finite state machines}
 \Wider[1em]{
 \begin{itemize}
-	\item 有限自动机 可以接受 $\mbox{a}^m \mbox{b}^n$ 这种字串，$m$ 和 $n$ 不同
-	\item 但它不能接受 $\mbox{a}^k \mbox{b}^k$ 这种字串，因为它里面没有办法「记住」$k$ 是多少次
-	\item 有限自动机 能辨认的 \textbf{语言}，称作 \textbf{regular languages}
-	\item Noam Chomsky 在 1950s 定义，他是计算机科学家 + 语言学家，现在主要谈政治，从左派角度批评美国资本主义
+	\item FSMs can accept strings of the form $\mbox{a}^m \mbox{b}^n$, where $m$ and $n$ are different
+	\item But they can't recognize $\mbox{a}^k \mbox{b}^k$ as they have no way to ``remember'' how many times $k$ is
+	\item The \textbf{languages} accepted by FSMs are called \textbf{regular languages}
+	\item Formulated in 1950s by Noam Chomsky (computer scientist + linguist, now a leftist critic of US politics)
 \end{itemize}
 }
 \end{frame}
 
 \begin{frame}
 \frametitle{Turing machines}
-	Turing 机 = 有限自动机 + 无限长 的 {\color{red}\textbf{记忆磁带}} （每个 state 可以 读／写 一个字符）\\
+	Turing machine = finite state machine + infinite {\color{red}\textbf{memory tape}} (each state can read/write 1 symbol)\\
 	\begin{equation}
 	\label{fig:Turing-machine}
 	\includegraphics[scale=0.6]{../AGI-16/Turing-machine.png}
@@ -334,29 +335,29 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \begin{frame}
 \frametitle{Turing machines}
 \begin{itemize}
-	\item 亦即是说： 有限自动机 + 无限读写带 = 可以计算任何函数，此即 Church-Turing 假设
-	\item Turing 机 等价於 $\lambda$-calculus、combinatory logic、cellular automata、game of life、recurrent 神经网络、等
+	\item Finite state machine + infinite tape = can compute all computable functions, \textit{ie}, \textbf{Church-Turing hypothesis}
+	\item Turing machines are \textbf{equivalent} to: $\lambda$-calculus, combinatory logic, cellular automata, game of life, recurrent neural networks, ... \textit{etc}
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Alan Turing (1912-1954)}
 \begin{itemize}
-	\item Turing 是一个 远超越於时代 的人
-	\item 他考虑过 神经网络 作为学习机器
-	\item 也考虑过 进化算法 (evolutionary algorithms)
-	\item 而当时 1940s 还未有电脑 --- 电脑是他发明的！
-	\item {\color{red}他求出所有\textbf{可计算函数}的形式，从而将AI的问题 \textbf{限制} 在一框框内} 
+	\item Turing was a man very much ahead of his time
+	\item He considered neurons as learning machines
+	\item Also considered evolutionary algorithms
+	\item In 1940s there were no computers yet --- he invented them!
+	\item {\color{red}He formulated the form of \textbf{all computable functions}, thus \textbf{confining} the problem of AI within a framework}
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Recurrent neural networks}
-	其实一个 RNN 可以看成类似 (\ref{fig:Turing-machine}) 的结构：
+	Structure of RNN can be seen as similar to (\ref{fig:Turing-machine}):
 	\begin{equation}
 	\includegraphics[scale=0.6]{RNN-as-Turing-machine.png}
 	\end{equation}
-	重点是 hidden state 可以储存计算的 {\color{red}中途结果}，令 RNN 也变成 Turing 机
+	Key is that the \textbf{hidden state} can store {\color{red}\textbf{intermediate results}} of computations, enabling RNNs to be Turing-universal
 \end{frame}
 
 \section[Section]{Structure of classical AI systems}
@@ -365,10 +366,10 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \begin{frame}
 \frametitle{John McCarthy (1927-2011)}
 \begin{itemize}
-	\item 「AI 之父」
-	\item 1956年 在 Dartmouth 第一次举行「人工智能」会议
-	\item 开创了 使用 {\color{red}\textbf{数理逻辑}} 作为 AI 的 \textbf{知识表述} (knowledge representation)
-	\item 晚年研究 \textbf{改写系统} (term rewriting systems)，是一种更 \textbf{广义} 的逻辑
+	\item ``Father of AI''
+	\item Held the first AI conference in 1956 in Dartmouth
+	\item Pioneered the use of {\color{red}\textbf{mathematical logic}} as \textbf{knowledge representation} in AI
+	\item In later years he studied \textbf{term rewriting systems}, a more \textbf{generalized} form of logic
 \end{itemize}
 \end{frame}
 
@@ -380,18 +381,21 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 \begin{frame}
 \frametitle{Propositional vs predicate logic}
+\Wider[1em]{
+\fontsize{16}{15}\selectfont\fontsize{16}{15}\selectfont
 \begin{itemize}
-	\item 最重要是 搞清 \textbf{命题逻辑} 和 一阶 \textbf{谓词逻辑} 的区别
-	\item 命题逻辑：$P_1 =$ 「昨天下雨」 \\ \hspace{3cm} $P_2 =$「今天下雨」\\
-		{\color{red}命题 没有 \textbf{内部结构}}
-	\item 谓词逻辑：$P_3 =$ 下雨(北京,前天)
-	\item 谓词 有 \textbf{代入}(substitution) 的复杂性
+	\item The important distinction is between \textbf{propositional} and first-order \textbf{predicate} logic
+	\item In propositional logic, {\color{red}propositions don't have \textbf{internal structure}} \\
+	\hspace{3cm} $P_1 =$ ``It rained yesterday'' \\ \hspace{3cm} $P_2 =$ ``It's raining today''
+	\item Predicate logic: $P_3 =$ rain(New York, today)
+	\item Predicates bring about the complexity of \textbf{substitutions}
 \end{itemize}
+}
 \end{frame}
 
 \begin{frame}
 \frametitle{Architecture of logic-based AI systems}
-这个 架构 很重要，就像 蒸汽机 时代 的 Carnot cycle（卡诺循环）：
+This cycle is as important as the \textit{Carnot cycle} in the age of steam engines:
 \begin{equation}
 \label{fig:LBAI-architecture}
 \vcenter{\hbox{\includegraphics[scale=0.5]{LBAI-architecture.png}}}
@@ -400,24 +404,25 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 \begin{frame}
 \frametitle{What is a logic rule?}
+\fontsize{16}{15}\selectfont
 \begin{itemize}
-	\item 举例： 爱一个人 但他不爱你 则失恋
+	\item Example: loving someone and not loved back implies heartbreak:
 	\begin{equation}
 	\heartsuit(x,y) \wedge \neg \heartsuit(y,x) \Rightarrow \frownie{}(x)
 	\end{equation}
-	\item 这是一条 rule，变量 $x,y$ 需要 {\color{red}\textbf{代入}} 适当的个体，例如 $\{x \setminus \mbox{John}, y \setminus \mbox{Mary} \}$
-	\item 寻找 代入 的算法叫 \textbf{matching}  或 \textbf{unify}
+	\item This is a rule.  Variables $x,y$ need to be {\color{red}\textbf{substituted}} with appropriate objects, \textit{eg} $\{x \setminus \mbox{John}, y \setminus \mbox{Mary} \}$
+	\item Algorithm for finding substitutions is called \textbf{matching} or \textbf{unify}
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{SOAR cognitive architecture}
+\frametitle{SOAR architecture}
 \Wider[1em]{
 \begin{itemize}
-	\item SOAR 是一个著名的 \textbf{认知架构}
-	\item 基本上 它根据 working memory 寻找 可以\textbf{发动}的 rules，类似图(\ref{fig:LBAI-architecture})
-	\item 它用 \textbf{Rete} 算法 快速地搜寻 可用的 rules，这是经典 AI 里的重要算法（\textit{rete} 在拉丁文的意思是「网状」）
-	\item 鉴於中国AI的后起之秀，视野不够广阔，故补充一些基础知识
+	\item is a famous \textbf{cognitive architecture}
+	\item SOAR searches for logic rules that match with working memory, similar to what is depicted in (\ref{fig:LBAI-architecture})
+	\item SOAR uses the \textbf{Rete} algorithm to search for applicable rules efficiently, this is an important algorithm in classical AI (\textit{rete} meaning ``web-like'' in Latin)
+	% \item 鉴於中国AI的后起之秀，视野不够广阔，故补充一些基础知识
 \end{itemize}
 }
 \end{frame}
@@ -426,24 +431,25 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \frametitle{My theory}
 \Wider[2em]{
 \begin{itemize}
-	\item 我的理论里，rules 和 matching 机制，都 \textbf{纳入} 到 神经网路 里
-	\item 神经网络 这件武器，优点是 可以 逼近 很复杂的 mappings，它是现时最强的 机器学习 方法
-	\item 我将 逻辑结构 松弛 (relax)，务求做到足够的 归纳偏好 即可
-	\item 这理论中最关键的元件，是 symmetric 神经网络
+	\item In my theory, the rules and their matching mechanism are \textbf{absorbed} into an NN
+	\item The NN is a weapon whose strength is in approximating very complex mappings;  It is the most powerful machine-learning technology we have nowadays
+	\item In my design I \textbf{relax} the structure of logic to get just the right amount of inductive bias
+	\item In this design the central component is the \textbf{symmetric} NN
 \end{itemize}
 }
 \end{frame}
 
 \begin{frame}
-\frametitle{Commutativity of logic conjunctions}
+\frametitle{Commutativity of logic $\wedge$}
+\fontsize{16}{15}\selectfont
 \Wider[1em]{
 \begin{itemize}
-	\item $\wedge$ 的交换律 可能是 逻辑 中最重要的规律：
+	\item The commutativity of $\wedge$ is perhaps the most important law of logic:
 	\begin{equation}
-	\mbox{肚饿} \wedge \mbox{没钱} \Leftrightarrow \mbox{没钱} \wedge \mbox{肚饿}
+	\mbox{hungry} \wedge \mbox{penniless} \Leftrightarrow \mbox{penniless} \wedge \mbox{hungry}
 	\end{equation}
-	\item 也可以理解为： 从 前提 推导出 结论，前提中 命题的 {\color{red}\textbf{次序}} 应该没有关系，甚至可以夹杂无关的命题
-	\item 交换律 抽象了 逻辑命题 的结构，类似 抽象代数 中，交换群（又叫 阿贝尔群，纪念 Abel）的重要性
+	\item Could be understood as:  When deducing a conclusion from some premises, the propositions in the premise could be presented in any {\color{red}\textbf{order}}, even containing irrelevant propositions
+	\item The commutative law abstracts the structure of propositions, similar to the importance of commutative groups (also called Abelian group, in memory of Abel) in abstract algebra
 \end{itemize}
 }
 \end{frame}
@@ -451,27 +457,28 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \begin{frame}
 \frametitle{Symmetric neural networks}
 \begin{itemize}
-	\item 卷积 神经网络 具有 平移不变性
-	\item 类似地，{\color{red}\textbf{对称}}神经网络 具有 交换不变性 (permutation invariance)
-	\item 它可以透过 weight-sharing 来实现，类似 卷积层 的权重共享
-	\item SymNet :逻辑 $\approx$ ConvNet :视觉
+	\item Convolutional NNs possess translational invariance
+	\item Similarly, {\color{red}\textbf{symmetric}} NNs possess \textbf{permutation invariance}
+	\item This can be realized via \textbf{weight-sharing}, as similar in ConvNets
+	\item SymNet : logic $\approx$ ConvNet : vision
 \end{itemize}
 \end{frame}
 
-\section*{结论：中国会不会有自主研发的 AGI？}
+\section*{Conclusion: will China build its own AGI?}
 
 \begin{frame}
 \frametitle{Will China build its own AGI?}
+\fontsize{16}{15}\selectfont
 \Wider[1em]{
 \begin{itemize}
-	\item 日本 在1980年代 研发 第5代电脑 的失败，可以作为借鉴
-	\item 地球的资源有限，科技发展 往往是国与国之间 竞争的结果
-	\item 在美国有歧视中国的人，中国内部也有拖后腿、倒向外国的人，但在美国也有帮过我的朋友
-	\item 所以我比较支持 建立全球化的 AGI 项目
+	\item The failure of Japan in 1980s to develop 5th-Generation computers can be a lesson
+	\item As the earth has limited resources, technological progress often is the result of competition among national entities
+	\item In the US there are people against China;  In China there are also people dragging our feet, supporting outsiders.  Yet I have also recieved help from American friends
+	\item Therefore, I tend to be more supportive of globalized AGI projects
 \end{itemize}
 }
 	\begin{center}
-		多谢收看 \smiley{}
+		Thanks for watching \smiley{}
 	\end{center}
 \end{frame}
 
