@@ -86,7 +86,7 @@
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 
-\title[China AGI group]{AGI 的一些基本概念} % The short title appears at the bottom of every slide, the full title is only on the title page
+\title[AGI theory]{My AGI theory explained} % The short title appears at the bottom of every slide, the full title is only on the title page
 
 \author{YKY 甄景贤} % Your name
 \institute[] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
@@ -128,45 +128,43 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 %\part{title}
 
-\section[Section]
-{\texorpdfstring{什么是 归纳偏好？
-\protect\linebreak[1] 「没有免费午餐」}
-{什么是 归纳偏好？「没有免费午餐」}}
+\section[Section]{What is inductive bias? ``No free lunch'' theorem}
 \frame{\sectionpage}
 
 \begin{frame}
-\frametitle{机器学习 的 目的}
+\frametitle{The goal of machine learning}
 \begin{itemize}
-	\item 机器学习 的 目的，是在某些「学习机器」的 \textbf{空间} 中，搜寻 符合要求的某些机器
-	\item 例如在所有给定大小的神经网络中，搜寻符合 \textbf{目标函数} 的那些神经网络的 weights
+	\item The goal of machine learning is to search in a \textbf{space} of learning machines, those machines that satisfy certain criteria
+	\item For example, among the neural networks of a certain size and shape, find the weights that satisfy an \textbf{objective function}
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{AI Winter}
 \begin{itemize}
-	\item 一般来说，AI 的 樽颈问题 是 {\color{red}\textbf{搜寻空间} 太大}，导致 学习 太慢
-	\item 历史上「AI 寒冬」出现的原因，是因为 \textbf{基於逻辑} 的学习方法，导致 搜寻空间 的 组合数量爆炸，而没有好的 heuristic（算法窍门）
+	\item Generally speaking, bottleneck problem of AI = {\color{red}\textbf{search space too large}}, thus learning too slow
+	\item Historically, ``AI Winter'' occurred because \textbf{logic-based} AI learning suffers from combinatorial explosion, and we lacked workable \textbf{heuristics} to tackle it
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Inductive bias (归纳偏好)}
+\frametitle{Inductive bias}
 \begin{itemize}
-	\item 每种学习方法都有它的 \textbf{归纳偏好}
-	\item 换言之，在 搜寻空间 里预先 划分 某些部分 是不会搜索的
-	\item 所以 偏好 令学习更快
-	\item 但如果 偏好 太强，连 答案 所在的空间也删除了 \\
+	\item Every learning algorithm has its \textbf{inductive bias}
+	\item In other words, some regions of the search space would not be searched
+	\item Thus bias makes learning faster
+	\item But if bias is too strong, the space containing the solution would be cut off \\
 	``Throw the baby out with the water''
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{「没有免费午餐」定理}
+\frametitle{``No free lunch'' theorem}
+\fontsize{16}{15}\selectfont
 \begin{itemize}
-	\item 在 搜寻空间 没有 \textit{a priori} （先验的）分布下，每种 归纳偏好，{\color{red}必然 对某些问题 提升效能，但对馀下的问题 降低效能}，这就是 ``no free lunch'' 的意思
-	\item 例如 人类视觉 有3维 Euclidean 空间的几何不变性，所以 人脑的视觉神经 很可能有 对这种不变性的偏好
-	\item 又或者 人类思维 有「逻辑」结构，这种结构可以令 机器 更快学习 人类智慧
+	\item When search space has no \textit{a priori} structure, any inductive bias must be {\color{red}\textbf{good at some problems while bad at others}};  the meaning of ``no free lunch''
+	\item For example, vision has the invariance of 3D Euclidean geometry, thus the human visual cortex may have inductive bias for this invariance
+	\item Or, human cognition has ``logical'' structure, using this inductive bias may accelerate machine learning of human intelligence
 \end{itemize}
 \end{frame}
 
@@ -174,26 +172,23 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \frametitle{Kolmogorov complexity}
 \fontsize{16}{15}\selectfont
 \begin{itemize}
-	\item 最后还要一提 Kolmogorov 复杂性
-	\item 它 {\color{red}\textbf{不可计算}} (incomputable) 但 {\color{red}\textbf{可以近似}} (approximable)
-	\item 逻辑命题之间的 \textbf{语义距离} (semantic distance metric) 和它有关，一个 逻辑推导步骤 等如 语义距离的一单位
-	\item 寻找一套 逻辑 法则，\textbf{解释} 这世界，但法则的数目不可太多，也不能推出错误结论 ------ 这些要求等於 \textbf{间接地} 近似 Kolmogorov 复杂性
+	\item is {\color{red}\textbf{incomputable}}, but {\color{red}\textbf{approximable}}
+	\item The {\color{red}\textbf{semantic distance metric}} between logic propositions is related to it, where one logic deduction step corresponds to 1 unit of semantic distance
+	\item Find a set of logic rules, that \textbf{explains} the world, and not deduce false facts, and \# of rules cannot be too large --- these requirements \textit{implicitly} approximate Kolmogorov complexity
 \end{itemize}
 \end{frame}
 
-\section[Section]
-{\texorpdfstring{神经网络 的 力量 \protect\linebreak[1] 来自什么？}
-{神经网络 的 力量来自什么？}}
+\section[Section]{What gives neural networks their power?}
 \frame{\sectionpage}
 
 \begin{frame}
-\frametitle{神经网络的结构}
+\frametitle{Structure of a neural network}
 \begin{itemize}
-	\item 一粒神经元 就是 一个 dot product 接著 一个 非线性函数：
+	\item 1 neuron is a \textbf{dot product} followed by a \textbf{non-linearity}:
 	\begin{equation}
 	\sigmoid \langle \vect{x}, \vect{w} \rangle
 	\end{equation}	
-	\item 这非线性函数 可以有很多种，例如：
+	\item The non-linearity can take various forms, \textit{eg}:
 	\begin{equation}
 	\sigmoid (\xi) = \frac{1}{1 + e^{- \xi}}
 	\end{equation}
@@ -201,13 +196,13 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \end{frame}
 
 \begin{frame}
-\frametitle{神经网络的结构}
+\frametitle{Structure of a neural network}
 \begin{itemize}
-	\item 一层神经元 是 一个 矩阵 乘法：
+	\item 1 \textbf{layer} of neurons is a matrix multiplication:
 	\begin{equation}
 	\sigmoid( \; W \cdot \vect{x} \; )
 	\end{equation}	
-	\item 一个神经网络 是很多 {\color{red}层} 的函数 composition $(f \circ f)$：
+	\item A neuron network is the function composition $(f \circ f)$ of many {\color{red}layers}:
 	\begin{equation}
 	[ \sigmoid W ]^L \; \vect{x}
 	\end{equation}	
@@ -215,30 +210,30 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \end{frame}
 
 \begin{frame}
-\frametitle{神经网络 的 特性}
+\frametitle{Properties of neural networks}
 \begin{itemize}
-	\item 神经网络 是一个有很多 {\color{red}\textbf{参数}} 的 函数
-	\item 它是 \textbf{万能的 函数 近似器} [Cybenko 1989]
-	\item 定理 的 证明 可追溯到 Weierstrauss 近似定理 (1885)，即: 任意连续函数 可以用 多项式 近似
-	\item 但这定理的证明 {\color{red}和 深度 无关}
+	\item A neural network is a function with many {\color{red}\textbf{parameters}}
+	\item It is a \textbf{universal function approximator} [Cybenko 1989]
+	\item Its proof can be traced to Weierstrauss's approximation theorem (1885): any continuous function can be uniformly approximated by polynomials
+	\item But the proof is {\color{red}independent of depth}
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{神经网络 的威力来自「深度」}
+\frametitle{Power of NNs comes from depth}
 \begin{itemize}
-	\item 假设 $\sigmoid W \vect{x}$ 是 3次多项式
-	\item 每增加一层 神经网络，等如
+	\item Suppose $\sigmoid W \vect{x}$ is a \textit{cubic} polynomial
+	\item Adding each layer is equivalent to:
 	\begin{equation}
-	 (\mbox{多项式} \circ \mbox{多项式})
+	 (\mbox{polynomial} \circ \mbox{polynomial})
 	\end{equation}
-	\item 故，总体 的 多项式 次数 = $3^L$
-	\item 换句话说 整体次数 呈 {\color{red}\textbf{指数式增长}}
+	\item Thus, the resulting polynomial has total degree = $3^L$
+	\item In other words, total degree grows  {\color{red}\textbf{exponentially}}
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{神经网络 的威力来自「深度」}
+\frametitle{Power of NNs comes from depth}
 \begin{itemize}
 	\item \textbf{代数基本定理}：多项式 \textbf{次数} = 曲线 跨过 $x=0$ 多少次
 	\begin{equation}
@@ -249,7 +244,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \end{frame}
 
 \begin{frame}
-\frametitle{神经网络 的威力来自「深度」}
+\frametitle{Power of NNs comes from depth}
 \begin{itemize}
 	\item 这和 VC-dimension 道理一样 [Vapnik–Chervonenkis 1971] 
 	\item VC-dimension = 函数 能将 空间 分割成多少块
@@ -259,7 +254,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \end{frame}
 
 \begin{frame}
-\frametitle{神经网络 的威力来自「深度」}
+\frametitle{Power of NNs comes from depth}
 \begin{itemize}
 	\item VC-dim {\color{red}\textbf{指数增长}} 的意义，表示 神经网络 能 代表 一些 非常复杂的 \textbf{函数家族}
 	\item 而 神经网络 的参数个数 相对地 很少，可以在 电脑上实现
@@ -267,7 +262,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \end{frame}
 
 \begin{frame}
-\frametitle{卷积 神经网络 的 启示}
+\frametitle{Revelation from convolution networks}
 \begin{itemize}
 	\item Yann LeCun 在 1989 发明了 ConvNet，触发了 机器视觉 的革命，最近得了 Turing 奖
 	\begin{equation}
@@ -278,7 +273,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \end{frame}
 
 \begin{frame}
-\frametitle{卷积 神经网络 的 启示}
+\frametitle{Revelation from convolution networks}
 \begin{itemize}
 	\item CNN 将普通 NN 的 点积 用 卷积 代替：
 	\begin{equation}
@@ -293,7 +288,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \end{frame}
 
 \begin{frame}
-\frametitle{卷积 神经网络 的 启示}
+\frametitle{Revelation from convolution networks}
 \begin{itemize}
 	\item 其实 \textbf{视觉} 需要的是 \textbf{仿射} (affine) 不变性，它包括 平移、旋转、放大缩小 等
 	\item 但 似乎 单单是 平移不变性 所带来的 \textbf{学习加速}，已足以令 CNN 在 2012 年超越了人类水平
@@ -301,11 +296,11 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \end{itemize}
 \end{frame}
 
-\section{Turing 机 与 逻辑 的 宇宙性}
+\section{Turing machines and universal logic}
 \frame{\sectionpage}
 
 \begin{frame}
-\frametitle{有限自动机}
+\frametitle{Finite state machines}
 \begin{itemize}
 	\item 有限自动机 通常用一些 tuple 定义（从略），例如：
 	\begin{equation}
@@ -316,7 +311,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \end{frame}
 
 \begin{frame}
-\frametitle{有限自动机}
+\frametitle{Finite state machines}
 \Wider[1em]{
 \begin{itemize}
 	\item 有限自动机 可以接受 $\mbox{a}^m \mbox{b}^n$ 这种字串，$m$ 和 $n$ 不同
@@ -328,7 +323,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \end{frame}
 
 \begin{frame}
-\frametitle{Turing 机}
+\frametitle{Turing machines}
 	Turing 机 = 有限自动机 + 无限长 的 {\color{red}\textbf{记忆磁带}} （每个 state 可以 读／写 一个字符）\\
 	\begin{equation}
 	\label{fig:Turing-machine}
@@ -337,7 +332,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \end{frame}
 
 \begin{frame}
-\frametitle{Turing 机}
+\frametitle{Turing machines}
 \begin{itemize}
 	\item 亦即是说： 有限自动机 + 无限读写带 = 可以计算任何函数，此即 Church-Turing 假设
 	\item Turing 机 等价於 $\lambda$-calculus、combinatory logic、cellular automata、game of life、recurrent 神经网络、等
@@ -356,7 +351,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \end{frame}
 
 \begin{frame}
-\frametitle{回路 神经网络}
+\frametitle{Recurrent neural networks}
 	其实一个 RNN 可以看成类似 (\ref{fig:Turing-machine}) 的结构：
 	\begin{equation}
 	\includegraphics[scale=0.6]{RNN-as-Turing-machine.png}
@@ -364,7 +359,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 	重点是 hidden state 可以储存计算的 {\color{red}中途结果}，令 RNN 也变成 Turing 机
 \end{frame}
 
-\section[经典逻辑 AI 系统 的基本结构]{经典逻辑 AI 系统 的 结构}
+\section[Section]{Structure of classical AI systems}
 \frame{\sectionpage}
 
 \begin{frame}
@@ -378,13 +373,13 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \end{frame}
 
 \begin{frame}
-\frametitle{逻辑 的 种类繁多}
+\frametitle{The world of logical structures}
 \Wider[2em]{
 \includegraphics[scale=0.43]{../2018/world-of-logical-structures.png}}
 \end{frame}
 
 \begin{frame}
-\frametitle{命题逻辑 vs 谓词逻辑}
+\frametitle{Propositional vs predicate logic}
 \begin{itemize}
 	\item 最重要是 搞清 \textbf{命题逻辑} 和 一阶 \textbf{谓词逻辑} 的区别
 	\item 命题逻辑：$P_1 =$ 「昨天下雨」 \\ \hspace{3cm} $P_2 =$「今天下雨」\\
@@ -395,7 +390,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \end{frame}
 
 \begin{frame}
-\frametitle{经典 逻辑 AI 架构}
+\frametitle{Architecture of logic-based AI systems}
 这个 架构 很重要，就像 蒸汽机 时代 的 Carnot cycle（卡诺循环）：
 \begin{equation}
 \label{fig:LBAI-architecture}
@@ -404,7 +399,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \end{frame}
 
 \begin{frame}
-\frametitle{何谓 logic rule？}
+\frametitle{What is a logic rule?}
 \begin{itemize}
 	\item 举例： 爱一个人 但他不爱你 则失恋
 	\begin{equation}
@@ -428,7 +423,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \end{frame}
 
 \begin{frame}
-\frametitle{我的理论}
+\frametitle{My theory}
 \Wider[2em]{
 \begin{itemize}
 	\item 我的理论里，rules 和 matching 机制，都 \textbf{纳入} 到 神经网路 里
@@ -440,7 +435,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \end{frame}
 
 \begin{frame}
-\frametitle{逻辑 交换律}
+\frametitle{Commutativity of logic conjunctions}
 \Wider[1em]{
 \begin{itemize}
 	\item $\wedge$ 的交换律 可能是 逻辑 中最重要的规律：
@@ -454,7 +449,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \end{frame}
 
 \begin{frame}
-\frametitle{Symmetric 神经网络}
+\frametitle{Symmetric neural networks}
 \begin{itemize}
 	\item 卷积 神经网络 具有 平移不变性
 	\item 类似地，{\color{red}\textbf{对称}}神经网络 具有 交换不变性 (permutation invariance)
@@ -466,7 +461,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \section*{结论：中国会不会有自主研发的 AGI？}
 
 \begin{frame}
-\frametitle{中国会不会有自主研发的 AGI？}
+\frametitle{Will China build its own AGI?}
 \Wider[1em]{
 \begin{itemize}
 	\item 日本 在1980年代 研发 第5代电脑 的失败，可以作为借鉴
