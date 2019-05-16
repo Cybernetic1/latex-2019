@@ -9,13 +9,13 @@
 \section{General case for $y = A x$}
 
 \begin{equation}
-\boxed{\mbox{original}} \quad y_j = \sum_i a_{ij} x_i
+\boxed{\mbox{original}} \quad y_j = \sum_i a_{ij} x_i .
 \end{equation}
 
 Equivariance implies:
 \begin{eqnarray}
-\boxed{\mbox{swapped}} \quad y_j \cdot \sigma(x_j \; x_k) &=& y_k \quad \boxed{\mbox{original}} \nonumber\\
-\sum_i \square + a_{kj} x_j + a_{jj} x_k &=& \sum_i \square + a_{jk} x_j + a_{kk} x_k
+\boxed{\mbox{swapped}} \quad y_j \cdot \sigma(x_j \; x_k) &=& y_k \quad \boxed{\mbox{original}} \\
+\sum_i \square + a_{kj} x_j + a_{jj} x_k &=& \sum_i \square + a_{jk} x_j + a_{kk} x_k \nonumber
 \end{eqnarray}
 where $\square$ denotes ``the rest of the elements''.
 
@@ -31,27 +31,34 @@ a_{kj} &=& a_{jk} \quad \quad \forall j, k \nonumber \\
 a_{jj} &=& a_{kk} \quad \quad \forall j, k .
 \end{eqnarray}
 
-In other words, the matrix $A$ is:
+In other words, the matrix $A$ is of the form:
 \begin{equation}
-A = \alpha I + \beta 1 1^T
+A = \alpha I + \beta 1 1^T .
 \end{equation}
 
-\section{Case for $y_k = A_k x x$}
+\section{Case for $y_k = A_k x \cdot x$}
 
 The general form of a ``quadratic'' vector function is:
 \begin{equation}
-y = (A x) \cdot x + B x + C
+y = (A x) \cdot x + B x + C .
 \end{equation}
 
 We just focus on the quadratic term $(A x) \cdot x$:
 \begin{equation}
-\boxed{\mbox{original}} \quad y_k = \sum_j \left[ \sum_i a_{ij}^k x_i \right] x_j
+\boxed{\mbox{original}} \quad y_k = \sum_j \left[ \sum_i a_{ij}^k x_i \right] x_j .
 \end{equation}
 
 Equivariance implies:
 \begin{eqnarray}
-\boxed{\mbox{swapped}} \quad y_k \cdot \sigma(x_h \; x_k) &=& y_k \quad \boxed{\mbox{original}} \nonumber\\
-\sum_{j \neq h,k} \sum_{i \neq h,k} \square + a_{kj} x_j + a_{jj} x_k &=& \sum_{j \neq h,k} \sum_{i \neq h,k} \square + a_{jk} x_j + a_{kk} x_k
+\boxed{\mbox{swapped}} \quad y_k \cdot \sigma(x_k \; x_h) &=& y_h \quad \boxed{\mbox{original}} \\
+\sum_{j \neq h,k} \sum_{i \neq h,k} a_{ij}^k x_i x_j + a_{hh}^k x_k^2 + a_{kh}^k x_h x_k + a_{hk}^k x_k x_h + a_{kk}^k x_h^2 &=& \sum_{j \neq h,k} \sum_{i \neq h,k} a_{ij}^h x_i x_j + a_{hh}^h x_h^2 + a_{kh}^h x_k x_h + a_{hk}^h x_h x_k + a_{kk}^h x_k^2 \nonumber
+\end{eqnarray}
+which yields:
+\begin{eqnarray}
+a_{ij}^h &=& a_{ij}^k \quad \quad \forall h,k, (i,j) \neq (h,k) \nonumber \\
+a_{hh}^h &=& a_{kk}^k \quad \quad \forall h,k \nonumber \\
+a_{hh}^k &=& a_{kk}^h \quad \quad \forall h,k \nonumber \\
+a_{kh}^k + a_{hk}^k &=& a_{kh}^h + a_{hk}^h \quad \quad \forall h,k .
 \end{eqnarray}
 
 \end{document}
