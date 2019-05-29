@@ -15,18 +15,14 @@
 Equivariance implies:
 \begin{eqnarray}
 \boxed{\mbox{swapped}} \quad y_j \cdot \sigma(x_j \; x_k) &=& y_k \quad \boxed{\mbox{original}} \\
-\sum_i \square + a_{kj} x_j + a_{jj} x_k &=& \sum_i \square + a_{jk} x_j + a_{kk} x_k \nonumber
+\sum_{i \neq j,k} a_{ij} x_i + a_{kj} x_j + a_{jj} x_k &=& \sum_{i \neq j,k} a_{ik} x_i + a_{jk} x_j + a_{kk} x_k . \nonumber
 \end{eqnarray}
-where $\square$ denotes ``the rest of the elements''.
 
-This gives us a set of equations:
-\begin{equation}
-a_{kj} x_j + a_{jj} x_k = a_{jk} x_j + a_{kk} x_k \quad \quad \forall x_j, x_k
-\end{equation}
-for $(j \; k) \in \mathfrak{S}_n$.
+% for $(j \; k) \in \mathfrak{S}_n$.
 
-By setting $x_j$ and $x_k$ to zero, this yields:
+Comparing coefficients yields:
 \begin{eqnarray}
+a_{ij} &=& a_{ik} \quad \quad \forall j, k, (i \neq j, k) \nonumber \\
 a_{kj} &=& a_{jk} \quad \quad \forall j, k \nonumber \\
 a_{jj} &=& a_{kk} \quad \quad \forall j, k .
 \end{eqnarray}
