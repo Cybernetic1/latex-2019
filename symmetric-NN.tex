@@ -14,7 +14,7 @@
 
 Equivariance implies:
 \begin{eqnarray}
-\boxed{\mbox{swapped}} \quad y_j \cdot \sigma(x_j \; x_k) &=& y_k \quad \boxed{\mbox{original}} \\
+\boxed{\mbox{swapped}} \quad y_j ( \sigma(x_j \; x_k) x) &=& y_k \quad \boxed{\mbox{original}} \\
 \sum_{i \neq j,k} a_{ij} x_i + a_{kj} x_j + a_{jj} x_k &=& \sum_{i \neq j,k} a_{ik} x_i + a_{jk} x_j + a_{kk} x_k . \nonumber
 \end{eqnarray}
 
@@ -46,7 +46,7 @@ We just focus on the quadratic term $(A x) \cdot x$:
 
 Equivariance implies:
 \begin{eqnarray}
-\boxed{\mbox{swapped}} \quad y_k \cdot \sigma(x_k \; x_h) &=& y_h \quad \boxed{\mbox{original}} \\
+\boxed{\mbox{swapped}} \quad y_k ( \sigma(x_k \; x_h) x) &=& y_h \quad \boxed{\mbox{original}} \\
 \sum_{j \neq h,k} \sum_{i \neq h,k} a_{ij}^k x_i x_j + a_{hh}^k x_k^2 + a_{kh}^k x_h x_k + a_{hk}^k x_k x_h + a_{kk}^k x_h^2 &=& \sum_{j \neq h,k} \sum_{i \neq h,k} a_{ij}^h x_i x_j + a_{hh}^h x_h^2 + a_{kh}^h x_k x_h + a_{hk}^h x_h x_k + a_{kk}^h x_k^2 \nonumber
 \end{eqnarray}
 which yields:
@@ -56,5 +56,50 @@ a_{hh}^h &=& a_{kk}^k \quad \quad \forall h,k \nonumber \\
 a_{hh}^k &=& a_{kk}^h \quad \quad \forall h,k \nonumber \\
 a_{kh}^k + a_{hk}^k &=& a_{kh}^h + a_{hk}^h \quad \quad \forall h,k .
 \end{eqnarray}
+
+\section{With output space ``folded in half''}
+
+Now suppose the output is only $1/2$ the dimension of the input.  Define a new form of equivariance such that the input permutation would act on the output as ``folded in half''. 
+
+In other words, equivariance is changed to:
+\begin{equation}
+\boxed{\mbox{swapped}} \quad y_k \cdot \sigma(x_k \; x_h) = y_h \mbox{  or  } y_{h-N/2} \quad \boxed{\mbox{original}} \end{equation}
+where $\tau$ is $\sigma$ acting on $y$ as double its length and identifying $y_i = y_{i + N/2}$.
+
+\subsection{Linear case}
+
+Just notice that the dimension of $y$ is halved:
+\begin{equation}
+\boxed{\mbox{original}} \quad y_j = \sum_i a_{ij} x_i .
+\end{equation}
+
+``Folded'' equivariance implies:
+\begin{eqnarray}
+\boxed{\mbox{swapped}} \quad y_j ( \sigma(x_j \; x_k) x) \mbox{ or } y_m ( \sigma(x_m \; x_k) x) &=& y_k \mbox{ or } y_n \quad \boxed{\mbox{original}} \\
+\sum_{i \neq j,k} a_{ij} x_i + a_{kj} x_j + a_{jj} x_k &=& \sum_{i \neq j,k} a_{ik} x_i + a_{jk} x_j + a_{kk} x_k  \nonumber \\
+\mbox{or } \sum_{i \neq m,k} a_{im} x_i + a_{km} x_m + a_{mm} x_k & & \mbox{or } \sum_{i \neq j,n} a_{in} x_i + a_{jn} x_j + a_{nn} x_n  \nonumber
+\end{eqnarray}
+where $m = j - N/2, n = k - N/2$.  This gives rise to $2 \times 2 = 4$ cases.
+
+Comparing coefficients yields:
+\begin{eqnarray}
+a_{ij} &=& a_{ik} \quad \quad \forall \;  j \le N/2, k \le N/2, (i \neq j, k) \nonumber \\
+a_{kj} &=& a_{jk} \quad \quad \forall \;  j \le N/2, k \le N/2 \nonumber \\
+a_{jj} &=& a_{kk} \quad \quad \forall \;  j \le N/2, k \le N/2 \nonumber\\
+\hline \nonumber\\
+a_{ij} &=& a_{ik} \quad \quad \forall \;  j > N/2, k \le N/2, (i \neq j, k) \nonumber \\
+a_{kj} &=& a_{jk} \quad \quad \forall \;  j > N/2, k \le N/2 \nonumber \\
+a_{jj} &=& a_{kk} \quad \quad \forall \;  j > N/2, k \le N/2 \nonumber\\
+\hline \nonumber\\
+a_{ij} &=& a_{ik} \quad \quad \forall \;  j \le N/2, k > N/2, (i \neq j, k) \nonumber \\
+a_{kj} &=& a_{jk} \quad \quad \forall \;  j \le N/2, k > N/2 \nonumber \\
+a_{jj} &=& a_{kk} \quad \quad \forall \;  j \le N/2, k > N/2 \nonumber\\
+\hline \nonumber\\
+a_{ij} &=& a_{ik} \quad \quad \forall \;  j > N/2, k > N/2, (i \neq j, k) \nonumber \\
+a_{kj} &=& a_{jk} \quad \quad \forall \;  j > N/2, k > N/2 \nonumber \\
+a_{jj} &=& a_{kk} \quad \quad \forall \;  j > N/2, k > N/2
+\end{eqnarray}
+
+\subsection{Quadratic case}
 
 \end{document}
