@@ -43,6 +43,7 @@ We just focus on the quadratic term $(A x) \cdot x$:
 \begin{equation}
 \boxed{\mbox{original}} \quad y_k = \sum_j \left[ \sum_i a_{ij}^k x_i \right] x_j .
 \end{equation}
+Note that the matrix $A$ is ``3D'' and has $N \times N \times N$ entries.
 
 Equivariance implies:
 \begin{eqnarray}
@@ -83,7 +84,7 @@ Just notice that the dimension of $y$ is halved:
 % where $m = j - N/2$.  This gives rise to 2 sets of equations.
 with the restriction $j \in \{ 1,..., N/2 \}$, and $k \in \{ 1,..., N \}$.
 
-Comparing coefficients yields:
+The constraints obtained are same as before, except that index ranges are different:
 \begin{eqnarray}
 a_{ij} &=& a_{ik} \quad \quad \forall \;  j, k, (i \neq j, k) \nonumber \\
 a_{kj} &=& a_{jk} \quad \quad \forall \;  j, k \nonumber \\
@@ -101,6 +102,15 @@ a_{jj} &=& a_{kk} \quad \quad \forall \;  j, k \nonumber
 %a_{kj} &=& a_{jk} \quad \quad \forall \;  j > N/2, k > N/2 \nonumber \\
 %a_{jj} &=& a_{kk} \quad \quad \forall \;  j > N/2, k > N/2
 \end{eqnarray}
+
+These constraints give rise to a matrix of this form (for the $6 \times 2$ case, numbers represent different colors):
+\begin{equation}
+\begin{tabular}{c c c c c c c}
+5 & 1 & 1 & 2 & 3 & 4 & \\
+1 & 5 & 1 & 2 & 3 & 4 & \\
+1 & 1 & 5 & 2 & 3 & 4 & .
+\end{tabular} 
+\end{equation}This pattern is obtained from my Python code.
 
 \subsection{Quadratic case}
 
