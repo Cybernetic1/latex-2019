@@ -58,6 +58,24 @@ a_{hh}^k &= a_{kk}^h && \forall \; h,k \nonumber \\
 a_{kh}^k + a_{hk}^k &= a_{kh}^h + a_{hk}^h \quad && \forall \; h,k .
 \end{alignat}
 
+How many different colors?
+\begin{equation}
+\begin{tabular}{c c c}
+$N = 3$ .... & 14 & / 27 \\
+$N = 4$ .... & 26 & / 64 \\
+$N = 5$ .... & 42 & / 125 \\
+$N = 6$ .... & 92 & / 216 
+\end{tabular}
+\end{equation}
+
+There would be $N$ \textbf{blocks} of $N \times N$ matrices.
+
+All diagonals consists of 2 colors, regardless of $N$ (from 2nd and 3rd equations).  This leaves $N (N - 1)$ non-diagonal entries per block.
+
+Non-diagonal entries of different blocks are equal, if the block indices are different from the row and column indices.  Out of $N$ blocks there would be 2 different sets of non-diagonal weights.  (This comes from the 1st equation.)
+
+The last equation causes non-diagonal weights to have a certain symmetry about the diagonal.  
+
 \section{With output space ``folded in half''}
 
 Now suppose the output is only $1/2$ the dimension of the input.  Define a new form of equivariance such that the input permutation would act on the output as ``folded in half''. 
@@ -103,7 +121,7 @@ a_{jj} &=& a_{kk} \quad \quad \forall \;  j, k \nonumber
 %a_{jj} &=& a_{kk} \quad \quad \forall \;  j > N/2, k > N/2
 \end{eqnarray}
 
-These constraints give rise to a matrix of this form (for the $6 \times 2$ case, numbers represent different colors):
+These constraints give rise to a matrix of this form (for the $6 \times 3$ case, numbers represent different colors):
 \begin{equation}
 \begin{tabular}{c c c c c c c}
 5 & 1 & 1 & 2 & 3 & 4 & \\
