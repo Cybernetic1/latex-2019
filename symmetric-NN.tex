@@ -14,7 +14,7 @@
 
 Equivariance implies:
 \begin{eqnarray}
-\boxed{\mbox{swapped}} \quad y_j ( \sigma(x_j \; x_k) x) &=& y_k \quad \boxed{\mbox{original}} \\
+\boxed{\mbox{swapped}} \quad y_j ( \sigma(x_j \; x_k) x) &=& \sigma \cdot y_j = y_k \quad \boxed{\mbox{original}} \\
 \sum_{i \neq j,k} a_{ij} x_i + a_{kj} x_j + a_{jj} x_k &=& \sum_{i \neq j,k} a_{ik} x_i + a_{jk} x_j + a_{kk} x_k . \nonumber
 \end{eqnarray}
 
@@ -46,25 +46,45 @@ We just focus on the quadratic term $(A x) \cdot x$:
 Note that the matrix $A$ is ``3D'' and has $N \times N \times N$ entries.
 
 Equivariance implies:
+\begin{equation}
+\boxed{\mbox{swapped}} \quad y_k ( \sigma(x_k \; x_h) \cdot x) = \sigma \cdot y_k = y_h \quad \boxed{\mbox{original}}
+% \sum_{j \neq h,k} \sum_{i \neq h,k} a_{ij}^k x_i x_j + a_{hh}^k x_k^2 + a_{kh}^k x_h x_k + a_{hk}^k x_k x_h + a_{kk}^k x_h^2 &=& \sum_{j \neq h,k} \sum_{i \neq h,k} a_{ij}^h x_i x_j + a_{hh}^h x_h^2 + a_{kh}^h x_k x_h + a_{hk}^h x_h x_k + a_{kk}^h x_k^2 \nonumber
+\end{equation}
+
 \begin{eqnarray}
-\boxed{\mbox{swapped}} \quad y_k ( \sigma(x_k \; x_h) x) &=& y_h \quad \boxed{\mbox{original}} \\
-\sum_{j \neq h,k} \sum_{i \neq h,k} a_{ij}^k x_i x_j + a_{hh}^k x_k^2 + a_{kh}^k x_h x_k + a_{hk}^k x_k x_h + a_{kk}^k x_h^2 &=& \sum_{j \neq h,k} \sum_{i \neq h,k} a_{ij}^h x_i x_j + a_{hh}^h x_h^2 + a_{kh}^h x_k x_h + a_{hk}^h x_h x_k + a_{kk}^h x_k^2 \nonumber
+LHS &=& \sum_j \left[ \sum_{i \neq h,k} a^k_{ij} x_i + a^k_{hj} x_k + a^k_{kj} x_h \right] \sigma \cdot x_j \nonumber \\
+&=& \sum_{j \neq h,k} \left[ \sum_{i \neq h,k} a^k_{ij} x_i + a^k_{hj} x_k + a^k_{kj} x_h \right] x_j
++ \left[ \sum_{i \neq h,k} a^k_{ih} x_i + a^k_{hh} x_k + a^k_{kh} x_h \right] x_k
++ \left[ \sum_{i \neq h,k} a^k_{ik} x_i + a^k_{hk} x_k + a^k_{kk} x_h \right] x_h \nonumber \\
+&=& \sum_{j \neq h,k} \sum_{i \neq h,k} a^k_{ij} x_i x_j + \sum_{j \neq h,k} a^k_{hj} x_k x_j + \sum_{j \neq h,k} a^k_{kj} x_h x_j \nonumber \\
+&& + \sum_{i \neq h,k} a^k_{ih} x_i x_k + a^k_{hh} x^2_k + a^k_{kh} x_h x_k \nonumber \\
+&& + \sum_{i \neq h,k} a^k_{ik} x_i x_h + a^k_{hk} x_k x_h + a^k_{kk} x^2_h \nonumber \\
+RHS &=& \sum_j \left[ \sum_i a_{ij}^h x_i \right] x_j \nonumber \\
+&=& \sum_{j \neq h,k} \sum_{i \neq h,k} a^h_{ij} x_i x_j + \sum_{j \neq h,k} a^h_{kj} x_k x_j + \sum_{j \neq h,k} a^h_{hj} x_h x_j \nonumber \\
+&& + \sum_{i \neq h,k} a^h_{ik} x_i x_k + a^h_{kk} x^2_k + a^h_{hk} x_h x_k \nonumber \\
+&& + \sum_{i \neq h,k} a^h_{ih} x_i x_h + a^h_{kh} x_k x_h + a^h_{hh} x^2_h
 \end{eqnarray}
-which yields:
+
+Comparing coefficients yields:
 \begin{alignat}{3}
 a_{ij}^h &= a_{ij}^k && \forall \; h,k, (i \neq h,k, j \neq h,k) \nonumber \\
+a_{kj}^h &= a_{hj}^k && \forall \; h,k, (j \neq h,k) \nonumber \\
+a_{hj}^h &= a_{kj}^k && \forall \; h,k, (j \neq h,k) \nonumber \\
+a_{ik}^h &= a_{ih}^k && \forall \; h,k, (i \neq h,k) \nonumber \\
+a_{ih}^h &= a_{ik}^k && \forall \; h,k, (i \neq h,k) \nonumber \\
+a_{kk}^h &= a_{hh}^k && \forall \; h,k \nonumber \\
 a_{hh}^h &= a_{kk}^k && \forall \; h,k \nonumber \\
-a_{hh}^k &= a_{kk}^h && \forall \; h,k \nonumber \\
-a_{kh}^k + a_{hk}^k &= a_{kh}^h + a_{hk}^h \quad && \forall \; h,k .
+a_{hk}^h + a_{kh}^h &= a_{hk}^k + a_{kh}^k \quad && \forall \; h,k .
 \end{alignat}
 
 How many different colors?
 \begin{equation}
-\begin{tabular}{c c c}
-$N = 3$ .... & 14 & / 27 \\
-$N = 4$ .... & 26 & / 64 \\
-$N = 5$ .... & 42 & / 125 \\
-$N = 6$ .... & 92 & / 216 
+\begin{tabular}{c c c c}
+$N = 2$ .... & 6 & / 8 & = 75\% \\
+$N = 3$ .... & 9 & / 27 & = 33.3\% \\
+$N = 4$ .... & 11 & / 64 & = 17/2\% \\
+$N = 5$ .... & 13 & / 125 & = 10.4\% \\
+$N = 6$ .... & 15 & / 216 & = 6.9\%
 \end{tabular}
 \end{equation}
 
@@ -95,7 +115,7 @@ Just notice that the dimension of $y$ is halved:
 ``Folded'' equivariance implies:
 \begin{eqnarray}
 \boxed{\mbox{swapped}} \quad y_j ( \sigma(x_j \; x_k) x) %\mbox{ or } y_m ( \sigma(x_m \; x_k) x)
-&=& y_k \quad \boxed{\mbox{original}} \\
+&=& \sigma \cdot y_j = y_k \quad \boxed{\mbox{original}} \\
 \sum_{i \neq j,k} a_{ij} x_i + a_{kj} x_j + a_{jj} x_k &=& \sum_{i \neq j,k} a_{ik} x_i + a_{jk} x_j + a_{kk} x_k  \nonumber
 % \mbox{or } \sum_{i \neq m,k} a_{im} x_i + a_{km} x_m + a_{mm} x_k & & \nonumber
 \end{eqnarray}
