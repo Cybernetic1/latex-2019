@@ -1,5 +1,9 @@
 \input{../YKY-preamble.tex}
 
+\usepackage{xeCJK}
+\setCJKmainfont[BoldFont=SimHei,ItalicFont=KaiTi]{SimSun}
+\usepackage{color}
+
 \title{Symmetric neural networks}
 \author{YKY}
 
@@ -151,5 +155,37 @@ These constraints give rise to a matrix of this form (for the $6 \times 3$ case,
 \end{equation}This pattern is obtained from my Python code.
 
 \subsection{Quadratic case}
+
+\section{Training of the NN}
+
+作者：zighouse
+
+链接：\url{https://www.zhihu.com/question/327765164/answer/704606353}
+
+来源：知乎
+
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+神经网络是对一类内部结构固定的非线性函数的俗称，这类函数是输出关于输入以及隐含内部状态的函数，输出与输入呈现非线性特性。当一份输出只与一份输入有关时，常用卷积神经网络来实现。当一份输出与一个相继表达的输入序列相关时，可以用回归神经网络来实现。一般地，神经网络可以技术性地分解成神经元的复合，这里的神经元是在这个神经网络中的一种最基本的非线性函数的俗称，管理着属于它的内部状态，并基于这些内部状态在神经网络中负责着分配到它的非线性处理。每多一重基本非线性函数的复合，则多一层神经元。如果在某一重复合中出现了两类或者更多类基本非线性函数项的合并，则出现了分支。
+
+神经网络的权值是分解到具体神经元管理的一种内部状态。用反向传播方法来更新神经网络的权值是基于这样一个基本的假设：在一个确定的输入（或者输入序列）并产生当前输出的这个点（权值构成的线性空间中的点）上，输出在这个点上是连续的。即权值点的连续微小变化会导致输出点相应的连续微小变化。这样，当我们希望调节当前权值以使此输出向特定点靠拢时，就得出了基于权值空间中错误/误差/惩罚的梯度的反向传播算法。
+
+如果想在某个神经网络中的两个权值间建立一种约束关系，这两个权值自然就不再相互独立，可以通过考查整个权值构成的线性空间，秩会变小。约束条件只要不改变连续假设，仍然可以求出带约束条件下的梯度。如果改变了连续假设，则意味着非线性分解不恰当，需要重新分解神经网络的基本结构。
+
+Recall the classic back-prop algorithm:
+\begin{eqnarray}
+\frac{\partial \epsilon}{\partial W_{i j}} &=& o_i \delta_j \\
+\delta_j &=& \frac{\partial \epsilon}{\partial o_j} \frac{\partial o_j}{\partial \mathrm{net}_j} =
+	\begin{cases}
+	\displaystyle
+	\frac{\partial L}{\partial \sigmoid(o_j)} \frac{\partial \sigmoid(o_j)}{\partial o_j} & \text{if $j$ = output neuron} \\
+	\displaystyle
+	\sum_l w_{j l} \delta_l \frac{\partial \sigmoid(o_j)}{\partial o_j} &  \text{if $j$ = inner neuron} 
+	\end{cases}
+\end{eqnarray}
+
+Calculate $\frac{\partial U}{\partial W}$.  If they are linked then update together.
+
+
 
 \end{document}
