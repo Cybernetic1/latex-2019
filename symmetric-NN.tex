@@ -154,6 +154,8 @@ These constraints give rise to a matrix of this form (for the $6 \times 3$ case,
 \end{tabular} 
 \end{equation}This pattern is obtained from my Python code.
 
+NOTE:  The above pattern is verified to be NOT equivariant, there is a bug in the equivariant condition.
+
 \subsection{Quadratic case}
 
 \section{Training of the NN}
@@ -172,10 +174,24 @@ These constraints give rise to a matrix of this form (for the $6 \times 3$ case,
 
 如果想在某个神经网络中的两个权值间建立一种约束关系，这两个权值自然就不再相互独立，可以通过考查整个权值构成的线性空间，秩会变小。约束条件只要不改变连续假设，仍然可以求出带约束条件下的梯度。如果改变了连续假设，则意味着非线性分解不恰当，需要重新分解神经网络的基本结构。
 
+Traditional neural network:
+\begin{eqnarray}
+\boxed{neuron} \quad & y = & \sigmoid \vect{w} \cdot \vect{x} \nonumber \\
+\boxed{layer} \quad & y = & \sigmoid W \vect{x} \nonumber \\
+\boxed{network} \quad & y = & \sigmoid W \circ \sigmoid W \; .... \; \vect{x} 
+\end{eqnarray}
+
+Quadratic neural network:
+\begin{eqnarray}
+\boxed{neuron} \quad & y = & \sigmoid W \vect{x} \cdot \vect{x} \nonumber \\
+\boxed{layer} \quad & y = & \sigmoid W \vect{x} \cdot \vect{x} \nonumber \\
+\boxed{network} \quad & y = & \sigmoid W \circ \sigmoid W \; .... \; \vect{x} 
+\end{eqnarray}
+
 Recall the classic back-prop algorithm:
 \begin{eqnarray}
-\frac{\partial \epsilon}{\partial W_{i j}} &=& o_i \delta_j \\
-\delta_j &=& \frac{\partial \epsilon}{\partial o_j} \frac{\partial o_j}{\partial \mathrm{net}_j} =
+\frac{\partial E}{\partial W_{i j}} &=& o_i \delta_j \\
+\delta_j &=& \frac{\partial E}{\partial o_j} \frac{\partial o_j}{\partial \mathrm{net}_j} =
 	\begin{cases}
 	\displaystyle
 	\frac{\partial L}{\partial \sigmoid(o_j)} \frac{\partial \sigmoid(o_j)}{\partial o_j} & \text{if $j$ = output neuron} \\
@@ -185,7 +201,6 @@ Recall the classic back-prop algorithm:
 \end{eqnarray}
 
 Calculate $\frac{\partial U}{\partial W}$.  If they are linked then update together.
-
 
 
 \end{document}
