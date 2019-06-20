@@ -202,5 +202,16 @@ Recall the classic back-prop algorithm:
 
 Calculate $\frac{\partial U}{\partial W}$.  If they are linked then update together.
 
+The co-efficient of $x_i x_j$ is $W_{i j}$, for the $y_k$ component.  We need to calculate the gradient for each $W_{i j k}$.  
+
+The most tricky part is the ``additive'' constraint:
+\begin{equation}
+W_{hk}^h + W_{kh}^h = W_{hk}^k + W_{kh}^k \quad \forall \; h,k .
+\end{equation}
+
+How are the 4 derivatives related by the additive constraint?  How would this ``derived'' additive constraint affect weight updating?
+
+
+
 
 \end{document}
