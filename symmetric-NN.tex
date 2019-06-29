@@ -100,6 +100,13 @@ Non-diagonal entries of different blocks are equal, if the block indices are dif
 
 The last equation causes non-diagonal weights to have a certain symmetry about the diagonal.  
 
+\section{Quadratic, multi-layer, unconstrained case}
+
+In the last section we have \textbf{equivariant} layers composed together to form a neural network.  Now we relax the constraints so that the multi-layer network is free to have any weights except that the output must be \textbf{invariant}.
+
+
+
+
 \section{With output space ``folded in half''}
 
 Now suppose the output is only $1/2$ the dimension of the input.  Define a new form of equivariance such that the input permutation would act on the output as ``folded in half''. 
@@ -158,7 +165,7 @@ NOTE:  The above pattern is verified to be NOT equivariant, there is a bug in th
 
 \subsection{Quadratic case}
 
-\section{Training of the NN}
+\section{Learning algorithm}
 
 作者：zighouse
 
@@ -174,6 +181,8 @@ NOTE:  The above pattern is verified to be NOT equivariant, there is a bug in th
 
 如果想在某个神经网络中的两个权值间建立一种约束关系，这两个权值自然就不再相互独立，可以通过考查整个权值构成的线性空间，秩会变小。约束条件只要不改变连续假设，仍然可以求出带约束条件下的梯度。如果改变了连续假设，则意味着非线性分解不恰当，需要重新分解神经网络的基本结构。
 
+\subsection{Classic back-prop with quadratic neurons}
+
 Traditional neural network:
 \begin{eqnarray}
 \boxed{neuron} \quad & y = & \sigmoid \vect{w} \cdot \vect{x} \nonumber \\
@@ -183,9 +192,9 @@ Traditional neural network:
 
 Quadratic neural network:
 \begin{eqnarray}
-\boxed{neuron} \quad & y = & \sigmoid W \vect{x} \cdot \vect{x} \nonumber \\
-\boxed{layer} \quad & y = & \sigmoid W \vect{x} \cdot \vect{x} \nonumber \\
-\boxed{network} \quad & y = & \sigmoid W \circ \sigmoid W \; .... \; \vect{x} 
+\boxed{neuron} \quad & y = & W \vect{x} \cdot \vect{x} \nonumber \\
+\boxed{layer} \quad & y = & W \vect{x} \cdot \vect{x} \nonumber \\
+\boxed{network} \quad & y = & W \vect{x} \circ W \vect{x} \; .... \; \vect{x} 
 \end{eqnarray}
 
 Traditionally, each neuron $k$ with output $o_k$ is defined as:
@@ -197,7 +206,9 @@ This is replaced by our new neuron:
 \begin{equation}
 o_k = {\text{net}}_k = \sum_j \sum_i W_{ij}^k o_i o_j
 \end{equation}
-where the 2 summations can be interchanged.
+where the 2 summations can be \textbf{interchanged}.
+
+What follows is just a re-working of traditional back-propagation.
 
 Using the chain rule:
 \begin{equation}
@@ -207,55 +218,74 @@ Using the chain rule:
 
 For the RHS's second factor, only one term in the sum depends on $W_{ij}^k$, so:
 \begin{equation}
+	\label{eqn:do-k-dW}
 \frac{\partial o_k}{\partial W_{ij}^k}
 = \frac{\partial }{\partial W_{ij}^k} \left( \sum_{i'} \sum_{j'} W_{i' j'}^k o_{i'} o_{j'} \right)
 = \frac{\partial }{\partial W_{ij}^k} W_{ij}^k o_i o_j = o_i o_j .
 \end{equation}
 
-If $k$ is an inner neuron, consider $E$ as a function with the inputs being all neurons $N = \{ u, v, \dots , w \}$  receiving input from neuron $k$,
-\begin{equation}
+If $k$ is an inner neuron, let $L = \{ u, v, \dots , w \}$ be the \textbf{next layer} of neurons receiving input from neuron $k$.  Consider $E$ as a function with the inputs being all neurons in $L$:
+\begin{eqnarray}
 \frac{\partial E(o_k)}{\partial o_k}
-= \frac{\partial E(\mathrm {net}_u, \text{net}_v, \dots ,\mathrm{net}_w)}{\partial o_k}
-\end{equation}
-and take the total derivative with respect to $o_k$. A \textbf{recursive} expression for the derivative is obtained:
+&=& \frac{\partial E(o_u, o_v, \dots, o_w)}{\partial o_k} \nonumber \\
+\boxed{\mbox{next layer}} \quad o_{\ell} &=& \sum_j \sum_i W_{ij}^{\ell} o_i o_j \quad \boxed{\mbox{current layer}}
+\end{eqnarray}
+and take the total derivative with respect to $o_k$.  A \textbf{recursive} expression for the derivative is obtained:
 \begin{equation}
+	\label{eqn:dE-do-k}
 \frac{\partial E}{\partial o_k}
-= \sum_{n \in N} \left( \frac{\partial E}{\partial o_n} \frac{\partial o_n}{\partial o_k} \right)
-= \sum_{n \in N} \left( \frac{\partial E}{\partial o_n} W_{n}^k \right)
+= \sum_{\ell \in L} \left( \frac{\partial E}{\partial o_{\ell}} \frac{\partial o_{\ell}}{\partial o_k} \right)
+= \sum_{\ell \in L} \left( \frac{\partial E}{\partial o_{\ell}} \sum_j W_{kj}^{\ell} o_j \right)
 \end{equation}
 
 Substituting, we obtain:
 \begin{eqnarray}
 \frac{\partial E}{\partial W_{ij}^k}
 &=& \frac{\partial E}{\partial o_k} \frac{\partial o_k}{\partial W_{ij}^k}
-= \frac{\partial E}{\partial o_k} o_i o_j \nonumber \\ 
-\frac{\partial E}{\partial W_{ij}^k}
-&=& o_i o_j \delta_k
+= \frac{\partial E}{\partial o_k} o_i o_j := \delta_k o_i o_j \nonumber \\ 
+\delta_k &=& \sum_{\ell \in L} \left( \delta_{\ell} \sum_j W_{kj}^{\ell} o_j \right)
 \end{eqnarray}
 
-Recall the classic back-prop algorithm:
+Our algorithm can be compared the classic back-prop algorithm:
 \begin{eqnarray}
-\frac{\partial E}{\partial W_{i j}} &=& o_i \delta_j \\
+\frac{\partial E}{\partial W_{i j}} &=& \delta_j o_i \nonumber \\
 \delta_j &=& \frac{\partial E}{\partial o_j} \frac{\partial o_j}{\partial \mathrm{net}_j} =
 	\begin{cases}
 	\displaystyle
 	\frac{\partial L}{\partial \sigmoid(o_j)} \frac{\partial \sigmoid(o_j)}{\partial o_j} & \text{if $j$ = output neuron} \\
 	\displaystyle
-	\sum_l w_{j l} \delta_l \frac{\partial \sigmoid(o_j)}{\partial o_j} &  \text{if $j$ = inner neuron} 
+	\sum_l W_{j l} \delta_l \frac{\partial \sigmoid(o_j)}{\partial o_j} &  \text{if $j$ = inner neuron} 
 	\end{cases}
 \end{eqnarray}
 
-Calculate $\frac{\partial U}{\partial W}$.  If they are linked then update together.
+\subsection{Shared weights}
+
+For our purpose, it is good to know that all the weight-sharing occurs \textbf{within} each layer, never across layers.
+
+\subsubsection{Equality constraints}
+
+For simple \textbf{equality} of weights, the weights should be collected together.
 
 The co-efficient of $x_i x_j$ is $W_{i j}$, for the $y_k$ component.  We need to calculate the gradient for each $W_{i j k}$.  
+
+\subsubsection{Additive constraints}
 
 The most tricky part is the ``additive'' constraint:
 \begin{equation}
 W_{hk}^h + W_{kh}^h = W_{hk}^k + W_{kh}^k \quad \forall \; h,k .
 \end{equation}
 
-How are the 4 derivatives related by the additive constraint?  How would this ``derived'' additive constraint affect weight updating?
+This is just like having 4 ``not quite independent'' variables $x, y, u, v$ satisfying:
+\begin{equation}
+x + y = u + v
+\end{equation}
+and asking what is
+\begin{equation}
+\frac{\partial (x + y)}{\partial x} \mbox{ ?}
+\end{equation}
+And the solution is to make one of the variables \textbf{depend} on the other 3.
 
+We need to consider equations (\ref{eqn:do-k-dW}) and (\ref{eqn:dE-do-k}).
 
 
 
