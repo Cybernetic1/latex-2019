@@ -204,7 +204,9 @@ o_k = \sigmoid ({\text{net}}_k) = \sigmoid \left(\sum _{j=1}^{n} w_{jk} o_j \rig
 
 This is replaced by our new neuron:
 \begin{equation}
+\boxed{\mbox{next layer}} \quad
 o_k = {\text{net}}_k = \sum_j \sum_i W_{ij}^k o_i o_j
+\quad \boxed{\mbox{current layer}}
 \end{equation}
 where the 2 summations can be \textbf{interchanged}.
 
@@ -228,7 +230,9 @@ If $k$ is an inner neuron, let $L = \{ u, v, \dots , w \}$ be the \textbf{next l
 \begin{eqnarray}
 \frac{\partial E(o_k)}{\partial o_k}
 &=& \frac{\partial E(o_u, o_v, \dots, o_w)}{\partial o_k} \nonumber \\
-\boxed{\mbox{next layer}} \quad o_{\ell} &=& \sum_j \sum_i W_{ij}^{\ell} o_i o_j \quad \boxed{\mbox{current layer}}
+\boxed{\mbox{next layer}} \quad
+	o_{\ell} &=& \sum_j \sum_i W_{ij}^{\ell} o_i o_j
+\quad \boxed{\mbox{current layer}}
 \end{eqnarray}
 and take the total derivative with respect to $o_k$.  A \textbf{recursive} expression for the derivative is obtained:
 \begin{equation}
@@ -262,11 +266,25 @@ Our algorithm can be compared the classic back-prop algorithm:
 
 For our purpose, it is good to know that all the weight-sharing occurs \textbf{within} each layer, never across layers.
 
+The coefficient of $x_i x_j$ is $W_{i j}$, for the $y_k$ component.  For each weight $W_{ij}^k$ we need to calculate the gradient $\displaystyle \frac{\partial E}{\partial W_{ij}^k}$, but the weights are in equivalence classes.
+
+Say if the following 2 weights are shared:
+\begin{equation}
+W_0 := W_{i j} \equiv W_{i' j'}
+\end{equation}
+Then the network:
+\begin{equation}
+y = \sum \sum W_{ij} x_i x_j
+\end{equation}
+would contain the shared components:
+\begin{equation}
+W_0 ( x_i x_j + x_{i'} x_{j'} ) + \mbox{other terms ...}
+\end{equation}
+
 \subsubsection{Equality constraints}
 
 For simple \textbf{equality} of weights, the weights should be collected together.
 
-The co-efficient of $x_i x_j$ is $W_{i j}$, for the $y_k$ component.  We need to calculate the gradient for each $W_{i j k}$.  
 
 \subsubsection{Additive constraints}
 
@@ -285,8 +303,10 @@ and asking what is
 \end{equation}
 And the solution is to make one of the variables \textbf{depend} on the other 3.
 
-We need to consider equations (\ref{eqn:do-k-dW}) and (\ref{eqn:dE-do-k}).
+For each layer, iterate over every neuron representative, which has a collection of coefficients.
 
+We need to consider equations (\ref{eqn:do-k-dW}) and (\ref{eqn:dE-do-k}), but (\ref{eqn:dE-do-k}) is unaffected by weight-sharing.
 
+In (\ref{eqn:do-k-dW}), for each equivalence class, 
 
 \end{document}
