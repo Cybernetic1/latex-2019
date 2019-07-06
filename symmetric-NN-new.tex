@@ -4,11 +4,57 @@
 \setCJKmainfont[BoldFont=SimHei,ItalicFont=KaiTi]{SimSun}
 \usepackage{color}
 
+\usepackage{mathtools}
+
 \title{Symmetric neural networks}
 \author{YKY}
 
 \begin{document}
 \maketitle
+
+\section{Invariant theory}
+
+Traditional neural network:
+\begin{eqnarray}
+\boxed{neuron} \quad & y = & \sigmoid \vect{w} \cdot \vect{x} \nonumber \\
+\boxed{layer} \quad & y = & \sigmoid W \vect{x} \nonumber \\
+\boxed{network} \quad & y = & \sigmoid W \circ \sigmoid W \; .... \; \vect{x} 
+\end{eqnarray}
+
+Quadratic neural network:
+\begin{eqnarray}
+\boxed{neuron} \quad & y = & W \vect{x} \cdot \vect{x} \nonumber \\
+\boxed{layer} \quad & y = & W \vect{x} \cdot \vect{x} \nonumber \\
+\boxed{network} \quad & y = & W \vect{x} \circ W \vect{x} \; .... \; \vect{x} 
+\end{eqnarray}
+
+Traditionally, each neuron $k$ with output $o_k$ is defined as:
+\begin{equation}
+o_k = \sigmoid ({\text{net}}_k) = \sigmoid \left(\sum _{j=1}^{n} w_{jk} o_j \right) .
+\end{equation}
+
+This is replaced by our new neuron:
+\begin{equation}
+\boxed{\mbox{next layer}} \quad
+o_k = {\text{net}}_k = \sum_j \sum_i W_{ij}^k o_i o_j
+\quad \boxed{\mbox{current layer}}
+\end{equation}
+where the 2 summations can be \textbf{interchanged}.
+
+Let $y = F(x)$ denote the (overall) neural network function.  In our case $F(x)$ is a polynomial $\in \mathbb{R}[x]^{\mathfrak{S}_n}$ where $\mathfrak{S}_n$ is the symmetric group of $n$ elements.
+
+This is one quadratic layer with $i > j$ edges deleted (because $x_i x_j = x_j x_i$):
+\begin{equation}
+\vcenter{\hbox{\includegraphics[scale=0.75]{quadratic-NN-2.png}}}
+\end{equation}
+The link in red is $W_{11}^1$.
+
+This is one network layer complete with quadratic, linear, and constant terms:
+\begin{equation}
+\vcenter{\hbox{\includegraphics[scale=0.75]{quadratic-NN-3.png}}}
+\end{equation}
+Notice that this block should be repeated for each output $y_1, ..., y_3$.
+
 
 \section{General case for $y = A x$}
 
@@ -45,7 +91,7 @@ y = (A x) \cdot x + B x + C .
 
 We just focus on the quadratic term $(A x) \cdot x$:
 \begin{equation}
-\boxed{\mbox{original}} \quad y_k = \sum_j \left[ \sum_i a_{ij}^k x_i \right] x_j .
+\boxed{\mbox{original}} \quad y_k = \sum_j \left[ \sum_{i < j} a_{ij}^k x_i \right] x_j .
 \end{equation}
 Note that the matrix $A$ is ``3D'' and has $N \times N \times N$ entries.
 
@@ -56,39 +102,56 @@ Equivariance implies:
 \end{equation}
 
 \begin{eqnarray}
-LHS &=& \sum_j \left[ \sum_{i \neq h,k} a^k_{ij} x_i + a^k_{hj} x_k + a^k_{kj} x_h \right] \sigma \cdot x_j \nonumber \\
-&=& \sum_{j \neq h,k} \left[ \sum_{i \neq h,k} a^k_{ij} x_i + a^k_{hj} x_k + a^k_{kj} x_h \right] x_j
-+ \left[ \sum_{i \neq h,k} a^k_{ih} x_i + a^k_{hh} x_k + a^k_{kh} x_h \right] x_k
-+ \left[ \sum_{i \neq h,k} a^k_{ik} x_i + a^k_{hk} x_k + a^k_{kk} x_h \right] x_h \nonumber \\
-&=& \sum_{j \neq h,k} \sum_{i \neq h,k} a^k_{ij} x_i x_j + \sum_{j \neq h,k} a^k_{hj} x_k x_j + \sum_{j \neq h,k} a^k_{kj} x_h x_j \nonumber \\
-&& + \sum_{i \neq h,k} a^k_{ih} x_i x_k + a^k_{hh} x^2_k + a^k_{kh} x_h x_k \nonumber \\
-&& + \sum_{i \neq h,k} a^k_{ik} x_i x_h + a^k_{hk} x_k x_h + a^k_{kk} x^2_h \nonumber \\
-RHS &=& \sum_j \left[ \sum_i a_{ij}^h x_i \right] x_j \nonumber \\
-&=& \sum_{j \neq h,k} \sum_{i \neq h,k} a^h_{ij} x_i x_j + \sum_{j \neq h,k} a^h_{kj} x_k x_j + \sum_{j \neq h,k} a^h_{hj} x_h x_j \nonumber \\
-&& + \sum_{i \neq h,k} a^h_{ik} x_i x_k + a^h_{kk} x^2_k + a^h_{hk} x_h x_k \nonumber \\
-&& + \sum_{i \neq h,k} a^h_{ih} x_i x_h + a^h_{kh} x_k x_h + a^h_{hh} x^2_h
+LHS &=& \sum_j \left[ \sum_{i < j \atop i \neq h,k} a^k_{ij} x_i + \underbracket[1pt]{a^k_{hj} x_k}_{\text{if } h < j} + \underbracket[1pt]{a^k_{kj} x_h}_{\text{if } k < j} \right] \sigma \cdot x_j \quad \quad \boxed{\text{apply } \sigma \cdot x_i} \nonumber \\
+% ================================================================================================
+&=& \sum_{j \neq h,k} \left[ \sum_{i < j \atop i \neq h,k} a^k_{ij} x_i + \underbracket[1pt]{a^k_{hj} x_k}_{\text{if } h < j} + \underbracket[1pt]{a^k_{kj} x_h}_{\text{if } k < j} \right] x_j
++ \left[ \sum_{i < h \atop i \neq k} a^k_{ih} x_i + \underbracket[1pt]{a^k_{kh} x_h}_{\text{if } k < h} \right] x_k
++ \left[ \sum_{i < k \atop i \neq h} a^k_{ik} x_i + \underbracket[1pt]{a^k_{hk} x_k}_{\text{if } h < k} \right] x_h \nonumber \\
+& & \boxed{\text{apply } \sigma \cdot x_j} \nonumber \\
+% ================================================================================================
+&=& \sum_{j \neq h,k} \sum_{i < j \atop i \neq h,k} a^k_{ij} x_i x_j + {\color{teal}\sum_{j > h} a^k_{hj} x_k x_j} + {\color{brown}\sum_{j > k} a^k_{kj} x_h x_j} \nonumber \\
+&& + {\color{blue}\sum_{i < h \atop i \neq k} a^k_{ih} x_i x_k} + {\color{red}\underbracket[1pt]{a^k_{kh} x_h x_k}_{\text{if } k < h}} \nonumber \\
+&& + {\color{red}\sum_{i < k \atop i \neq h} a^k_{ik} x_i x_h} + {\color{blue}\underbracket[1pt]{a^k_{hk} x_k x_h}_{\text{if } h < k}} \nonumber \\
+% ************************************************************************************************
+RHS &=& \sum_j \left[ \sum_{i < j} a_{ij}^h x_i \right] x_j \nonumber \\
+% ================================================================================================
+&=& \sum_j \left[ \sum_{i < j \atop i \neq h,k} a^h_{ij} x_i + \underbracket[1pt]{a^h_{hj} x_h}_{\text{if } h < j} + \underbracket[1pt]{a^h_{kj} x_k}_{\text{if } k < j} \right] x_j \nonumber \\
+% ================================================================================================
+&=& \sum_{j \neq h,k} \left[ \sum_{i < j \atop i \neq h,k} a^h_{ij} x_i + \underbracket[1pt]{a^h_{hj} x_h}_{\text{if } h < j} + \underbracket[1pt]{a^h_{kj} x_k}_{\text{if } k < j} \right] x_j
++ \left[ \sum_{i < h \atop i \neq k} a^h_{ih} x_i + \underbracket[1pt]{a^h_{kh} x_k}_{\text{if } k < h} \right] x_h
++ \left[ \sum_{i < k \atop i \neq h} a^h_{ik} x_i + \underbracket[1pt]{a^h_{hk} x_h}_{\text{if } h < k} \right] x_k \nonumber \\
+% ================================================================================================
+&=& \sum_{j \neq h,k} \sum_{i < j \atop i \neq h,k} a^h_{ij} x_i x_j + {\color{brown}\sum_{j > h} a^h_{hj} x_h x_j} + {\color{teal}\sum_{j > k} a^h_{kj} x_k x_j} \nonumber \\
+&& + {\color{red}\sum_{i < k \atop i \neq h} a^h_{ih} x_i x_h} + {\color{red}\underbracket[1pt]{a^h_{kh} x_k x_h}_{\text{if } k < h}} \nonumber \\
+&& + {\color{blue}\sum_{i < h \atop i \neq k} a^h_{ik} x_i x_k} + {\color{blue}\underbracket[1pt]{a^h_{hk} x_h x_k}_ {\text{if } h < k}}
 \end{eqnarray}
 
 Comparing coefficients yields:
 \begin{alignat}{3}
-a_{ij}^h &= a_{ij}^k && \forall \; h,k, (i \neq h,k, j \neq h,k) \nonumber \\
-a_{kj}^h &= a_{hj}^k && \forall \; h,k, (j \neq h,k) \nonumber \\
-a_{hj}^h &= a_{kj}^k && \forall \; h,k, (j \neq h,k) \nonumber \\
-a_{ik}^h &= a_{ih}^k && \forall \; h,k, (i \neq h,k) \nonumber \\
-a_{ih}^h &= a_{ik}^k && \forall \; h,k, (i \neq h,k) \nonumber \\
-a_{kk}^h &= a_{hh}^k && \forall \; h,k \nonumber \\
-a_{hh}^h &= a_{kk}^k && \forall \; h,k \nonumber \\
-a_{hk}^h + a_{kh}^h &= a_{hk}^k + a_{kh}^k \quad && \forall \; h,k .
+a_{ij}^h &= a_{ij}^k && \forall \; h,k. \; j \neq h,k; \; i < j; \; i \neq h,k \nonumber \\
+{\color{brown}a_{hj}^h} &= {\color{brown}a_{kj}^k} && \forall \; h,k. \; j > \max(h,k) \nonumber \\
+{\color{teal}a_{kj}^h} &= {\color{teal}a_{hj}^k} && \forall \; h,k. \; j > \max(h,k) \nonumber \\
+a_{hj}^h &= a_{hj}^k = 0 \quad && \text{if } h < j \le k \nonumber \\
+a_{kj}^h &= a_{kj}^k = 0 \quad && \text{if } k < j \le h \nonumber \\
+{\color{red}a_{ih}^h} &= {\color{red}a_{ik}^k} && \forall \; h,k. \; i < k; \; i \neq h \nonumber \\
+{\color{blue}a_{ik}^h} &= {\color{blue}a_{ih}^k} && \forall \; h,k. \; i < h; \; i \neq k \nonumber \\
+{\color{red}a_{kh}^h} &= {\color{red}a_{kh}^k} && \forall \; h,k. \; k < h \nonumber \\
+{\color{blue}a_{hk}^h} &= {\color{blue}a_{hk}^k} && \forall \; h,k. \; h < k .
 \end{alignat}
 
 How many different colors?
 \begin{equation}
-\begin{tabular}{c c c c}
-$N = 2$ .... & 6 & / 8 & = 75\% \\
-$N = 3$ .... & 9 & / 27 & = 33.3\% \\
-$N = 4$ .... & 11 & / 64 & = 17/2\% \\
-$N = 5$ .... & 13 & / 125 & = 10.4\% \\
-$N = 6$ .... & 15 & / 216 & = 6.9\%
+\begin{tabular}{l l l l}
+$N = 1$ .... & 1 & / 1 & = 100\% \\
+$N = 2$ .... & 4 & / 8 & = 50\% \\
+$N = 3$ .... & 6 & / 27 & = 22.2\% \\
+$N = 4$ .... & 7 & / 64 & = 10.9\% \\
+$N = 5$ .... & 8 & / 125 & = 6.4\% \\
+$N = 6$ .... & 9 & / 216 & = 4.2\% \\
+$N = 7$ .... & 10 & / 343 & = 2.9\% \\
+$N = 8$ .... & 11 & / 512 & = 2.1\% \\
+$N = 9$ .... & 12 & / 729 & = 1.6\% \\
+$N = 10$ .... & 13 & / 1000 & = 1.3\%
 \end{tabular}
 \end{equation}
 
