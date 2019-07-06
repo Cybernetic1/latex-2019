@@ -56,87 +56,87 @@ This is one network layer complete with quadratic, linear, and constant terms:
 Notice that this block should be repeated for each output $y_1, ..., y_3$.
 
 
-\section{General case for $y = A x$}
+\section{General case for $y = W x$}
 
 \begin{equation}
-\boxed{\mbox{original}} \quad y_j = \sum_i a_{ij} x_i .
+\boxed{\mbox{original}} \quad y_j = \sum_i W_{ij} x_i .
 \end{equation}
 
 Equivariance implies:
 \begin{eqnarray}
 \boxed{\mbox{swapped}} \quad y_j ( \sigma(x_j \; x_k) x) &=& \sigma \cdot y_j = y_k \quad \boxed{\mbox{original}} \\
-\sum_{i \neq j,k} a_{ij} x_i + a_{kj} x_j + a_{jj} x_k &=& \sum_{i \neq j,k} a_{ik} x_i + a_{jk} x_j + a_{kk} x_k . \nonumber
+\sum_{i \neq j,k} W_{ij} x_i + W_{kj} x_j + W_{jj} x_k &=& \sum_{i \neq j,k} W_{ik} x_i + W_{jk} x_j + W_{kk} x_k . \nonumber
 \end{eqnarray}
 
 % for $(j \; k) \in \mathfrak{S}_n$.
 
 Comparing coefficients yields:
 \begin{eqnarray}
-a_{ij} &=& a_{ik} \quad \quad \forall \; j, k, (i \neq j, k) \nonumber \\
-a_{kj} &=& a_{jk} \quad \quad \forall \; j, k \nonumber \\
-a_{jj} &=& a_{kk} \quad \quad \forall \; j, k .
+W_{ij} &=& W_{ik} \quad \quad \forall \; j, k, (i \neq j, k) \nonumber \\
+W_{kj} &=& W_{jk} \quad \quad \forall \; j, k \nonumber \\
+W_{jj} &=& W_{kk} \quad \quad \forall \; j, k .
 \end{eqnarray}
 
-In other words, the matrix $A$ is of the form:
+In other words, the matrix $W$ is of the form:
 \begin{equation}
-A = \alpha I + \beta 1 1^T .
+W = \alpha I + \beta 1 1^T .
 \end{equation}
 
-\section{Case for $y_k = A_k x \cdot x$}
+\section{Case for $y_k = W_k x \cdot x$}
 
 The general form of a ``quadratic'' vector function is:
 \begin{equation}
 y = (A x) \cdot x + B x + C .
 \end{equation}
 
-We just focus on the quadratic term $(A x) \cdot x$:
+We just focus on the quadratic term $(W x) \cdot x$:
 \begin{equation}
-\boxed{\mbox{original}} \quad y_k = \sum_j \left[ \sum_{i < j} a_{ij}^k x_i \right] x_j .
+\boxed{\mbox{original}} \quad y_k = \sum_j \left[ \sum_{i < j} W_{ij}^k x_i \right] x_j .
 \end{equation}
-Note that the matrix $A$ is ``3D'' and has $N \times N \times N$ entries.
+Note that the matrix $W$ is ``3-dimensional'' and has $N \times N \times N$ entries.
 
 Equivariance implies:
 \begin{equation}
 \boxed{\mbox{swapped}} \quad y_k ( \sigma(x_k \; x_h) \cdot x) = \sigma \cdot y_k = y_h \quad \boxed{\mbox{original}}
-% \sum_{j \neq h,k} \sum_{i \neq h,k} a_{ij}^k x_i x_j + a_{hh}^k x_k^2 + a_{kh}^k x_h x_k + a_{hk}^k x_k x_h + a_{kk}^k x_h^2 &=& \sum_{j \neq h,k} \sum_{i \neq h,k} a_{ij}^h x_i x_j + a_{hh}^h x_h^2 + a_{kh}^h x_k x_h + a_{hk}^h x_h x_k + a_{kk}^h x_k^2 \nonumber
+% \sum_{j \neq h,k} \sum_{i \neq h,k} W_{ij}^k x_i x_j + W_{hh}^k x_k^2 + W_{kh}^k x_h x_k + W_{hk}^k x_k x_h + W_{kk}^k x_h^2 &=& \sum_{j \neq h,k} \sum_{i \neq h,k} W_{ij}^h x_i x_j + W_{hh}^h x_h^2 + W_{kh}^h x_k x_h + W_{hk}^h x_h x_k + W_{kk}^h x_k^2 \nonumber
 \end{equation}
 
 \begin{eqnarray}
-LHS &=& \sum_j \left[ \sum_{i < j \atop i \neq h,k} a^k_{ij} x_i + \underbracket[1pt]{a^k_{hj} x_k}_{\text{if } h < j} + \underbracket[1pt]{a^k_{kj} x_h}_{\text{if } k < j} \right] \sigma \cdot x_j \quad \quad \boxed{\text{apply } \sigma \cdot x_i} \nonumber \\
+LHS &=& \sum_j \left[ \sum_{i < j \atop i \neq h,k} W^k_{ij} x_i + \underbracket[1pt]{W^k_{hj} x_k}_{\text{if } h < j} + \underbracket[1pt]{W^k_{kj} x_h}_{\text{if } k < j} \right] \sigma \cdot x_j \quad \quad \boxed{\text{apply } \sigma \cdot x_i} \nonumber \\
 % ================================================================================================
-&=& \sum_{j \neq h,k} \left[ \sum_{i < j \atop i \neq h,k} a^k_{ij} x_i + \underbracket[1pt]{a^k_{hj} x_k}_{\text{if } h < j} + \underbracket[1pt]{a^k_{kj} x_h}_{\text{if } k < j} \right] x_j
-+ \left[ \sum_{i < h \atop i \neq k} a^k_{ih} x_i + \underbracket[1pt]{a^k_{kh} x_h}_{\text{if } k < h} \right] x_k
-+ \left[ \sum_{i < k \atop i \neq h} a^k_{ik} x_i + \underbracket[1pt]{a^k_{hk} x_k}_{\text{if } h < k} \right] x_h \nonumber \\
+&=& \sum_{j \neq h,k} \left[ \sum_{i < j \atop i \neq h,k} W^k_{ij} x_i + \underbracket[1pt]{W^k_{hj} x_k}_{\text{if } h < j} + \underbracket[1pt]{W^k_{kj} x_h}_{\text{if } k < j} \right] x_j
++ \left[ \sum_{i < h \atop i \neq k} W^k_{ih} x_i + \underbracket[1pt]{W^k_{kh} x_h}_{\text{if } k < h} \right] x_k
++ \left[ \sum_{i < k \atop i \neq h} W^k_{ik} x_i + \underbracket[1pt]{W^k_{hk} x_k}_{\text{if } h < k} \right] x_h \nonumber \\
 & & \boxed{\text{apply } \sigma \cdot x_j} \nonumber \\
 % ================================================================================================
-&=& \sum_{j \neq h,k} \sum_{i < j \atop i \neq h,k} a^k_{ij} x_i x_j + {\color{teal}\sum_{j > h} a^k_{hj} x_k x_j} + {\color{brown}\sum_{j > k} a^k_{kj} x_h x_j} \nonumber \\
-&& + {\color{blue}\sum_{i < h \atop i \neq k} a^k_{ih} x_i x_k} + {\color{red}\underbracket[1pt]{a^k_{kh} x_h x_k}_{\text{if } k < h}} \nonumber \\
-&& + {\color{red}\sum_{i < k \atop i \neq h} a^k_{ik} x_i x_h} + {\color{blue}\underbracket[1pt]{a^k_{hk} x_k x_h}_{\text{if } h < k}} \nonumber \\
+&=& \sum_{j \neq h,k} \sum_{i < j \atop i \neq h,k} W^k_{ij} x_i x_j + {\color{green}\sum_{j > h} W^k_{hj} x_k x_j} + {\color{magenta}\sum_{j > k} W^k_{kj} x_h x_j} \nonumber \\
+&& + {\color{blue}\sum_{i < h \atop i \neq k} W^k_{ih} x_i x_k} + {\color{red}\underbracket[1pt]{W^k_{kh} x_h x_k}_{\text{if } k < h}} \nonumber \\
+&& + {\color{red}\sum_{i < k \atop i \neq h} W^k_{ik} x_i x_h} + {\color{blue}\underbracket[1pt]{W^k_{hk} x_k x_h}_{\text{if } h < k}} \nonumber \\
 % ************************************************************************************************
-RHS &=& \sum_j \left[ \sum_{i < j} a_{ij}^h x_i \right] x_j \nonumber \\
+RHS &=& \sum_j \left[ \sum_{i < j} W_{ij}^h x_i \right] x_j \nonumber \\
 % ================================================================================================
-&=& \sum_j \left[ \sum_{i < j \atop i \neq h,k} a^h_{ij} x_i + \underbracket[1pt]{a^h_{hj} x_h}_{\text{if } h < j} + \underbracket[1pt]{a^h_{kj} x_k}_{\text{if } k < j} \right] x_j \nonumber \\
+&=& \sum_j \left[ \sum_{i < j \atop i \neq h,k} W^h_{ij} x_i + \underbracket[1pt]{W^h_{hj} x_h}_{\text{if } h < j} + \underbracket[1pt]{W^h_{kj} x_k}_{\text{if } k < j} \right] x_j \nonumber \\
 % ================================================================================================
-&=& \sum_{j \neq h,k} \left[ \sum_{i < j \atop i \neq h,k} a^h_{ij} x_i + \underbracket[1pt]{a^h_{hj} x_h}_{\text{if } h < j} + \underbracket[1pt]{a^h_{kj} x_k}_{\text{if } k < j} \right] x_j
-+ \left[ \sum_{i < h \atop i \neq k} a^h_{ih} x_i + \underbracket[1pt]{a^h_{kh} x_k}_{\text{if } k < h} \right] x_h
-+ \left[ \sum_{i < k \atop i \neq h} a^h_{ik} x_i + \underbracket[1pt]{a^h_{hk} x_h}_{\text{if } h < k} \right] x_k \nonumber \\
+&=& \sum_{j \neq h,k} \left[ \sum_{i < j \atop i \neq h,k} W^h_{ij} x_i + \underbracket[1pt]{W^h_{hj} x_h}_{\text{if } h < j} + \underbracket[1pt]{W^h_{kj} x_k}_{\text{if } k < j} \right] x_j
++ \left[ \sum_{i < h \atop i \neq k} W^h_{ih} x_i + \underbracket[1pt]{W^h_{kh} x_k}_{\text{if } k < h} \right] x_h
++ \left[ \sum_{i < k \atop i \neq h} W^h_{ik} x_i + \underbracket[1pt]{W^h_{hk} x_h}_{\text{if } h < k} \right] x_k \nonumber \\
 % ================================================================================================
-&=& \sum_{j \neq h,k} \sum_{i < j \atop i \neq h,k} a^h_{ij} x_i x_j + {\color{brown}\sum_{j > h} a^h_{hj} x_h x_j} + {\color{teal}\sum_{j > k} a^h_{kj} x_k x_j} \nonumber \\
-&& + {\color{red}\sum_{i < k \atop i \neq h} a^h_{ih} x_i x_h} + {\color{red}\underbracket[1pt]{a^h_{kh} x_k x_h}_{\text{if } k < h}} \nonumber \\
-&& + {\color{blue}\sum_{i < h \atop i \neq k} a^h_{ik} x_i x_k} + {\color{blue}\underbracket[1pt]{a^h_{hk} x_h x_k}_ {\text{if } h < k}}
+&=& \sum_{j \neq h,k} \sum_{i < j \atop i \neq h,k} W^h_{ij} x_i x_j + {\color{magenta}\sum_{j > h} W^h_{hj} x_h x_j} + {\color{green}\sum_{j > k} W^h_{kj} x_k x_j} \nonumber \\
+&& + {\color{red}\sum_{i < k \atop i \neq h} W^h_{ih} x_i x_h} + {\color{red}\underbracket[1pt]{W^h_{kh} x_k x_h}_{\text{if } k < h}} \nonumber \\
+&& + {\color{blue}\sum_{i < h \atop i \neq k} W^h_{ik} x_i x_k} + {\color{blue}\underbracket[1pt]{W^h_{hk} x_h x_k}_ {\text{if } h < k}}
 \end{eqnarray}
 
 Comparing coefficients yields:
 \begin{alignat}{3}
-a_{ij}^h &= a_{ij}^k && \forall \; h,k. \; j \neq h,k; \; i < j; \; i \neq h,k \nonumber \\
-{\color{brown}a_{hj}^h} &= {\color{brown}a_{kj}^k} && \forall \; h,k. \; j > \max(h,k) \nonumber \\
-{\color{teal}a_{kj}^h} &= {\color{teal}a_{hj}^k} && \forall \; h,k. \; j > \max(h,k) \nonumber \\
-a_{hj}^h &= a_{hj}^k = 0 \quad && \text{if } h < j \le k \nonumber \\
-a_{kj}^h &= a_{kj}^k = 0 \quad && \text{if } k < j \le h \nonumber \\
-{\color{red}a_{ih}^h} &= {\color{red}a_{ik}^k} && \forall \; h,k. \; i < k; \; i \neq h \nonumber \\
-{\color{blue}a_{ik}^h} &= {\color{blue}a_{ih}^k} && \forall \; h,k. \; i < h; \; i \neq k \nonumber \\
-{\color{red}a_{kh}^h} &= {\color{red}a_{kh}^k} && \forall \; h,k. \; k < h \nonumber \\
-{\color{blue}a_{hk}^h} &= {\color{blue}a_{hk}^k} && \forall \; h,k. \; h < k .
+W_{ij}^h &= W_{ij}^k && \forall \; h,k. \; j \neq h,k; \; i < j; \; i \neq h,k \nonumber \\
+{\color{magenta}W_{hj}^h} &= {\color{magenta}W_{kj}^k} && \forall \; h,k. \; j > \max(h,k) \nonumber \\
+{\color{green}W_{kj}^h} &= {\color{green}W_{hj}^k} && \forall \; h,k. \; j > \max(h,k) \nonumber \\
+{\color{magenta}W_{hj}^h} &= {\color{green}W_{hj}^k} = 0 \quad && \forall \; h,k. \; h < j \le k \nonumber \\
+{\color{green}W_{kj}^h} &= {\color{magenta}W_{kj}^k} = 0 \quad && \forall \; h,k. \; k < j \le h \nonumber \\
+{\color{red}W_{ih}^h} &= {\color{red}W_{ik}^k} && \forall \; h,k. \; i < k; \; i \neq h \nonumber \\
+{\color{blue}W_{ik}^h} &= {\color{blue}W_{ih}^k} && \forall \; h,k. \; i < h; \; i \neq k \nonumber \\
+{\color{red}W_{kh}^h} &= {\color{red}W_{kh}^k} && \forall \; h,k. \; k < h \nonumber \\
+{\color{blue}W_{hk}^h} &= {\color{blue}W_{hk}^k} && \forall \; h,k. \; h < k .
 \end{alignat}
 
 How many different colors?
@@ -183,36 +183,36 @@ where $\tau$ is $\sigma$ acting on $y$ as double its length and identifying $y_i
 
 Just notice that the dimension of $y$ is halved:
 \begin{equation}
-\boxed{\mbox{original}} \quad y_j = \sum_i a_{ij} x_i .
+\boxed{\mbox{original}} \quad y_j = \sum_i W_{ij} x_i .
 \end{equation}
 
 ``Folded'' equivariance implies:
 \begin{eqnarray}
 \boxed{\mbox{swapped}} \quad y_j ( \sigma(x_j \; x_k) x) %\mbox{ or } y_m ( \sigma(x_m \; x_k) x)
 &=& \sigma \cdot y_j = y_k \quad \boxed{\mbox{original}} \\
-\sum_{i \neq j,k} a_{ij} x_i + a_{kj} x_j + a_{jj} x_k &=& \sum_{i \neq j,k} a_{ik} x_i + a_{jk} x_j + a_{kk} x_k  \nonumber
-% \mbox{or } \sum_{i \neq m,k} a_{im} x_i + a_{km} x_m + a_{mm} x_k & & \nonumber
+\sum_{i \neq j,k} W_{ij} x_i + W_{kj} x_j + W_{jj} x_k &=& \sum_{i \neq j,k} W_{ik} x_i + W_{jk} x_j + W_{kk} x_k  \nonumber
+% \mbox{or } \sum_{i \neq m,k} W_{im} x_i + W_{km} x_m + W_{mm} x_k & & \nonumber
 \end{eqnarray}
 % where $m = j - N/2$.  This gives rise to 2 sets of equations.
 with the restriction $j \in \{ 1,..., N/2 \}$, and $k \in \{ 1,..., N \}$.
 
 The constraints obtained are same as before, except that index ranges are different:
 \begin{eqnarray}
-a_{ij} &=& a_{ik} \quad \quad \forall \;  j, k, (i \neq j, k) \nonumber \\
-a_{kj} &=& a_{jk} \quad \quad \forall \;  j, k \nonumber \\
-a_{jj} &=& a_{kk} \quad \quad \forall \;  j, k \nonumber
+W_{ij} &=& W_{ik} \quad \quad \forall \;  j, k, (i \neq j, k) \nonumber \\
+W_{kj} &=& W_{jk} \quad \quad \forall \;  j, k \nonumber \\
+W_{jj} &=& W_{kk} \quad \quad \forall \;  j, k \nonumber
 %\hline \nonumber\\
-%a_{ij} &=& a_{ik} \quad \quad \forall \;  j > N/2, k \le N/2, (i \neq j, k) \nonumber \\
-%a_{kj} &=& a_{jk} \quad \quad \forall \;  j > N/2, k \le N/2 \nonumber \\
-%a_{jj} &=& a_{kk} \quad \quad \forall \;  j > N/2, k \le N/2 \nonumber\\
+%W_{ij} &=& W_{ik} \quad \quad \forall \;  j > N/2, k \le N/2, (i \neq j, k) \nonumber \\
+%W_{kj} &=& W_{jk} \quad \quad \forall \;  j > N/2, k \le N/2 \nonumber \\
+%W_{jj} &=& W_{kk} \quad \quad \forall \;  j > N/2, k \le N/2 \nonumber\\
 %\hline \nonumber\\
-%a_{ij} &=& a_{ik} \quad \quad \forall \;  j \le N/2, k > N/2, (i \neq j, k) \nonumber \\
-%a_{kj} &=& a_{jk} \quad \quad \forall \;  j \le N/2, k > N/2 \nonumber \\
-%a_{jj} &=& a_{kk} \quad \quad \forall \;  j \le N/2, k > N/2 \nonumber\\
+%W_{ij} &=& W_{ik} \quad \quad \forall \;  j \le N/2, k > N/2, (i \neq j, k) \nonumber \\
+%W_{kj} &=& W_{jk} \quad \quad \forall \;  j \le N/2, k > N/2 \nonumber \\
+%W_{jj} &=& W_{kk} \quad \quad \forall \;  j \le N/2, k > N/2 \nonumber\\
 %\hline \nonumber\\
-%a_{ij} &=& a_{ik} \quad \quad \forall \;  j > N/2, k > N/2, (i \neq j, k) \nonumber \\
-%a_{kj} &=& a_{jk} \quad \quad \forall \;  j > N/2, k > N/2 \nonumber \\
-%a_{jj} &=& a_{kk} \quad \quad \forall \;  j > N/2, k > N/2
+%W_{ij} &=& W_{ik} \quad \quad \forall \;  j > N/2, k > N/2, (i \neq j, k) \nonumber \\
+%W_{kj} &=& W_{jk} \quad \quad \forall \;  j > N/2, k > N/2 \nonumber \\
+%W_{jj} &=& W_{kk} \quad \quad \forall \;  j > N/2, k > N/2
 \end{eqnarray}
 
 These constraints give rise to a matrix of this form (for the $6 \times 3$ case, numbers represent different colors):
