@@ -163,6 +163,13 @@ Non-diagonal entries of different blocks are equal, if the block indices are dif
 
 The last equation causes non-diagonal weights to have a certain symmetry about the diagonal.  
 
+\section{Programmatic way to find invariant constraints on weights}
+
+Define a scheme to index all the weights in the multi-layer NN: $W_{ij}^{k \ell}$.  Then the entire NN function can be expanded as a polynomial with coefficients from $W$.
+
+For one quadratic layer, there would be ??? terms.  The coefficients for each term would be composed out of $W$.  Permuting the input would require coefficients of \textbf{like} terms to be equal.
+
+
 \section{Quadratic, multi-layer, unconstrained case}
 
 In the last section we have \textbf{equivariant} layers composed together to form a neural network.  Now we relax the constraints so that the multi-layer network is free to have any weights except that the output must be \textbf{invariant}.
