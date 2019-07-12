@@ -167,8 +167,11 @@ The last equation causes non-diagonal weights to have a certain symmetry about t
 
 Define a scheme to index all the weights in the multi-layer NN: $W_{ij}^{k \ell}$.  Then the entire NN function can be expanded as a polynomial with coefficients from $W$.
 
-For one quadratic layer, there would be ??? terms.  The coefficients for each term would be composed out of $W$.  Permuting the input would require coefficients of \textbf{like} terms to be equal.
+For one quadratic layer, there would be a total of $\displaystyle n \left( n^2 - \frac{n (n - 1)}{2} \right) = \frac{n^2 (n + 1)}{2}$ terms.  The coefficients for each term would be composed out of $W_{ij}^{k \ell}$.  Permuting the input would require coefficients of \textbf{like} terms to be equal.  We should try all pairwise permutations of $n$ inputs, of which there are $n (n - 1) / 2$.
 
+On the second layer, the output would be composed of sums and products of polynomials with second-layer weights.  Thus the new coefficients would be \textbf{polynomials} in multi-layer weights.  Invariance or equivariance requires that we compare coefficients of like terms, thus yielding \textbf{equalities with polynomials} on both sides.  Such conditions seems much more complex than the single-layer conditions for equivariance.
+
+This means that the weights would be in an \textbf{algebraic variety} of reduced dimension.  Our objective is to update / learn the weights \textbf{within} this variety.  
 
 \section{Quadratic, multi-layer, unconstrained case}
 
