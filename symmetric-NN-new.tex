@@ -3,6 +3,7 @@
 \usepackage{xeCJK}
 \setCJKmainfont[BoldFont=SimHei,ItalicFont=KaiTi]{SimSun}
 \usepackage{color}
+\usepackage{hyperref}
 
 \usepackage{mathtools}
 \usepackage{hyperref}
@@ -92,7 +93,7 @@ y = (A x) \cdot x + B x + C .
 
 We just focus on the quadratic term $(W x) \cdot x$:
 \begin{equation}
-\boxed{\mbox{original}} \quad y_k = \sum_j \left[ \sum_{i < j} W_{ij}^k x_i \right] x_j .
+\boxed{\mbox{original}} \quad y_k = \sum_j \left[ \sum_{i \le j} W_{ij}^k x_i \right] x_j .
 \end{equation}
 Note that the matrix $W$ is ``3-dimensional'' and has $N \times N \times N$ entries.
 
@@ -101,6 +102,8 @@ Equivariance implies:
 \boxed{\mbox{swapped}} \quad y_k ( \sigma(x_k \; x_h) \cdot x) = \sigma \cdot y_k = y_h \quad \boxed{\mbox{original}}
 % \sum_{j \neq h,k} \sum_{i \neq h,k} W_{ij}^k x_i x_j + W_{hh}^k x_k^2 + W_{kh}^k x_h x_k + W_{hk}^k x_k x_h + W_{kk}^k x_h^2 &=& \sum_{j \neq h,k} \sum_{i \neq h,k} W_{ij}^h x_i x_j + W_{hh}^h x_h^2 + W_{kh}^h x_k x_h + W_{hk}^h x_h x_k + W_{kk}^h x_k^2 \nonumber
 \end{equation}
+
+NOTE: I need to correct the following with $i < j$ changed to $i \le j$:
 
 \begin{eqnarray}
 LHS &=& \sum_j \left[ \sum_{i < j \atop i \neq h,k} W^k_{ij} x_i + \underbracket[1pt]{W^k_{hj} x_k}_{\text{if } h < j} + \underbracket[1pt]{W^k_{kj} x_h}_{\text{if } k < j} \right] \sigma \cdot x_j \quad \quad \boxed{\text{apply } \sigma \cdot x_i} \nonumber \\
