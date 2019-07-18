@@ -5,6 +5,7 @@
 \usepackage{color}
 
 \usepackage{mathtools}
+\usepackage{hyperref}
 
 \title{Symmetric neural networks}
 \author{YKY}
@@ -163,6 +164,12 @@ Non-diagonal entries of different blocks are equal, if the block indices are dif
 
 The last equation causes non-diagonal weights to have a certain symmetry about the diagonal.  
 
+For example, the number of monomials in 3 variables and of degree $\le 8$ is:
+\begin{eqnarray}
+{10\choose8} + {9\choose7} + {8\choose6} + .... + {4\choose2} + {3\choose1} + {3\choose0} \nonumber \\
+= 45 + 36 + 28 + 21 + 15 + 10 + 6 + 3 + 1 = 165
+\end{eqnarray}
+
 \section{Programmatic way to find invariant constraints on weights}
 
 Define a scheme to index all the weights in the multi-layer NN: $W_{ij}^{k \ell}$.  Then the entire NN function can be expanded as a polynomial with coefficients from $W$.
@@ -176,8 +183,6 @@ This means that the weights would be in an \textbf{algebraic variety} of reduced
 \section{Quadratic, multi-layer, unconstrained case}
 
 In the last section we have \textbf{equivariant} layers composed together to form a neural network.  Now we relax the constraints so that the multi-layer network is free to have any weights except that the output must be \textbf{invariant}.
-
-
 
 
 \section{With output space ``folded in half''}
