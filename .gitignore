@@ -13,7 +13,9 @@
 # these rules might exclude image files for figures etc.
 # *.ps
 # *.eps
-*.pdf
+
+# **** YKY: we want to keep PDF files for sharing online in 知乎 etc
+# *.pdf
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
