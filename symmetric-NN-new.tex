@@ -131,17 +131,17 @@ Let $\sigma := (x_k \rightleftharpoons x_h)$, meaning \textbf{transposition} of 
 & + {\color{blue}\sum_{i < k \atop i \neq h} W^h_{ik} x_i x_k} + {\color{blue}\underbracket[1pt]{W^h_{hk} x_h x_k}_ {\text{if } h \le k} } + W^h_{kk} x_k^2
 \end{align}
 
-Comparing coefficients yields:
+Comparing coefficients yields the following equations (except for the ``colorful'' ones):
 \begin{alignat}{3}
-W_{ij}^h &= W_{ij}^k && \forall \; h,k. \; j \neq h,k; \; i \le j; \; i \neq h,k \nonumber \\
-{\color{cyan}W_{hj}^h} &= {\color{cyan}W_{kj}^k} && \forall \; h,k. \; j > \max(h,k) \nonumber \\
-{\color{olive}W_{kj}^h} &= {\color{olive}W_{hj}^k} && \forall \; h,k. \; j > \max(h,k) \nonumber \\
-{\color{cyan}W_{hj}^h} &= {\color{olive}W_{hj}^k} = 0 \quad && \forall \; h,k. \; h < j \le k \nonumber \\
-{\color{olive}W_{kj}^h} &= {\color{cyan}W_{kj}^k} = 0 \quad && \forall \; h,k. \; k < j \le h \nonumber \\
-{\color{red}W_{ih}^h} &= {\color{red}W_{ik}^k} && \forall \; h,k. \; i \le k; \; i \neq h \nonumber \\
-{\color{blue}W_{ik}^h} &= {\color{blue}W_{ih}^k} && \forall \; h,k. \; i \le h; \; i \neq k \nonumber \\
-{\color{red}W_{kh}^h} &= {\color{red}W_{kh}^k} && \forall \; h,k. \; k \le h \nonumber \\
-{\color{blue}W_{hk}^h} &= {\color{blue}W_{hk}^k} && \forall \; h,k. \; h \le k \nonumber \\
+W_{ij}^h &= W_{ij}^k \quad \quad && \forall \; h,k. \; j \neq h,k; \; i \le j; \; i \neq h,k \nonumber \\
+%{\color{cyan}W_{hj}^h} &= {\color{cyan}W_{kj}^k} && \forall \; h,k. \; j > \max(h,k) \nonumber \\
+%{\color{olive}W_{kj}^h} &= {\color{olive}W_{hj}^k} && \forall \; h,k. \; j > \max(h,k) \nonumber \\
+%{\color{cyan}W_{hj}^h} &= {\color{olive}W_{hj}^k} = 0 \quad && \forall \; h,k. \; h < j \le k \nonumber \\
+%{\color{olive}W_{kj}^h} &= {\color{cyan}W_{kj}^k} = 0 \quad && \forall \; h,k. \; k < j \le h \nonumber \\
+%{\color{red}W_{ih}^h} &= {\color{red}W_{ik}^k} && \forall \; h,k. \; i \le k; \; i \neq h \nonumber \\
+%{\color{blue}W_{ik}^h} &= {\color{blue}W_{ih}^k} && \forall \; h,k. \; i \le h; \; i \neq k \nonumber \\
+%{\color{red}W_{kh}^h} &= {\color{red}W_{kh}^k} && \forall \; h,k. \; k \le h \nonumber \\
+%{\color{blue}W_{hk}^h} &= {\color{blue}W_{hk}^k} && \forall \; h,k. \; h \le k \nonumber \\
 W_{hh}^k &= W_{kk}^h && \forall \; h,k. \nonumber \\
 W_{kk}^k &= W_{hh}^h && \forall \; h,k.
 \end{alignat}
@@ -149,6 +149,10 @@ W_{kk}^k &= W_{hh}^h && \forall \; h,k.
 The following diagram shows the situation of the index $j$ in the {\color{cyan}cyan} and {\color{olive}olive} cases:
 \begin{equation}
 \vcenter{\hbox{\includegraphics[scale=0.6]{index-j-diagram.png}}}
+\end{equation}
+
+\begin{equation}
+\vcenter{\hbox{\includegraphics[scale=0.6]{index-grid-2D.png}}}
 \end{equation}
 
 How many different colors?
