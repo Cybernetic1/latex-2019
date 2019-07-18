@@ -97,51 +97,59 @@ We just focus on the quadratic term $(W x) \cdot x$:
 \end{equation}
 Note that the matrix $W$ is ``3-dimensional'' and has $N \times N \times N$ entries.
 
-Equivariance implies:
+Let $\sigma := (x_k \rightleftharpoons x_h)$, meaning \textbf{transposition} of the two elements.  Equivariance implies:
 \begin{equation}
-\boxed{\mbox{swapped}} \quad y_k ( \sigma(x_k \; x_h) \cdot x) = \sigma \cdot y_k = y_h \quad \boxed{\mbox{original}}
+\boxed{\mbox{LHS}} \quad y_k ( \sigma \cdot x) = \sigma \cdot y_k = y_h \quad \boxed{\mbox{RHS}}
 % \sum_{j \neq h,k} \sum_{i \neq h,k} W_{ij}^k x_i x_j + W_{hh}^k x_k^2 + W_{kh}^k x_h x_k + W_{hk}^k x_k x_h + W_{kk}^k x_h^2 &=& \sum_{j \neq h,k} \sum_{i \neq h,k} W_{ij}^h x_i x_j + W_{hh}^h x_h^2 + W_{kh}^h x_k x_h + W_{hk}^h x_h x_k + W_{kk}^h x_k^2 \nonumber
 \end{equation}
 
-NOTE: I need to correct the following with $i < j$ changed to $i \le j$:
-
-\begin{eqnarray}
-LHS &=& \sum_j \left[ \sum_{i < j \atop i \neq h,k} W^k_{ij} x_i + \underbracket[1pt]{W^k_{hj} x_k}_{\text{if } h < j} + \underbracket[1pt]{W^k_{kj} x_h}_{\text{if } k < j} \right] \sigma \cdot x_j \quad \quad \boxed{\text{apply } \sigma \cdot x_i} \nonumber \\
-% ================================================================================================
-&=& \sum_{j \neq h,k} \left[ \sum_{i < j \atop i \neq h,k} W^k_{ij} x_i + \underbracket[1pt]{W^k_{hj} x_k}_{\text{if } h < j} + \underbracket[1pt]{W^k_{kj} x_h}_{\text{if } k < j} \right] x_j
-+ \left[ \sum_{i < h \atop i \neq k} W^k_{ih} x_i + \underbracket[1pt]{W^k_{kh} x_h}_{\text{if } k < h} \right] x_k
-+ \left[ \sum_{i < k \atop i \neq h} W^k_{ik} x_i + \underbracket[1pt]{W^k_{hk} x_k}_{\text{if } h < k} \right] x_h \nonumber \\
-& & \boxed{\text{apply } \sigma \cdot x_j} \nonumber \\
-% ================================================================================================
-&=& \sum_{j \neq h,k} \sum_{i < j \atop i \neq h,k} W^k_{ij} x_i x_j + {\color{green}\sum_{j > h} W^k_{hj} x_k x_j} + {\color{magenta}\sum_{j > k} W^k_{kj} x_h x_j} \nonumber \\
-&& + {\color{blue}\sum_{i < h \atop i \neq k} W^k_{ih} x_i x_k} + {\color{red}\underbracket[1pt]{W^k_{kh} x_h x_k}_{\text{if } k < h}} \nonumber \\
-&& + {\color{red}\sum_{i < k \atop i \neq h} W^k_{ik} x_i x_h} + {\color{blue}\underbracket[1pt]{W^k_{hk} x_k x_h}_{\text{if } h < k}} \nonumber \\
-% ************************************************************************************************
-RHS &=& \sum_j \left[ \sum_{i < j} W_{ij}^h x_i \right] x_j \nonumber \\
-% ================================================================================================
-&=& \sum_j \left[ \sum_{i < j \atop i \neq h,k} W^h_{ij} x_i + \underbracket[1pt]{W^h_{hj} x_h}_{\text{if } h < j} + \underbracket[1pt]{W^h_{kj} x_k}_{\text{if } k < j} \right] x_j \nonumber \\
-% ================================================================================================
-&=& \sum_{j \neq h,k} \left[ \sum_{i < j \atop i \neq h,k} W^h_{ij} x_i + \underbracket[1pt]{W^h_{hj} x_h}_{\text{if } h < j} + \underbracket[1pt]{W^h_{kj} x_k}_{\text{if } k < j} \right] x_j
-+ \left[ \sum_{i < h \atop i \neq k} W^h_{ih} x_i + \underbracket[1pt]{W^h_{kh} x_k}_{\text{if } k < h} \right] x_h
-+ \left[ \sum_{i < k \atop i \neq h} W^h_{ik} x_i + \underbracket[1pt]{W^h_{hk} x_h}_{\text{if } h < k} \right] x_k \nonumber \\
-% ================================================================================================
-&=& \sum_{j \neq h,k} \sum_{i < j \atop i \neq h,k} W^h_{ij} x_i x_j + {\color{magenta}\sum_{j > h} W^h_{hj} x_h x_j} + {\color{green}\sum_{j > k} W^h_{kj} x_k x_j} \nonumber \\
-&& + {\color{red}\sum_{i < k \atop i \neq h} W^h_{ih} x_i x_h} + {\color{red}\underbracket[1pt]{W^h_{kh} x_k x_h}_{\text{if } k < h}} \nonumber \\
-&& + {\color{blue}\sum_{i < h \atop i \neq k} W^h_{ik} x_i x_k} + {\color{blue}\underbracket[1pt]{W^h_{hk} x_h x_k}_ {\text{if } h < k}}
-\end{eqnarray}
+\begin{align}
+\boxed{\mbox{LHS}} &= y_k ( \sigma \cdot x ) = \sum_j \left[ \sum_{i \le j} W_{ij}^k  \; \sigma \cdot x_i \right] \sigma \cdot x_j \nonumber \\
+&= \sum_j \left[ \sum_{i \le j \atop i \neq h,k} W^k_{ij} x_i + \underbracket[1pt]{W^k_{hj} x_k}_{\text{if } h \le j} + \underbracket[1pt]{W^k_{kj} x_h}_{\text{if } k \le j} \right] \sigma \cdot x_j \quad \quad \boxed{\text{apply } \sigma \cdot x_i} \nonumber \\
+% 
+&= \sum_{j \neq h,k} \left[ \sum_{i \le j \atop i \neq h,k} W^k_{ij} x_i + \underbracket[1pt]{W^k_{hj} x_k}_{\text{if } h \le j} + \underbracket[1pt]{W^k_{kj} x_h}_{\text{if } k \le j} \right] x_j 
+	\quad \quad \quad \boxed{\text{apply } \sigma \cdot x_j} \nonumber \\
+	& \quad \quad + \left[ \sum_{i \le h \atop i \neq k} W^k_{ih} x_i + W^k_{hh} x_k + \underbracket[1pt]{W^k_{kh} x_h}_{\text{if } k \le h} \right] x_k
+	+ \left[ \sum_{i \le k \atop i \neq h} W^k_{ik} x_i + \underbracket[1pt]{W^k_{hk} x_k}_{\text{if } h \le k} + W^k_{kk} x_h \right] x_h \nonumber \\
+% 
+&= \sum_{j \neq h,k} \sum_{i \le j \atop i \neq h,k} W^k_{ij} x_i x_j + {\color{olive}\sum_{j > h} W^k_{hj} x_k x_j} + {\color{cyan}\sum_{j > k} W^k_{kj} x_h x_j} \nonumber \\
+& \quad \quad + {\color{blue}\sum_{i \le h \atop i \neq k} W^k_{ih} x_i x_k} + W^k_{hh} x_k^2 + {\color{red}  \underbracket[1pt]{W^k_{kh} x_h x_k}_{\text{if } k \le h}} \nonumber \\
+& \quad \quad + {\color{red}\sum_{i \le k \atop i \neq h} W^k_{ik} x_i x_h} + {\color{blue} \underbracket[1pt]{W^k_{hk} x_k x_h}_{\text{if } h \le k} } + W^k_{kk} x_h^2 \nonumber \\
+% 
+% ============================================================================================
+% 
+\boxed{\mbox{RHS}} &= \sum_j \left[ \sum_{i \le j} W_{ij}^h x_i \right] x_j \nonumber \\
+% 
+&= \sum_j \left[ \sum_{i \le j \atop i \neq h,k} W^h_{ij} x_i + \underbracket[1pt]{W^h_{hj} x_h}_{\text{if } h \le j} + \underbracket[1pt]{W^h_{kj} x_k}_{\text{if } k \le j} \right] x_j \nonumber \\
+% 
+&= \sum_{j \neq h,k} \left[ \sum_{i \le j \atop i \neq h,k} W^h_{ij} x_i + \underbracket[1pt]{W^h_{hj} x_h}_{\text{if } h \le j} + \underbracket[1pt]{W^h_{kj} x_k}_{\text{if } k \le j} \right] x_j \nonumber \\
+& \quad \quad + \left[ \sum_{i \le h \atop i \neq k} W^h_{ih} x_i + W^h_{hh} x_h + \underbracket[1pt]{W^h_{kh} x_k}_{\text{if } k \le h} \right] x_h
++ \left[ \sum_{i \le k \atop i \neq h} W^h_{ik} x_i + \underbracket[1pt]{W^h_{hk} x_h}_{\text{if } h \le k} + W^h_{kk} x_k \right] x_k \nonumber \\
+% 
+&= \sum_{j \neq h,k} \sum_{i \le j \atop i \neq h,k} W^h_{ij} x_i x_j + {\color{cyan}\sum_{j > h} W^h_{hj} x_h x_j} + {\color{olive}\sum_{j > k} W^h_{kj} x_k x_j} \nonumber \\
+& + {\color{red}\sum_{i \le k \atop i \neq h} W^h_{ih} x_i x_h} + W^h_{hh} x_h^2 + {\color{red} \underbracket[1pt]{W^h_{kh} x_k x_h}_{\text{if } k \le h}} \nonumber \\
+& + {\color{blue}\sum_{i \le h \atop i \neq k} W^h_{ik} x_i x_k} + {\color{blue}\underbracket[1pt]{W^h_{hk} x_h x_k}_ {\text{if } h \le k} } + W^h_{kk} x_k^2
+\end{align}
 
 Comparing coefficients yields:
 \begin{alignat}{3}
-W_{ij}^h &= W_{ij}^k && \forall \; h,k. \; j \neq h,k; \; i < j; \; i \neq h,k \nonumber \\
-{\color{magenta}W_{hj}^h} &= {\color{magenta}W_{kj}^k} && \forall \; h,k. \; j > \max(h,k) \nonumber \\
-{\color{green}W_{kj}^h} &= {\color{green}W_{hj}^k} && \forall \; h,k. \; j > \max(h,k) \nonumber \\
-{\color{magenta}W_{hj}^h} &= {\color{green}W_{hj}^k} = 0 \quad && \forall \; h,k. \; h < j \le k \nonumber \\
-{\color{green}W_{kj}^h} &= {\color{magenta}W_{kj}^k} = 0 \quad && \forall \; h,k. \; k < j \le h \nonumber \\
-{\color{red}W_{ih}^h} &= {\color{red}W_{ik}^k} && \forall \; h,k. \; i < k; \; i \neq h \nonumber \\
-{\color{blue}W_{ik}^h} &= {\color{blue}W_{ih}^k} && \forall \; h,k. \; i < h; \; i \neq k \nonumber \\
-{\color{red}W_{kh}^h} &= {\color{red}W_{kh}^k} && \forall \; h,k. \; k < h \nonumber \\
-{\color{blue}W_{hk}^h} &= {\color{blue}W_{hk}^k} && \forall \; h,k. \; h < k .
+W_{ij}^h &= W_{ij}^k && \forall \; h,k. \; j \neq h,k; \; i \le j; \; i \neq h,k \nonumber \\
+{\color{cyan}W_{hj}^h} &= {\color{cyan}W_{kj}^k} && \forall \; h,k. \; j > \max(h,k) \nonumber \\
+{\color{olive}W_{kj}^h} &= {\color{olive}W_{hj}^k} && \forall \; h,k. \; j > \max(h,k) \nonumber \\
+{\color{cyan}W_{hj}^h} &= {\color{olive}W_{hj}^k} = 0 \quad && \forall \; h,k. \; h < j \le k \nonumber \\
+{\color{olive}W_{kj}^h} &= {\color{cyan}W_{kj}^k} = 0 \quad && \forall \; h,k. \; k < j \le h \nonumber \\
+{\color{red}W_{ih}^h} &= {\color{red}W_{ik}^k} && \forall \; h,k. \; i \le k; \; i \neq h \nonumber \\
+{\color{blue}W_{ik}^h} &= {\color{blue}W_{ih}^k} && \forall \; h,k. \; i \le h; \; i \neq k \nonumber \\
+{\color{red}W_{kh}^h} &= {\color{red}W_{kh}^k} && \forall \; h,k. \; k \le h \nonumber \\
+{\color{blue}W_{hk}^h} &= {\color{blue}W_{hk}^k} && \forall \; h,k. \; h \le k \nonumber \\
+W_{hh}^k &= W_{kk}^h && \forall \; h,k. \nonumber \\
+W_{kk}^k &= W_{hh}^h && \forall \; h,k.
 \end{alignat}
+
+The following diagram shows the situation of the index $j$ in the {\color{cyan}cyan} and {\color{olive}olive} cases:
+\begin{equation}
+\vcenter{\hbox{\includegraphics[scale=0.6]{index-j-diagram.png}}}
+\end{equation}
 
 How many different colors?
 \begin{equation}
