@@ -109,12 +109,12 @@ Let $\sigma := (x_k \rightleftharpoons x_h)$, meaning \textbf{transposition} of 
 % 
 &= \sum_{j \neq h,k} \left[ \sum_{i \le j \atop i \neq h,k} W^k_{ij} x_i + \underbracket[1pt]{W^k_{hj} x_k}_{\text{if } h \le j} + \underbracket[1pt]{W^k_{kj} x_h}_{\text{if } k \le j} \right] x_j 
 	\quad \quad \quad \boxed{\text{apply } \sigma \cdot x_j} \nonumber \\
-	& \quad \quad + \left[ \sum_{i \le h \atop i \neq k} W^k_{ih} x_i + W^k_{hh} x_k + \underbracket[1pt]{W^k_{kh} x_h}_{\text{if } k \le h} \right] x_k
-	+ \left[ \sum_{i \le k \atop i \neq h} W^k_{ik} x_i + \underbracket[1pt]{W^k_{hk} x_k}_{\text{if } h \le k} + W^k_{kk} x_h \right] x_h \nonumber \\
+	& \quad \quad + \left[ \sum_{i < h \atop i \neq k} W^k_{ih} x_i + W^k_{hh} x_k + \underbracket[1pt]{W^k_{kh} x_h}_{\text{if } k \le h} \right] x_k
+	+ \left[ \sum_{i < k \atop i \neq h} W^k_{ik} x_i + \underbracket[1pt]{W^k_{hk} x_k}_{\text{if } h \le k} + W^k_{kk} x_h \right] x_h \nonumber \\
 % 
 &= \sum_{j \neq h,k} \sum_{i \le j \atop i \neq h,k} W^k_{ij} x_i x_j + {\color{olive}\sum_{j > h} W^k_{hj} x_k x_j} + {\color{cyan}\sum_{j > k} W^k_{kj} x_h x_j} \nonumber \\
-& \quad \quad + {\color{blue}\sum_{i \le h \atop i \neq k} W^k_{ih} x_i x_k} + W^k_{hh} x_k^2 + {\color{red}  \underbracket[1pt]{W^k_{kh} x_h x_k}_{\text{if } k \le h}} \nonumber \\
-& \quad \quad + {\color{red}\sum_{i \le k \atop i \neq h} W^k_{ik} x_i x_h} + {\color{blue} \underbracket[1pt]{W^k_{hk} x_k x_h}_{\text{if } h \le k} } + W^k_{kk} x_h^2 \nonumber \\
+& \quad \quad + {\color{blue}\sum_{i < h \atop i \neq k} W^k_{ih} x_i x_k} + W^k_{hh} x_k^2 + {\color{red}  \underbracket[1pt]{W^k_{kh} x_h x_k}_{\text{if } k \le h}} \nonumber \\
+& \quad \quad + {\color{red}\sum_{i < k \atop i \neq h} W^k_{ik} x_i x_h} + {\color{blue} \underbracket[1pt]{W^k_{hk} x_k x_h}_{\text{if } h \le k} } + W^k_{kk} x_h^2 \nonumber \\
 % 
 % ============================================================================================
 % 
@@ -123,12 +123,12 @@ Let $\sigma := (x_k \rightleftharpoons x_h)$, meaning \textbf{transposition} of 
 &= \sum_j \left[ \sum_{i \le j \atop i \neq h,k} W^h_{ij} x_i + \underbracket[1pt]{W^h_{hj} x_h}_{\text{if } h \le j} + \underbracket[1pt]{W^h_{kj} x_k}_{\text{if } k \le j} \right] x_j \nonumber \\
 % 
 &= \sum_{j \neq h,k} \left[ \sum_{i \le j \atop i \neq h,k} W^h_{ij} x_i + \underbracket[1pt]{W^h_{hj} x_h}_{\text{if } h \le j} + \underbracket[1pt]{W^h_{kj} x_k}_{\text{if } k \le j} \right] x_j \nonumber \\
-& \quad \quad + \left[ \sum_{i \le h \atop i \neq k} W^h_{ih} x_i + W^h_{hh} x_h + \underbracket[1pt]{W^h_{kh} x_k}_{\text{if } k \le h} \right] x_h
-+ \left[ \sum_{i \le k \atop i \neq h} W^h_{ik} x_i + \underbracket[1pt]{W^h_{hk} x_h}_{\text{if } h \le k} + W^h_{kk} x_k \right] x_k \nonumber \\
+& \quad \quad + \left[ \sum_{i < h \atop i \neq k} W^h_{ih} x_i + W^h_{hh} x_h + \underbracket[1pt]{W^h_{kh} x_k}_{\text{if } k \le h} \right] x_h
++ \left[ \sum_{i < k \atop i \neq h} W^h_{ik} x_i + \underbracket[1pt]{W^h_{hk} x_h}_{\text{if } h \le k} + W^h_{kk} x_k \right] x_k \nonumber \\
 % 
 &= \sum_{j \neq h,k} \sum_{i \le j \atop i \neq h,k} W^h_{ij} x_i x_j + {\color{cyan}\sum_{j > h} W^h_{hj} x_h x_j} + {\color{olive}\sum_{j > k} W^h_{kj} x_k x_j} \nonumber \\
-& + {\color{red}\sum_{i \le k \atop i \neq h} W^h_{ih} x_i x_h} + W^h_{hh} x_h^2 + {\color{red} \underbracket[1pt]{W^h_{kh} x_k x_h}_{\text{if } k \le h}} \nonumber \\
-& + {\color{blue}\sum_{i \le h \atop i \neq k} W^h_{ik} x_i x_k} + {\color{blue}\underbracket[1pt]{W^h_{hk} x_h x_k}_ {\text{if } h \le k} } + W^h_{kk} x_k^2
+& + {\color{red}\sum_{i < h \atop i \neq k} W^h_{ih} x_i x_h} + W^h_{hh} x_h^2 + {\color{red} \underbracket[1pt]{W^h_{kh} x_k x_h}_{\text{if } k \le h}} \nonumber \\
+& + {\color{blue}\sum_{i < k \atop i \neq h} W^h_{ik} x_i x_k} + {\color{blue}\underbracket[1pt]{W^h_{hk} x_h x_k}_ {\text{if } h \le k} } + W^h_{kk} x_k^2
 \end{align}
 
 Comparing coefficients yields:
