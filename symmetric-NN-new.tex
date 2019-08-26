@@ -18,23 +18,30 @@ Permutation invariance of a neural network means that components of the input ve
 
 Invariance means that:
 \begin{equation}
-\forall \sigma \in \mathfrak{S}_n. \; F(\sigma \cdot x) = F(x)
+\label{eqn:invariance}
+\boxed{\mbox{invariance}} \quad \forall \sigma \in \mathfrak{S}_n. \; F(\sigma \cdot x) = F(x)
 \end{equation}
 The related concept of \textbf{equivariance} is defined by:
 \begin{equation}
-\forall \sigma \in \mathfrak{S}_n. \; F(\sigma \cdot x) = \sigma \cdot F(x)
+\label{eqn:invariance}
+\boxed{\mbox{equivariance}} \quad \forall \sigma \in \mathfrak{S}_n. \; F(\sigma \cdot x) = \sigma \cdot F(x)
 \end{equation}
 (assuming the output also consists of $n$ components).
 
-There are several possible ways to achieve permutation invariance in neural networks:
+There appears to be several ways to achieve permutation invariance in neural networks, but they all have various difficulties or drawbacks.  We explore them in this paper:
 \renewcommand{\theenumi}{(\Alph{enumi})}
 \begin{enumerate}
-	\item By constraining the weights.  If the activation function is an analytic function (whose Taylor series expansion has an infinite number of terms), there is in general no hope of 
-	\item By converting the input vector
-	\item 
+	\item By constraining the weights.  If the activation function is an \textbf{analytic function} (whose Taylor series expansion has an infinite number of terms), there is in general no hope of making the 2 sides of (\ref{eqn:invariance}) equal, because there is only a finite number of weights on both sides.  The only hope of making (\ref{eqn:invariance}) equal is by using \textbf{polynomial} activation functions.  Since the composition of polynomials are polynomials, both sides of (\ref{eqn:invariance}) are polynomials, so we can compare the coefficients of like terms.  This leads to a set of (equality) constraints for the weights.  The drawback of this method is that the number of constraints grows exponentially as the number of layers increases.
+
+	\item By mapping the input vector into a \textbf{free commutative} group, and embedding its Cayley graph into vector space.  As is well known, the Cayley graph of the \textbf{free group} $F_n$ is a tree, and can be embedded into the hyperbolic disc.  However, the Abelianization of $F_n$ becomes $F_n^{\text{Ab}} \cong \mathbb{Z}^n$ is not a tree but is like a ``grid'' of dimension $n$.  It seems impossible to embed $\mathbb{Z}^n$ into lower dimensions unless \textbf{fractal} structures are involved.  However, fractals are precisely a domain where neural networks may perform badly.
+	
+	\item By transforming the input vector space into the frequency domain.
+	
+	\item By constructing a symmetric function of the form $g(h(x_1), h(x_2), ..., h(x_n))$ where $g$ is an arbitrary symmetric function.  This idea is from PointNet, but it seems to be very restrictive due to the choice of the function $g$.  It seems that no choice of $g$ exists such that the resulting family of functions are \textbf{dense} in a function space of interest.  The denseness requirement comes from the Stone-Weierstrass theorem (1885, 1937).
 \end{enumerate}
 
-\section{Invariant theory}
+\renewcommand{\thesection}{(\Alph{section})}
+\section{Permutation-invariant polynomial neural networks}
 
 Traditional neural network:
 \begin{eqnarray}
@@ -78,7 +85,7 @@ This is one network layer complete with quadratic, linear, and constant terms:
 Notice that this block should be repeated for each output $y_1, ..., y_3$.
 
 
-\section{General case for $y = W x$}
+\subsection{General case for $y = W x$}
 
 \begin{equation}
 \boxed{\mbox{original}} \quad y_j = \sum_i W_{ij} x_i .
@@ -104,7 +111,7 @@ In other words, the matrix $W$ is of the form:
 W = \alpha I + \beta 1 1^T .
 \end{equation}
 
-\section{Case for $y_k = W_k x \cdot x$}
+\subsection{Quadratic case: $y_k = W_k x \cdot x$}
 
 The general form of a ``quadratic'' vector function is:
 \begin{equation}
@@ -205,7 +212,7 @@ For example, the number of monomials in 3 variables and of degree $\le 8$ is:
 = 45 + 36 + 28 + 21 + 15 + 10 + 6 + 3 + 1 = 165
 \end{eqnarray}
 
-\section{Programmatic way to find invariant constraints on weights}
+\subsection{Programmatic way to find invariant constraints on weights}
 
 Define a scheme to index all the weights in the multi-layer NN: $W_{ij}^{k \ell}$.  Then the entire NN function can be expanded as a polynomial with coefficients from $W$.
 
@@ -215,12 +222,12 @@ On the second layer, the output would be composed of sums and products of polyno
 
 This means that the weights would be in an \textbf{algebraic variety} of reduced dimension.  Our objective is to update / learn the weights \textbf{within} this variety.  
 
-\section{Quadratic, multi-layer, unconstrained case}
+\subsection{Quadratic, multi-layer, unconstrained case}
 
 In the last section we have \textbf{equivariant} layers composed together to form a neural network.  Now we relax the constraints so that the multi-layer network is free to have any weights except that the output must be \textbf{invariant}.
 
 
-\section{With output space ``folded in half''}
+\subsection{With output space ``folded in half''}
 
 Now suppose the output is only $1/2$ the dimension of the input.  Define a new form of equivariance such that the input permutation would act on the output as ``folded in half''. 
 
@@ -276,17 +283,13 @@ These constraints give rise to a matrix of this form (for the $6 \times 3$ case,
 
 NOTE:  The above pattern is verified to be NOT equivariant, there is a bug in the equivariant condition.
 
-\subsection{Quadratic case}
-
-\section{Learning algorithm}
+\subsection{Back-propagation algorithm for constrained weights}
 
 作者：zighouse
 
 链接：\url{https://www.zhihu.com/question/327765164/answer/704606353}
 
-来源：知乎
-
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+来源：知乎 / 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
 神经网络是对一类内部结构固定的非线性函数的俗称，这类函数是输出关于输入以及隐含内部状态的函数，输出与输入呈现非线性特性。当一份输出只与一份输入有关时，常用卷积神经网络来实现。当一份输出与一个相继表达的输入序列相关时，可以用回归神经网络来实现。一般地，神经网络可以技术性地分解成神经元的复合，这里的神经元是在这个神经网络中的一种最基本的非线性函数的俗称，管理着属于它的内部状态，并基于这些内部状态在神经网络中负责着分配到它的非线性处理。每多一重基本非线性函数的复合，则多一层神经元。如果在某一重复合中出现了两类或者更多类基本非线性函数项的合并，则出现了分支。
 
@@ -294,7 +297,7 @@ NOTE:  The above pattern is verified to be NOT equivariant, there is a bug in th
 
 如果想在某个神经网络中的两个权值间建立一种约束关系，这两个权值自然就不再相互独立，可以通过考查整个权值构成的线性空间，秩会变小。约束条件只要不改变连续假设，仍然可以求出带约束条件下的梯度。如果改变了连续假设，则意味着非线性分解不恰当，需要重新分解神经网络的基本结构。
 
-\subsection{Classic back-prop with quadratic neurons}
+\subsubsection{Classic back-prop with quadratic neurons}
 
 Traditional neural network:
 \begin{eqnarray}
@@ -375,7 +378,7 @@ Our algorithm can be compared the classic back-prop algorithm:
 	\end{cases}
 \end{eqnarray}
 
-\subsection{Shared weights}
+\subsubsection{Shared weights}
 
 For our purpose, it is good to know that all the weight-sharing occurs \textbf{within} each layer, never across layers.
 
@@ -420,5 +423,11 @@ For each layer, iterate over every neuron representative, which has a collection
 We need to consider equations (\ref{eqn:do-k-dW}) and (\ref{eqn:dE-do-k}), but (\ref{eqn:dE-do-k}) is unaffected by weight-sharing.
 
 In (\ref{eqn:do-k-dW}), for each equivalence class, 
+
+\section{Free Abelian group method}
+
+\section{Fourier transform method}
+
+\section{$g(h(x_1), ..., h(x_n))$ method}
 
 \end{document}
