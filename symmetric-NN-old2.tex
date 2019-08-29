@@ -225,6 +225,63 @@ This means that the weights would be in an \textbf{algebraic variety} of reduced
 
 In the last section we have \textbf{equivariant} layers composed together to form a neural network.  Now we relax the constraints so that the multi-layer network is free to have any weights except that the output must be \textbf{invariant}.
 
+
+\subsection{With output space ``folded in half''}
+
+Now suppose the output is only $1/2$ the dimension of the input.  Define a new form of equivariance such that the input permutation would act on the output as ``folded in half''. 
+
+In other words, equivariance is changed to:
+\begin{equation}
+\boxed{\mbox{swapped}} \quad y_k \cdot \sigma(x_k \; x_h) = y_h \mbox{  or  } y_{h-N/2} \quad \boxed{\mbox{original}} \end{equation}
+where $\tau$ is $\sigma$ acting on $y$ as double its length and identifying $y_i = y_{i + N/2}$.
+
+\subsection{Linear folded-in-half case}
+
+Just notice that the dimension of $y$ is halved:
+\begin{equation}
+\boxed{\mbox{original}} \quad y_j = \sum_i W_{ij} x_i .
+\end{equation}
+
+``Folded'' equivariance implies:
+\begin{eqnarray}
+\boxed{\mbox{swapped}} \quad y_j ( \sigma(x_j \; x_k) x) %\mbox{ or } y_m ( \sigma(x_m \; x_k) x)
+&=& \sigma \cdot y_j = y_k \quad \boxed{\mbox{original}} \\
+\sum_{i \neq j,k} W_{ij} x_i + W_{kj} x_j + W_{jj} x_k &=& \sum_{i \neq j,k} W_{ik} x_i + W_{jk} x_j + W_{kk} x_k  \nonumber
+% \mbox{or } \sum_{i \neq m,k} W_{im} x_i + W_{km} x_m + W_{mm} x_k & & \nonumber
+\end{eqnarray}
+% where $m = j - N/2$.  This gives rise to 2 sets of equations.
+with the restriction $j \in \{ 1,..., N/2 \}$, and $k \in \{ 1,..., N \}$.
+
+The constraints obtained are same as before, except that index ranges are different:
+\begin{eqnarray}
+W_{ij} &=& W_{ik} \quad \quad \forall \;  j, k, (i \neq j, k) \nonumber \\
+W_{kj} &=& W_{jk} \quad \quad \forall \;  j, k \nonumber \\
+W_{jj} &=& W_{kk} \quad \quad \forall \;  j, k \nonumber
+%\hline \nonumber\\
+%W_{ij} &=& W_{ik} \quad \quad \forall \;  j > N/2, k \le N/2, (i \neq j, k) \nonumber \\
+%W_{kj} &=& W_{jk} \quad \quad \forall \;  j > N/2, k \le N/2 \nonumber \\
+%W_{jj} &=& W_{kk} \quad \quad \forall \;  j > N/2, k \le N/2 \nonumber\\
+%\hline \nonumber\\
+%W_{ij} &=& W_{ik} \quad \quad \forall \;  j \le N/2, k > N/2, (i \neq j, k) \nonumber \\
+%W_{kj} &=& W_{jk} \quad \quad \forall \;  j \le N/2, k > N/2 \nonumber \\
+%W_{jj} &=& W_{kk} \quad \quad \forall \;  j \le N/2, k > N/2 \nonumber\\
+%\hline \nonumber\\
+%W_{ij} &=& W_{ik} \quad \quad \forall \;  j > N/2, k > N/2, (i \neq j, k) \nonumber \\
+%W_{kj} &=& W_{jk} \quad \quad \forall \;  j > N/2, k > N/2 \nonumber \\
+%W_{jj} &=& W_{kk} \quad \quad \forall \;  j > N/2, k > N/2
+\end{eqnarray}
+
+These constraints give rise to a matrix of this form (for the $6 \times 3$ case, numbers represent different colors):
+\begin{equation}
+\begin{tabular}{c c c c c c c}
+5 & 1 & 1 & 2 & 3 & 4 & \\
+1 & 5 & 1 & 2 & 3 & 4 & \\
+1 & 1 & 5 & 2 & 3 & 4 & .
+\end{tabular} 
+\end{equation}This pattern is obtained from my Python code.
+
+NOTE:  The above pattern is verified to be NOT equivariant, there is a bug in the equivariant condition.
+
 \subsection{Back-propagation algorithm for constrained weights}
 
 作者：zighouse
@@ -376,10 +433,8 @@ In (\ref{eqn:do-k-dW}), for each equivalence class,
 
 This is unrelated to the paper's topic, but I would digress a bit into the area of AGI.
 
-It seems that permutation invariance of neural networks is very difficult to achieve no matter which method we adopt.  So perhaps an alternative is to abandon the invariance entirely.
+It seems that permutation invariance of neural networks is very difficult to achieve no matter which method we adopt.  So perhaps an alternative is to abandon this symmetry entirely.
 
-The idea is to use an attention mechanism to select a particular conjunction, to which the rule-applier performs the forward deduction step.  In this case, the conjunction can be a \textbf{sorted} concatenation of proposition vectors.  But this has the problem that the matcher and the rule-applier seems to be learning the same structures.
 
-Assume that we have a conjunction that is ready for rule-application.  The possible patterns of deduction may be limited, and may be enumerable.  But we want to relax the ``rigid quantifications''.  
 
 \end{document}

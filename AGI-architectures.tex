@@ -1,0 +1,181 @@
+% TO-DO:  Kolmogorov complexity
+
+\documentclass[17pt]{beamer}
+\usepackage[CJKspace]{xeCJK}
+%\usepackage{newtxtext,newtxmath}	% use Times Roman font
+%\usefonttheme{serif}
+\usefonttheme{professionalfonts}
+%\setbeamertemplate{theorems}[numbered]
+\setbeamertemplate{caption}{\insertcaption} 	% no `Figure' prefix before caption
+
+\mode<presentation> {
+
+%\usetheme{default}
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+%\usetheme{Dresden}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+%\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+%\usecolortheme{albatross}
+%\usecolortheme{beaver}
+%\usecolortheme{beetle}
+%\usecolortheme{crane}
+%\usecolortheme{dolphin}
+%\usecolortheme{dove}
+%\usecolortheme{fly}
+%\usecolortheme{lily}
+%\usecolortheme{orchid}
+%\usecolortheme{rose}
+%\usecolortheme{seagull}
+%\usecolortheme{seahorse}
+%\usecolortheme{whale}
+%\usecolortheme{wolverine}
+
+%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage{verbatim} % comments
+% \usepackage{tikz-cd}  % commutative diagrams
+% \newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
+% \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+% \usepackage{amssymb}  % \leftrightharpoons
+\usepackage{wasysym} % frownie face
+
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+\newcommand*\sigmoid{\vcenter{\hbox{\includegraphics{sigmoid.png}}}}
+
+\makeatletter
+\renewcommand{\boxed}[1]{\fbox{\m@th$\displaystyle\scalebox{0.9}{#1}$} \,}
+\makeatother
+
+%---------------------------- make slide margin narrower --------------------------------
+\newcommand\Wider[2][3em]{%
+	\makebox[\linewidth][c]{%
+		\begin{minipage}{\dimexpr\textwidth+#1\relax}
+			\raggedright#2
+		\end{minipage}%
+}%
+}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[AGI architectures]{论 AGI 的架构} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author{YKY 甄景贤} % Your name
+\institute[] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+Independent researcher, Hong Kong \\ % Your institution for the title page
+\medskip
+\textit{generic.intelligence@gmail.com} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{Talk summary}
+\tableofcontents
+\end{frame}
+
+%---------------- this is for when you're using \part's ----------------------------------
+%\begin{frame}
+%\frametitle{Summary}
+%
+%{\usebeamerfont*{frametitle} Part I %\usebeamercolor[fg]{frametitle}
+% ~ ~ ~ Deep reinforcement learning}
+%%\tableofcontents[part=1]
+%
+%\vspace{1.5cm}
+%{\usebeamerfont*{frametitle} Part II %\usebeamercolor[fg]{frametitle}
+% ~ ~ ~ Logical structure}
+%%\tableofcontents[part=2]
+%\end{frame}
+
+%----------------------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+%------------------------------------------------
+
+%\part{title}
+
+\section[Section]
+{\texorpdfstring{什么是 归纳偏好？
+\protect\linebreak[1] 「没有免费午餐」}
+{什么是 归纳偏好？「没有免费午餐」}}
+\frame{\sectionpage}
+
+\begin{frame}
+\frametitle{机器学习 的 目的}
+\begin{itemize}
+	\item 机器学习 的 目的，是在某些「学习机器」的 \textbf{空间} 中，搜寻 符合要求的某些机器
+	\item 例如在所有给定大小的神经网络中，搜寻符合 \textbf{目标函数} 的那些神经网络的 weights
+\end{itemize}
+\end{frame}
+
+\section*{结论：中国会不会有自主研发的 AGI？}
+
+\begin{frame}
+\frametitle{中国会不会有自主研发的 AGI？}
+\Wider[1em]{
+\begin{itemize}
+	\item 日本 在1980年代 研发 第5代电脑 的失败，可以作为借鉴
+	\item 地球的资源有限，科技发展 往往是国与国之间 竞争的结果
+	\item 在美国有歧视中国的人，中国内部也有拖后腿、倒向外国的人，但在美国也有帮过我的朋友
+	\item 所以我比较支持 建立全球化的 AGI 项目
+\end{itemize}
+}
+	\begin{center}
+		多谢收看 \smiley{}
+	\end{center}
+\end{frame}
+
+\begin{comment}
+
+\begin{frame}
+\frametitle{References}
+\footnotesize{
+\begin{thebibliography}{99} % Beamer does not support BibTeX so references must be inserted manually as below
+\bibitem[]{} Bart Jacobs (1999)
+\newblock Categorical logic and type theory
+% \newblock \emph{North Holland, Studies in logic} v141.
+
+\bibitem[]{} Robert Goldblatt (2006)
+\newblock Topoi -- the categorical analysis of logic
+
+\end{thebibliography}
+}
+\end{frame}
+
+\end{comment}
+
+\end{document} 
