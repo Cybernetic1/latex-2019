@@ -1,6 +1,6 @@
 % TO-DO:  Kolmogorov complexity
 
-\documentclass[17pt]{beamer}
+\documentclass[15pt]{beamer}
 \usepackage[CJKspace]{xeCJK}
 %\usepackage{newtxtext,newtxmath}	% use Times Roman font
 %\usefonttheme{serif}
@@ -65,6 +65,7 @@
 % \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
 % \usepackage{amssymb}  % \leftrightharpoons
 \usepackage{wasysym} % frownie face
+\usepackage{newtxtext,newtxmath}	% Times New Roman font
 
 \newcommand{\vect}[1]{\boldsymbol{#1}}
 \newcommand*\sigmoid{\vcenter{\hbox{\includegraphics{sigmoid.png}}}}
@@ -101,10 +102,10 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 \frame{\titlepage}
 
-\begin{frame}
-\frametitle{Talk summary}
-\tableofcontents
-\end{frame}
+%\begin{frame}
+%\frametitle{Talk summary}
+%\tableofcontents
+%\end{frame}
 
 %---------------- this is for when you're using \part's ----------------------------------
 %\begin{frame}
@@ -128,32 +129,46 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 %\part{title}
 
-\section[Section]
-{\texorpdfstring{什么是 归纳偏好？
-\protect\linebreak[1] 「没有免费午餐」}
-{什么是 归纳偏好？「没有免费午餐」}}
-\frame{\sectionpage}
+%\section[Section]{}
+%\frame{\sectionpage}
 
 \begin{frame}
-\frametitle{机器学习 的 目的}
+\frametitle{最简单的 AGI 架构}
 \begin{itemize}
-	\item 机器学习 的 目的，是在某些「学习机器」的 \textbf{空间} 中，搜寻 符合要求的某些机器
-	\item 例如在所有给定大小的神经网络中，搜寻符合 \textbf{目标函数} 的那些神经网络的 weights
+	\item 最简单的 AGI 架构是这样的：（它包含一个 recurrent 回路）
+\begin{equation}
+\vcenter{\hbox{\includegraphics[scale=0.5]{minimal-architecture.png}}}
+\end{equation}
+	\item 它在 \textbf{强化学习} 的框架下，根据 Bellman 最优化条件，将 奖励 最大化
+	\item Transition function $F$ 可以用一个 神经网络 实现
+	\item 根据我先前解释过的 no free lunch 理论，这个架构的问题是缺乏 inductive bias，学习太慢
 \end{itemize}
 \end{frame}
 
-\section*{结论：中国会不会有自主研发的 AGI？}
+\begin{frame}
+\frametitle{No free lunch (NFL) 的迷思}
+\begin{itemize}
+	\item 根据 no free lunch 哲学，没有所谓「好」与「坏」的归纳偏好
+	\item 只要能加速学习的，但又不 切掉 AGI，都是好 bias
+	\item 但我又说，要用 逻辑结构 作为 bias； 这有没有矛盾？
+	\item 例如，可以将 $F$ 的神经网络 变稀疏 (sparse)，但保持 深度 (deep)
+	\item 
+\end{itemize}
+\end{frame}
+
 
 \begin{frame}
-\frametitle{中国会不会有自主研发的 AGI？}
-\Wider[1em]{
-\begin{itemize}
-	\item 日本 在1980年代 研发 第5代电脑 的失败，可以作为借鉴
-	\item 地球的资源有限，科技发展 往往是国与国之间 竞争的结果
-	\item 在美国有歧视中国的人，中国内部也有拖后腿、倒向外国的人，但在美国也有帮过我的朋友
-	\item 所以我比较支持 建立全球化的 AGI 项目
-\end{itemize}
-}
+\frametitle{Topos}
+Topos 是指一个能够在里面「做逻辑」的范畴。 它起源於将 \textbf{集合论} 改写成 \textbf{范畴论} 的尝试。
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Representation theory}
+\end{frame}
+
+\begin{frame}
+\frametitle{The end}
 	\begin{center}
 		多谢收看 \smiley{}
 	\end{center}
