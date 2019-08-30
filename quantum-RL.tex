@@ -476,7 +476,24 @@ which suggests that techiques in quantum mechanics can be applied to solve our A
 
 \subsection{Diffusion equation}
 
+Recently, I accidentally discovered \cite{Yan2019}
+\footnote{The relation $S = i \hbar \log \Psi$ appeared in one of Schr\"{o}dinger's 1926 papers, but is dismissed by him as ``incomprehensible''.  This formula seems to be overlooked by physicists since that time, possibly including Feynman.  I have yet to discuss / verify this with physicists.}
+a precise transition from the classical H-J equation to the \emp{Schr\"{o}dinger equation} in quantum mechanics, via a simple substitution $\Psi = e^{i S / \hbar}$,
+\begin{equation}
+\begin{tikzcd}[column sep = 6em]
+\boxed{\mbox{Hamilton-Jacobi}} \quad \displaystyle \frac{\partial S}{\partial t} = - H \quad
+\arrow[Rightarrow, r, "$\Psi = \exp \{ i S / \hbar \} $", align=center]
+& \quad \displaystyle i \hbar \frac{\partial \Psi}{\partial t} = H \Psi \quad \boxed{\mbox{Schr\"{o}dinger}} .
+\end{tikzcd}
+\end{equation} 
+This implies that the Schr\"{o}dinger equation is an alternative way of expressing the optimality condition for RL!  It is also known that the Schr\"{o}dinger equation in \textit{imaginary time} becomes the \textbf{diffusion equation} and is related to stochastic processes (\textit{cf} \cite{Strocchi2008} Ch.6); This may lead to new algorithms.
 
+We can also express $J$ using the quantum-mechanical notation:
+\begin{equation}
+J = \langle \Psi | i \hbar \,\log \Psi | \Psi \rangle
+\end{equation}
+
+All these ``physical'' ideas flow automatically from our definition of \textbf{rewards}, without the need to introduce them artificially.  But these ideas seem not immediately useful to our project, unless we are to explore \textbf{continuous-time} models.
 
 \subsection{Prior art: other cognitive architectures}
 

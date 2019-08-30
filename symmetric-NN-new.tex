@@ -19,12 +19,12 @@ Permutation invariance of a neural network means that components of the input ve
 Invariance means that:
 \begin{equation}
 \label{eqn:invariance}
-\boxed{\mbox{invariance}} \quad \forall \sigma \in \mathfrak{S}_n. \; F(\sigma \cdot x) = F(x)
+\boxed{\mbox{invariance}} \quad \forall \sigma \in \mathfrak{S}_n. \quad F(\sigma \cdot x) = F(x)
 \end{equation}
 The related concept of \textbf{equivariance} is defined by:
 \begin{equation}
 \label{eqn:invariance}
-\boxed{\mbox{equivariance}} \quad \forall \sigma \in \mathfrak{S}_n. \; F(\sigma \cdot x) = \sigma \cdot F(x)
+\boxed{\mbox{equivariance}} \quad \forall \sigma \in \mathfrak{S}_n. \quad F(\sigma \cdot x) = \sigma \cdot F(x)
 \end{equation}
 (assuming the output also consists of $n$ components).
 
@@ -39,6 +39,26 @@ There appears to be several ways to achieve permutation invariance in neural net
 	
 	\item By constructing a symmetric function of the form $g(h(x_1), h(x_2), ..., h(x_n))$ where $g$ is an arbitrary symmetric function.  This idea is from PointNet, but it seems to be very restrictive due to the choice of the function $g$.  It seems that no choice of $g$ exists such that the resulting family of functions are \textbf{dense} in a function space of interest.  The denseness requirement comes from the Stone-Weierstrass theorem (1885, 1937).
 \end{enumerate}
+
+\section{Prior art}
+
+Symmetric NNs have been proposed in \cite{Gens2014} \cite{Bie2019} \cite{Ravanbakhsh2016} \cite{Ravanbakhsh2017} \cite{Qi2016} \cite{Qi2017} \cite{Zaheer2017}.
+
+\subsection{Simple symmetrization is too inefficient}
+
+A simple fact:  If $\vect{F}(\vect{p},\vect{q})$ is any function, then
+\begin{equation}
+\vect{F}(\vect{p},\vect{q}) + \vect{F}(\vect{q},\vect{p}) \quad \mbox{or} \quad \vect{F}(\vect{p},\vect{q})  \vect{F}(\vect{q},\vect{p})
+\end{equation}
+would be symmetric functions in $(\vect{p},\vect{q})$.  This can be easily extended to $\mathbb{P}^k$.  % We will use the additive method.
+
+Thus if $\vect{F}$ is a ``free'' neural network, we can create a symmetric NN (via addition):
+\begin{equation}
+\vect{F}_{\mathrm{sym}}(\vect{x}) = \frac{1}{k!} \sum_{\sigma \in \mathfrak{S}_k} \vect{F}(\sigma \cdot \vect{x})
+\end{equation}
+where $\mathfrak{S}_k$ is the symmetric group of $k$ elements, and $\vect{x} = \vect{p}_1 \wedge \vect{p}_2 \wedge ... \vect{p}_k$.  Back-propagation can be easily adapted to such symmetric NNs.  However, if $K$ is the size of working memory, it would require to perform forward propagation $k! \;_K C_k = \;_K P_k$ times for each step, which is computationally inefficient (the same reason why \textit{Rete} was needed in classical AI).
+
+So we would not use this idea, but it is illustrative of the problem.
 
 \renewcommand{\thesection}{(\Alph{section})}
 \section{Permutation-invariant polynomial neural networks}
@@ -368,9 +388,47 @@ In (\ref{eqn:do-k-dW}), for each equivalence class,
 
 \section{Free Abelian group method}
 
+\subsection{Representation theory}
+
+Representation theory seems to be of no use in this situation.  A theorem says that any finite-dimensional irreducible representation (over $\mathbb{C}$) of an Abelian group $G$ is always 1-dimensional.  So $G$ has exactly $|G|$ complex representations \parencite{Qiu2011}.
+
+\hrule
+
+A recent book talks about metric embeddings into Banach space \parencite{Ostrovskii2013}, but the space appears to be infinite-dimensional.  Not sure if it is useful for our purpose.
+
 \section{Fourier transform method}
 
-\section{$g(h(x_1), ..., h(x_n))$ method}
+Now consider another simple idea.  Suppose we have 3 vectors $(\vect{v}_1, \vect{v}_2, \vect{v}_3)$ in a 1-dimensional vector space $V$, and we attach a \textbf{truth value} $\top = 1$ to each vector.  Then we try to approximate the \textbf{graph} of truth values $\top(\vect{v})$ as a ``wave'' using Fourier or wavelet transform:
+\begin{equation}
+\vcenter{\hbox{\includegraphics[scale=0.6]{Fourier-representation-0.png}}}
+\quad \Rightarrow \quad
+\vcenter{\hbox{\includegraphics[scale=0.6]{Fourier-representation-0B.png}}}
+\end{equation}
+
+The resulting representation has some nice properties:
+\begin{itemize}
+	\item If we permute $(\vect{v}_1, \vect{v}_2, \vect{v}_3)$, the graph (and thus its spectrum) remains the same, \textit{ie}, the representation is \uline{invariant under permutations}
+	\item We can add more vectors to the graph without changing the size of the spectral representation, \textit{ie}, it is relatively insensitive to the number of vectors
+\end{itemize}
+
+We can extend this idea to the \textbf{multi-dimensional} case where the literal proposition vector $\vect{p} \in \mathbb{P} = \mathbb{R}^{3d}$ 
+\footnote{For example, a typical $d$ from Word2Vec or GloVe is 200, so $3d = 600$.}
+and the state $\vect{x}$ consists of $k$ vectors $= \vect{p}_1 \wedge \vect{p}_2 \wedge ... \vect{p}_k$.  In other words, we need to apply Fourier transform to a wave over $3d$ dimensions.  Moreover, we can have truth values in the range $[-1,1]$, which can be construed as \textbf{fuzzy} truth values, or in the range $[0,1]$, regarded as the probability of \textbf{stochastic actions} (as is common in policy-gradient methods).
+\begin{equation}
+% \begin{tabular}{ccc}
+% proposition vectors in $n$-dim space & & wave over $n$-dim space \\
+% with {\color{red}truth values} \vspace*{0.5em} & & \\
+\vcenter{\hbox{\includegraphics[scale=0.6]{Fourier-representation-1.png}}} 
+\quad \Rightarrow \quad
+\vcenter{\hbox{\includegraphics[scale=0.6]{Fourier-representation-2.png}}} 
+% \end{tabular}
+\end{equation}
+
+Notice that our NN would \textit{input} from the spectral representation and \textit{output} the normal representation.
+
+With this approach, the geometric shapes of (\ref{eqn:cylindric-shapes}) and (\ref{eqn:diagonal-shapes}) would be distorted in very complicated ways.  It remains to be verified whether NNs can learn this task effectively.
+
+\section{PointNet's $g(h(x_1), ..., h(x_n))$ method}
 
 \section{Conclusion}
 

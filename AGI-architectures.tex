@@ -27,8 +27,8 @@
 %\usetheme{Ilmenau}
 %\usetheme{JuanLesPins}
 %\usetheme{Luebeck}
-\usetheme{Madrid}
-%\usetheme{Malmoe}
+%\usetheme{Madrid}
+\usetheme{Malmoe}
 %\usetheme{Marburg}
 %\usetheme{Montpellier}
 %\usetheme{PaloAlto}
@@ -58,6 +58,15 @@
 \setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
 }
 
+\setbeamertemplate{headline}{}
+\setbeamersize{text margin left=1mm,text margin right=1mm} 
+\settowidth{\leftmargini}{\usebeamertemplate{itemize item}}
+\addtolength{\leftmargini}{\labelsep}
+
+\usepackage[backend=biber,bibstyle=authoryear,citestyle=../authoryearbrack]{biblatex}
+\bibliography{../AGI-book}
+\renewcommand*{\bibfont}{\footnotesize}
+
 \usepackage{graphicx} % Allows including images
 \usepackage{verbatim} % comments
 % \usepackage{tikz-cd}  % commutative diagrams
@@ -67,6 +76,7 @@
 \usepackage{wasysym} % frownie face
 \usepackage{newtxtext,newtxmath}	% Times New Roman font
 
+\newcommand{\red}[1]{{\color{red}#1}}
 \newcommand{\vect}[1]{\boldsymbol{#1}}
 \newcommand*\sigmoid{\vcenter{\hbox{\includegraphics{sigmoid.png}}}}
 
@@ -74,20 +84,12 @@
 \renewcommand{\boxed}[1]{\fbox{\m@th$\displaystyle\scalebox{0.9}{#1}$} \,}
 \makeatother
 
-%---------------------------- make slide margin narrower --------------------------------
-\newcommand\Wider[2][3em]{%
-	\makebox[\linewidth][c]{%
-		\begin{minipage}{\dimexpr\textwidth+#1\relax}
-			\raggedright#2
-		\end{minipage}%
-}%
-}
 
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 
-\title[AGI architectures]{论 AGI 的架构} % The short title appears at the bottom of every slide, the full title is only on the title page
+\title[On AGI architecture]{\Huge《论 AGI 的架构》\\{\footnotesize 2019年 中期报告}} % The short title appears at the bottom of every slide, the full title is only on the title page
 
 \author{YKY 甄景贤} % Your name
 \institute[] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
@@ -136,9 +138,9 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \frametitle{最简单的 AGI 架构}
 \begin{itemize}
 	\item 最简单的 AGI 架构是这样的：（它包含一个 recurrent 回路）
-\begin{equation}
-\vcenter{\hbox{\includegraphics[scale=0.5]{minimal-architecture.png}}}
-\end{equation}
+		\begin{equation}
+		\vcenter{\hbox{\includegraphics[scale=0.5]{minimal-architecture.png}}}
+		\end{equation}
 	\item 它在 \textbf{强化学习} 的框架下，根据 Bellman 最优化条件，将 奖励 最大化
 	\item Transition function $F$ 可以用一个 神经网络 实现
 	\item 根据我先前解释过的 no free lunch 理论，这个架构的问题是缺乏 inductive bias，学习太慢
@@ -149,32 +151,111 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \frametitle{No free lunch (NFL) 的迷思}
 \begin{itemize}
 	\item 根据 no free lunch 哲学，没有所谓「好」与「坏」的归纳偏好
-	\item 只要能加速学习的，但又不 切掉 AGI，都是好 bias
-	\item 但我又说，要用 逻辑结构 作为 bias； 这有没有矛盾？
-	\item 例如，可以将 $F$ 的神经网络 变稀疏 (sparse)，但保持 深度 (deep)
-	\item 
+	\item 只要能加速学习的，但又不完全 切掉 AGI，都是好 bias
+		\begin{equation}
+		\vcenter{\hbox{\includegraphics[scale=0.5]{no-free-lunch.png}}}
+		\end{equation}
+	\item 例如，可以将 $F$ 的神经网络 变 \textbf{稀疏} (sparse)，但保持 深度 (deep)
+	\item 但我之前提议用 \textbf{逻辑结构} 作为 bias，是否\red{多此一举}呢？！ \includegraphics[scale=0.05]{../crying-laughing.jpg}
 \end{itemize}
 \end{frame}
 
-
 \begin{frame}
-\frametitle{Topos}
-Topos 是指一个能够在里面「做逻辑」的范畴。 它起源於将 \textbf{集合论} 改写成 \textbf{范畴论} 的尝试。
+\frametitle{强化学习 与 量子力学 之间的联系}
+\begin{itemize}
+	\item 强化学习 的最优化条件是 \textbf{Bellman} 方程：
+		\begin{equation}
+			\boxed{\mbox{Bellman}} \quad S_t(x) = \max_u \{ L(x,u) + \gamma S_{t+1}(x) \}
+		\end{equation}
+	\item 而 Bellman 方程 的 微分形式，是经典分析力学中的 \textbf{Hamilton-Jacobi} 方程 （这点在 1970s 已经为 Kalman 和 Pontryagin 等人认识），现代叫这方程为 Hamilton-Jacobi-Bellman (HJB) 方程：
+		\begin{equation}
+			\boxed{\mbox{Hamilton-Jacobi}} \quad \frac{\partial S(x, t)}{\partial t} = -H
+		\end{equation}
+	\item 其中 Lagrangian $L$ 和 Hamiltonian $H$ 之间有关系：
+	\begin{equation}
+		L = \text{K.E.} - \text{P.E.} \quad , \quad H = \text{K.E.} + \text{P.E.}
+	\end{equation}
+		$\text{K.E.}$ = kenetic energy, $\text{P.E.}$ = potential energy.
+	\item 至此，我们将一条 \textbf{离散}方程 变为 连续函数的\textbf{微分}方程，但\red{没有得益}
+\end{itemize}
+\end{frame}
 
+\begin{frame}[plain]
+\begin{itemize}
+	\item 我最近独立发现了从经典力学的 Hamilton-Jacobi 方程 过渡到 Schr\"{o}dinger 方程的 exact 形式，关键是透过 $\Psi = e^{-i \hbar S}$ 此一代入：
+		\begin{equation}
+		\boxed{\mbox{Hamilton-Jacobi}} \quad \frac{\partial S}{\partial t} = - H \quad
+		\Rightarrow
+		\quad i \hbar \frac{\partial \Psi}{\partial t} = H \Psi \quad \boxed{\mbox{Schr\"{o}dinger}}
+		\end{equation} 
+	\item 一直以来，量子力学的教科书 认为这种 量子化 (quantization) 过程 只能够是近似性的。  后有朋友告诉我 \parencite{Field2010} 已导出了这结果。
+	\item 从 AI 的角度来看，这结果表示： \red{强化学习 可以 转化为 在 Hilbert 空间中求解 Schr\"{o}dinger 方程！}
+	\item 而，Schrodinger 方程可以透过 \textbf{虚数时间} (imaginary time) 转化为 热力学的 \textbf{扩散} (diffusion) 方程
+		\begin{equation}
+			\boxed{\mbox{wave eqn.}} \quad \frac{\partial \Psi}{\partial t} + i \Delta \Psi = 0
+			\quad \leftrightsquigarrow \quad
+			\frac{\partial u}{\partial t} + \Delta u = 0 \quad \boxed{\mbox{heat eqn.}}
+		\end{equation}
+	\item 但应用到 AI 上需要 \textbf{离散化}，特别是利用 discrete Laplacian $\Delta$ 或 discrete Schr\"{o}dinger operators 作用在 \red{graph} 上（状态空间是 graph）
+	\item 暂未知这方向有没有好处 \includegraphics[scale=0.05]{../crying-laughing.jpg}
+\end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Representation theory}
+\frametitle{Topos 理论}
+Topos 是指一个能够在里面「\red{做逻辑}」的范畴，它起源於 Lawvere 于 1950s 将 \textbf{集合论} 表述成 \textbf{范畴论} 的尝试。 \\
+在一个 topos 范畴内的物体 (objects) 可以进行三种运算：
+\begin{itemize}
+	\item Cartesian product $A \times B$（对应命题逻辑的 $A \wedge B$）
+	\item exponentiation $A \rightarrow B = B^A$ （对应命题逻辑的 $A \Rightarrow B$）
+	\item subobject classifier $A \hookrightarrow B$ （表示 \textbf{子集} $A \subseteq B$ 的概念）
+\end{itemize}
+Topos 理论的重要性在於： 它概括了哪些数学结构有进行 \textbf{逻辑} 的能力，例如一些 relation graphs，algebras 等。 \\
+在我的理论里，神经网络 $F$ 负责 $U \stackrel{F}{\rightarrow} V$ 即 exponentiation $V^U$ 这部分，而 $U, V$ 是向量空间。 这至少要求我们将 $A \times B$ 的结构 embed 到向量空间中。 由於 $A \times B = B \times A$ 是\textbf{可交换}的，这促使我看了一下 Abel 群的理论。
 \end{frame}
+
+\begin{frame}
+\frametitle{交换不变性 (permutation invariance)}
+\begin{itemize}
+	\item 最近有個颇厉害的想法，将 Word2Vec 嵌入到 Poincar\'{e} disc / hyperbolic space \parencite{Nickel2017}
+	\item 类似地，能不能将 逻辑物体 的 vectors 嵌入到 hyperbolic space？ 
+	\item 自由群 $F_2$ 的 Cayley 图是\textbf{树}，但 \red{交换}自由群的 Cayley 图是\textbf{格状}的： 
+		\begin{equation}
+		\vcenter{\hbox{\includegraphics[scale=0.3]{Cayley-graph-F2.png}}}
+		\quad \quad \quad
+		\vcenter{\hbox{\includegraphics[scale=0.3]{Cayley-graph-Z2.png}}}
+		\end{equation}
+	\item 一般来说，自由群 $F_n$ 的 Cayley 图可以嵌入到（平面的）hyperbolic disc 上，但 $F_n$ 的 Abelianization $F_n^{\text{Ab}} \cong \mathbb{Z}^n = \mathbb{Z} \times ... \mathbb{Z}$ 是一个 \red{$n$-维} 空间的 grid，似乎不可能嵌入到平面上
+	\item 就算考虑 表示论 (representation theory)，所有 Abel 群的不可约复表示 都是 1-维的。 $F_n^{\text{Ab}}$ 的表示，恰好是 $n$ 个 1-维 表示的直和。 没卵用！
+\end{itemize}
+\end{frame}
+
+\begin{frame}[plain]
+% \frametitle{交换不变的 神经网络}
+\begin{itemize}
+	% \item 就算考虑 表示论 (representation theory)，所有 Abel 群的不可约复表示 都是 1-维的。 $F_n^{\text{Ab}}$ 的表示，恰好是 $n$ 个 1-维 表示的直和。 没卵用！
+	\item 上页结论是： $\mathbb{Z}^n$ 不可能嵌入到更低维的空间内，除非使用某种 \red{fractal} 方法。  然而，fractals 恰好是 神经网络 这件武器的「射程范围」之外！ 
+	\item 换个想法，通过 类似 weights-sharing 的 \textbf{约束}，令 神经网络 变成 permutation invariant (= \red{Symmetric NN})
+	\item 这方法 必需设 activation function = polynomial
+	\item 缺点是： 约束的数量 随著 层数 增加而 指数式增长，暂时只能做 1-2 层的，每层 = 2次多项式
+	\item 优点是： 反正我们希望 神经网络 是 sparse（减少权重空间的自由度），而这个做法同时具有逻辑 bias
+	\item 细节我会在另一篇论文讲述
+\end{itemize}
+\printbibliography
+\begin{center}
+	多谢收看 \smiley{}
+\end{center}
+\end{frame}
+
+\begin{comment}
 
 \begin{frame}
 \frametitle{The end}
+\printbibliography
 	\begin{center}
 		多谢收看 \smiley{}
 	\end{center}
 \end{frame}
-
-\begin{comment}
 
 \begin{frame}
 \frametitle{References}
