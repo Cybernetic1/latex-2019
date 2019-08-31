@@ -79,17 +79,32 @@
 \newcommand{\red}[1]{{\color{red}#1}}
 \newcommand{\vect}[1]{\boldsymbol{#1}}
 \newcommand*\sigmoid{\vcenter{\hbox{\includegraphics{sigmoid.png}}}}
+\newcommand*\confoundFace{$\vcenter{\hbox{\includegraphics[scale=0.2]{../confounded-face.jpg}}}$}
+\renewcommand{\smiley}{$\vcenter{\hbox{\includegraphics[scale=0.05]{../smiling-face.png}}}$}
 
 \makeatletter
 \renewcommand{\boxed}[1]{\fbox{\m@th$\displaystyle\scalebox{0.9}{#1}$} \,}
 \makeatother
 
+\newif\ifframeinlbf
+\frameinlbftrue
+\makeatletter
+\newcommand\listofframes{\@starttoc{lbf}}
+\makeatother
+
+\addtobeamertemplate{frametitle}{}{%
+	\ifframeinlbf
+	\addcontentsline{lbf}{section}{\protect\makebox[2em][l]{%
+			\protect\usebeamercolor[fg]{structure}\insertframenumber\hfill}%
+		\insertframetitle\par}%
+	\else\fi
+}
 
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 
-\title[On AGI architecture]{\Huge《论 AGI 的架构》\\{\footnotesize 2019年 中期报告}} % The short title appears at the bottom of every slide, the full title is only on the title page
+\title[On AGI architecture]{\Huge《论 AGI 的架构》\\{\footnotesize \today 中期报告}} % The short title appears at the bottom of every slide, the full title is only on the title page
 
 \author{YKY 甄景贤} % Your name
 \institute[] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
@@ -98,16 +113,22 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \medskip
 \textit{generic.intelligence@gmail.com} % Your email address
 }
-\date{\today} % Date, can be changed to a custom date
+\date{} % Date, can be changed to a custom date
 
 \begin{document}
 
+\frameinlbffalse
 \frame{\titlepage}
 
-%\begin{frame}
-%\frametitle{Talk summary}
-%\tableofcontents
-%\end{frame}
+\begin{frame}
+\frametitle{Table of contents}
+\listofframes
+\vspace*{0.5cm}
+Hello 各位朋友 \smiley
+
+近来有些进展，但只能算是「中段结果」，和大家分享一下。 \\
+也希望能找到合作者。
+\end{frame}
 
 %---------------- this is for when you're using \part's ----------------------------------
 %\begin{frame}
@@ -133,11 +154,11 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 %\section[Section]{}
 %\frame{\sectionpage}
-
+\frameinlbftrue
 \begin{frame}
 \frametitle{最简单的 AGI 架构}
 \begin{itemize}
-	\item 最简单的 AGI 架构是这样的：（它包含一个 recurrent 回路）
+	\item 最简单的 AGI 架构是这样的：（它包含一个 recurrent \textbf{回路}）
 		\begin{equation}
 		\vcenter{\hbox{\includegraphics[scale=0.5]{minimal-architecture.png}}}
 		\end{equation}
@@ -156,7 +177,41 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 		\vcenter{\hbox{\includegraphics[scale=0.5]{no-free-lunch.png}}}
 		\end{equation}
 	\item 例如，可以将 $F$ 的神经网络 变 \textbf{稀疏} (sparse)，但保持 深度 (deep)
-	\item 但我之前提议用 \textbf{逻辑结构} 作为 bias，是否\red{多此一举}呢？！ \includegraphics[scale=0.05]{../crying-laughing.jpg}
+	\item 但我之前提议用 \textbf{逻辑结构} 作为 bias，是否\red{多此一举}呢？！ \confoundFace 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{「双回路」架构}
+\begin{itemize}
+	\item 假设 working memory 是由分离的 \textbf{命题} (\red{\textbullet}) 构成的，可以提出一个「双回路」的架构： （回路在时间中运行）
+	\begin{equation}
+	\vcenter{\hbox{\includegraphics[scale=0.5]{double-loop-architecture.png}}}
+	\label{double-loop-arch-1}
+	\end{equation}
+	\item 这种架构很可能是人脑的架构，因为比较简单，可以进化出来
+	\item 据我所知，BERT 架构含有一个回路／一个隐状态 （BERT 逐个输入句子的单词，然后 隐状态 再将输出的单词 逐个吐出来）
+	\item 似乎 将 BERT 变成「双回路」，可以得到 AGI： （但我不熟悉 BERT）
+	\begin{equation}
+		\boxed{\text{单词／概念}} \stackrel{\text{loop 1}}{\longrightarrow} \boxed{\text{句子／命题}} \stackrel{\text{loop 2}}{\longrightarrow} \boxed{\text{mental state}}
+	\end{equation}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[plain]
+% \frametitle{「双回路」架构}
+\begin{itemize}
+	\item 图 (\ref{double-loop-arch-1}) 不够严谨，详细画出来是这样的：
+	\begin{equation}
+		\label{double-loop-arch}
+		\vcenter{\hbox{\includegraphics[scale=0.5]{double-loop-architecture-2.png}}}
+	\end{equation}
+	\item 相比之下，如果用了 symmetric NN 则架构更简单：
+	\begin{equation}
+		\label{symNN-arch}
+		\vcenter{\hbox{\includegraphics[scale=0.5]{symNN-architecture.png}}}
+	\end{equation}
+	\item 问题是 (\ref{double-loop-arch}) 和 (\ref{symNN-arch}) 哪个的 学习速度 更快？  但不易判断 \confoundFace
 \end{itemize}
 \end{frame}
 
@@ -197,7 +252,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 			\frac{\partial u}{\partial t} + \Delta u = 0 \quad \boxed{\mbox{heat eqn.}}
 		\end{equation}
 	\item 但应用到 AI 上需要 \textbf{离散化}，特别是利用 discrete Laplacian $\Delta$ 或 discrete Schr\"{o}dinger operators 作用在 \red{graph} 上（状态空间是 graph）
-	\item 暂未知这方向有没有好处 \includegraphics[scale=0.05]{../crying-laughing.jpg}
+	\item 暂未知这方向有没有好处 \confoundFace
 \end{itemize}
 \end{frame}
 
@@ -243,19 +298,11 @@ Topos 理论的重要性在於： 它概括了哪些数学结构有进行 \textb
 \end{itemize}
 \printbibliography
 \begin{center}
-	多谢收看 \smiley{}
+	多谢收看 \smiley
 \end{center}
 \end{frame}
 
 \begin{comment}
-
-\begin{frame}
-\frametitle{The end}
-\printbibliography
-	\begin{center}
-		多谢收看 \smiley{}
-	\end{center}
-\end{frame}
 
 \begin{frame}
 \frametitle{References}
