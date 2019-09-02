@@ -495,6 +495,28 @@ J = \langle \Psi | i \hbar \,\log \Psi | \Psi \rangle
 
 All these ``physical'' ideas flow automatically from our definition of \textbf{rewards}, without the need to introduce them artificially.  But these ideas seem not immediately useful to our project, unless we are to explore \textbf{continuous-time} models.
 
+\section{Weyl correspondence}
+
+Weyl proposed the following very general quantization rule: to a classical observable $a(x, p)$ depending on the position an momentum coordinates, one should associate an operator defined by
+\begin{equation}
+a_{\text{Weyl}} (\hat{x}, \hat{p}) = \frac{1}{2 \pi \hbar} \int e^{\frac{i}{\hbar} (x \hat{x} + p \hat{p})}  F a(x, p) dp dx
+\end{equation}
+where $F$ is the Fourier transform; this operator is formally obtained by replacing the variables $x$ and $p$ in the Fourier inversion formula by the non-commuting variables $x$ and $p$ used by Born, Jordan, and Heisenberg. Some easy algebra shows that if we quantize a classical Hamiltonian function
+\begin{equation}
+H = \frac{p^2}{2m} + V(x)
+\end{equation}
+using Weyl’s rule one obtains the operator
+\begin{equation}
+H(\hat{x}, \hat{p}) = - \frac{\hbar^2}{2m} \frac{\partial^2}{\partial x^2} + V(x)
+\end{equation}
+which is the same as the one appearing in Schrödinger’s equation. So far, so good. The rub comes from the following observation: if we apply Weyl’s rule to the monomials $x^r p^s$ considered by Born, Jordan, and Heisenberg, we get the correspondence
+\begin{equation}
+x^r p^s \longrightarrow \frac{1}{2^s} \sum_{k=0}^{s} {s \choose k} \hat{p}^{s-k} \hat{x}^r \hat{p}^k
+\end{equation}
+where the ${s \choose k}$'s are the binomial coefficients; as is immediately seen by simple inspection, this rule is fundamentally different from Born and Jordan’s quantization rule, as soon as $r, s \ge 2$. Thus, if one wants to extend the Schr\"{o}dinger picture to observables which are arbitrary functions of the variables $x$ and $p$ one obtains two different results depending on which quantization rule one uses. This fact has the following unwanted consequence: if one uses Weyl quantization, the Born–Jordan and Schr\"{o}dinger pictures are no longer equivalent, and we thus have two different quantum mechanics.
+
+--- Maurice A. de Gosson, Born–Jordan Quantization
+
 \subsection{Prior art: other cognitive architectures}
 
 The minimalist architecture based on reinforcement learning has been proposed by Itimar Ariel from Israel, in 2012 \cite{Arel2012}, and I also independently proposed in 2016 (precursor of this paper).  The prestigious researcher of signal processing, Simon Haykin, recently also used the ``RL + memory'' design, cf. his 2012 book \textit{Cognitive dynamic systems} \cite{Haykin2012}. Vladimir Anashin in the 1990's also proposed this kind of cognitive architecture \cite{Anashin2009}.  There may exist more precedents, eg: \cite{Ivancevic2006}.
