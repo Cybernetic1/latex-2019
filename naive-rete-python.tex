@@ -1,0 +1,36 @@
+\input{../YKY-preamble.tex}
+
+\usepackage[CJKspace]{xeCJK}
+\setCJKmainfont[BoldFont=SimHei,ItalicFont=KaiTi]{SimSun}
+\usepackage{color}
+
+\usepackage{mathtools}
+\usepackage{hyperref}
+
+\title{Comments to the Naive Rete python code}
+\author{YKY, general.intelligence@gmail.com}
+
+\begin{document}
+\maketitle
+
+\textbf{WME} = working memory element.
+
+\textbf{Alpha} network: performs the ``decision tree'' tests.
+
+\textbf{Alpha memory} = AM.  Store sets of WMEs.
+
+\textbf{Beta} network: checks consistency of \textbf{variable bindings} between conditions.
+
+Beta memories store sets of \textbf{tokens}, each token representing a sequence of WMEs --- specifically, a sequence of $k$ WMEs, satisfying the first $k$ conditions (with consistent variable bindings) of some production.
+
+\textbf{Production} node = \textbf{p-node} = firing of an action.
+
+\textbf{ncc} = negated conjunctive conditions.  Tests for the absence of a certain combination of WMEs.
+
+\textbf{Activation} means passing a new WME down the rete network.
+
+\textbf{Left} activation = activation of some node from another node in the \textbf{beta} network
+
+\textbf{Right} activation = activation of some node from the \textbf{alpha} network
+
+\end{document}

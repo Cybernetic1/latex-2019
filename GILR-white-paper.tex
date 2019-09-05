@@ -3,8 +3,6 @@
 \usepackage[CJKspace]{xeCJK}
 \setCJKmainfont[BoldFont=SimHei,ItalicFont=KaiTi]{SimSun}
 \usepackage{color}
-\usepackage{hyperref}
-
 \usepackage{mathtools}
 \usepackage{hyperref}
 
@@ -48,6 +46,16 @@
 \forall X, Y.  \quad \underbrace{X \heartsuit Y \wedge Y \heartsuit X}_{\mbox{head}} \Rightarrow \underbrace{\smiley X}_{\mbox{tail}}
 \end{equation}
 
+（这些可以在数学上严格定义，在论文中会详细定义）
+
+Logic rule 的学习，即 inductive rule learning 又叫 inductive logic programming (ILP).  有基础的书介绍，例如：
+\begin{equation}
+\vcenter{\hbox{\includegraphics[scale=0.4]{Peter-Flach-machine-learning_COVER.jpg}}}
+\quad \quad
+\vcenter{\hbox{\includegraphics[scale=0.4]{relational-knowledge-discovery_COVER.jpg}}}
+\end{equation}
+可以上 \href{https://b-ok.org/}{https://b-ok.org/} 下载。  这本身是一门颇深奥的学问，需要一段时间学习，但暂时不看也罢，只需要知道它是一种 combinatorial search，在 logic rules 的 lattice（格）中搜寻。 这是一种 离散的、符号的空间。
+
 \subsection{Genetic algorithm}
 
 要应用 GA 很容易，只需适当地 定义 cross-over 和 mutation.
@@ -55,6 +63,10 @@
 \textbf{Cross-over}： 随机地选取一个节点，将两个式子在这点交叉。 
 
 \textbf{Mutation}： 随机选择一个节点，在这个节点下换上一棵「随机树」(random tree)
+
+\subsection{协同进化 (co-operative co-evolution)}
+
+这部分是新的。 但它意思很明显，就是说： 进化的目标不只是一个最优的 个体，而是整个 群族。
 
 \section{Logic rule engine}
 
@@ -65,10 +77,55 @@
 \vcenter{\hbox{\includegraphics[scale=0.7]{LBAI-architecture.png}}}
 \end{equation}
 
+举例来说，例如打井游戏，游戏的 \textbf{状态} 是由一些 逻辑命题 描述： 
+\begin{eqnarray}
+	X(0,2) \nonumber \\
+	X(1,1) \nonumber \\
+	X(2,0) \nonumber \\
+	X(2,1) \nonumber \\
+	O(0,0) \nonumber \\
+	O(1,0) \nonumber \\
+	O(1,2) \nonumber \\
+	O(2,2) \nonumber \\
+	\square(0,1) 
+\end{eqnarray}
+表示这状态：
+\begin{equation}
+\begin{tabular}{c|c|c}
+$\bigcirc$ &          & $\times$ \\
+\hline
+$\bigcirc$ & $\times$ & $\bigcirc$ \\
+\hline
+$\times$   & $\times$ & $\bigcirc$ 
+\end{tabular}
+\end{equation}
+
+
+
 \subsection{Rete algorithm}
+
+（Rete 在 拉丁文的意思是「网状」）
 
 其实这个算法也和学习无关，它只是 逻辑引擎 的一个 \textbf{加速} 算法，大部分 实际使用的逻辑引擎 都需要 Rete 的加速。
 
+基本上，rete 算法将 logic rules 分拆、重组成 \textbf{树} 的结构：
+\begin{equation}
+\boxed{\text{logic rules}} \hookrightarrow \boxed{\text{树}} .
+\end{equation}
+这 tree 的意思和 decision tree 差不多。
 
+逻辑引擎 运行时，从 input 输入一些 命题，进入 working memory.  这些 命题 传统上叫作 \textbf{WME} (working memory elements).  於是要将 WME 和 知识库中的 logic rules 逐一比较，看看哪条 rule 能够 apply，这过程称为 matching.  Rete 的作用是加速这 matching.
+
+Rete 的 decision tree，输入是一个新的 WME，从树的 根 出发，比较有没有 match，如果有则记忆在树的节点里，如果没有则继续往下搜寻。
+
+举个例： 「爱一个人但那人不爱你，则不开心」
+\begin{equation}
+\forall X, Y.  \quad \underbrace{X \heartsuit Y \wedge \neg Y \heartsuit X}_{\mbox{head}} \Rightarrow \underbrace{\frownie X}_{\mbox{tail}}
+\end{equation}
+在 rete 的树上会有节点检查 有没有 $\heartsuit$ 和 $\neg \heartsuit$ 这两个 WME，如果两个节点都通过，则有一链结会通往 结论的「激活」(fire). 
+
+当然 rete 这个 tree 可以有不同的构造方法，类似 decision tree，例如根据 information gain. 
+
+由於 rete 是树状结构，它是 hierarchical（层级化）的。 我们可以利用 rete 的层级化，将 进化算法 变成 层级化的。 这会是论文最大的贡献。
 
 \end{document}
