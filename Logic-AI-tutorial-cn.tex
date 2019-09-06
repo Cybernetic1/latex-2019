@@ -1,6 +1,4 @@
-% TO-DO:  Kolmogorov complexity
-
-\documentclass[17pt]{beamer}
+\documentclass[15pt]{beamer}
 \usepackage[CJKspace]{xeCJK}
 %\usepackage{newtxtext,newtxmath}	% use Times Roman font
 %\usefonttheme{serif}
@@ -9,7 +7,6 @@
 \setbeamertemplate{caption}{\insertcaption} 	% no `Figure' prefix before caption
 
 \mode<presentation> {
-
 %\usetheme{default}
 %\usetheme{AnnArbor}
 %\usetheme{Antibes}
@@ -54,7 +51,7 @@
 %\usecolortheme{wolverine}
 
 %\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
-%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
 \setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
 }
 
@@ -77,20 +74,11 @@
 \renewcommand{\boxed}[1]{\fbox{\m@th$\displaystyle\scalebox{0.9}{#1}$} \,}
 \makeatother
 
-%---------------------------- make slide margin narrower --------------------------------
-\newcommand\Wider[2][3em]{%
-	\makebox[\linewidth][c]{%
-		\begin{minipage}{\dimexpr\textwidth+#1\relax}
-			\raggedright#2
-		\end{minipage}%
-}%
-}
-
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 
-\title[Logic AI]{{\normalsize 不要再怪我没教你：}\\ Logic-based AI 入门} % The short title appears at the bottom of every slide, the full title is only on the title page
+\title[AI logic tutorial]{{\normalsize 不要再怪我没教你：}\\ \Huge Logic-based AI 入门}
 
 \author{YKY 甄景贤} % Your name
 \institute[] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
@@ -132,15 +120,15 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 %\part{title}
 
-% \fontsize{16}{15}\selectfont
+% % \fontsize{16}{15}\selectfont
 
 \section[Section]{历史}
 \frame{\sectionpage}
 
 \begin{frame}
 \frametitle{Aristotle (ca. 300BC)}
+% \fontsize{16}{16}\selectfont
 \textbullet 逻辑 是 研究 (人类) {\color{red} \ 思考方式} 的学问
-\fontsize{16}{16}\selectfont
 \begin{minipage}[t]{0.5\linewidth}
 	\begin{itemize}
 		\item 亚里士多德 研究\\
@@ -161,7 +149,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 \begin{frame}
 \frametitle{Leibniz (1646-1716)}
-\fontsize{15}{15}\selectfont
+% \fontsize{15}{15}\selectfont
 \begin{minipage}[t]{0.6\linewidth}
 	\begin{itemize}
 		\item 他预言 在未来 人类的争论 可以 用数学逻辑 透过 {\color{red}\ 计算} 解决 (\textit{calculus ratiocinator})
@@ -179,7 +167,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 \begin{frame}
 \frametitle{George Boole (1815-1864)}
-\fontsize{16}{16}\selectfont
+% \fontsize{16}{16}\selectfont
 \begin{minipage}[t]{0.6\linewidth}
 	\begin{itemize}
 		\item 企图用 {\color{red} \ 代数} (algebra) 模拟 逻辑
@@ -198,7 +186,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 \begin{frame}
 \frametitle{Gottlob Frege (1848-1925)}
-\fontsize{15}{15}\selectfont
+% \fontsize{15}{15}\selectfont
 \begin{minipage}[t]{0.55\linewidth}
 	\begin{itemize}
 		\item 发明 {\color{red}\ predicate logic} (谓词逻辑)，第一种可以表述大部份思想／语言的逻辑
@@ -216,7 +204,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 \begin{frame}
 \frametitle{Principia Mathematica (1910's)}
-\fontsize{16}{16}\selectfont
+% \fontsize{16}{16}\selectfont
 \begin{minipage}[t]{0.35\linewidth}
 	\begin{itemize}
 		\item Russell \& Whitehead 巨著
@@ -238,7 +226,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 \begin{frame}
 \frametitle{Emil Post (1897-1954)}
-\fontsize{16}{16}\selectfont
+% \fontsize{16}{16}\selectfont
 \begin{minipage}[t]{0.62\linewidth}
 	\begin{itemize}
 		\item 犹太裔 天才儿童
@@ -259,7 +247,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 \begin{frame}
 \frametitle{Haskell Curry (1900-1982)}
-\fontsize{16}{16}\selectfont
+% \fontsize{16}{16}\selectfont
 \begin{minipage}[t]{0.62\linewidth}
 	\begin{itemize}
 		\item 他的姓和名 都变成了 \\编程语言！
@@ -280,7 +268,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 \begin{frame}
 \frametitle{Alfred Tarski (1901-1983)}
-\fontsize{16}{16}\selectfont
+% \fontsize{16}{16}\selectfont
 \begin{minipage}[t]{0.62\linewidth}
 	\begin{itemize}
 		\item 开创 {\color{red} \ 模型论} \\ (model theory)
@@ -300,7 +288,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 \begin{frame}
 \frametitle{Alonzo Church (1903-1995)}
-\fontsize{16}{16}\selectfont
+% \fontsize{16}{16}\selectfont
 \begin{minipage}[t]{0.55\linewidth}
 	\begin{itemize}
 		\item 发明 {\color{red} \ $\lambda-$calculus}
@@ -319,14 +307,12 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 \begin{frame}
 \frametitle{Kurt G\"{o}del (1906-1978)}
-\fontsize{14}{14}\selectfont
 \begin{minipage}[t]{0.62\linewidth}
 	\begin{itemize}
 		\item 受 纳粹 逼害，逃到美国
 		\item 晚年有 被害妄想症，怕被人下毒，只吃妻子煮的食物
 		\item 妻子是护士，有一次她生病入院6个月，结果 G\"{o}del 在家{\color{red}饿死}了！
-		\item \textbf{不完备性} (incompleteness) 似乎不妨碍 AGI 的发展 \\
-			\vspace{0.5em} \textrm{``not a show-stopper''}
+		\item \textbf{不完备性} (incompleteness) 似乎不妨碍 AGI 的发展 (``not a show-stopper'')
 	\end{itemize}
 \end{minipage}
 \hfill
@@ -339,7 +325,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 \begin{frame}
 \frametitle{Richard Montague (1930-1971)}
-\fontsize{14}{14}\selectfont
+% \fontsize{14}{14}\selectfont
 \begin{minipage}[t]{0.62\linewidth}
 	\begin{itemize}
 		\item Tarski 的学生
@@ -403,9 +389,8 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 \begin{frame}
 \frametitle{反对 逻辑， 论点 \#2}
-
 \begin{itemize}
-	\item
+	\item 人脑的思维机制是 model-based 而不是 rules-based
 \end{itemize}
 \end{frame}
 
@@ -415,7 +400,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \begin{frame}
 \frametitle{命题逻辑 vs 谓词逻辑}
 \begin{itemize}
-	\item blah
+	\item 谓词 = 有「洞」的命题
 \end{itemize}
 \end{frame}
 
@@ -447,7 +432,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \begin{frame}
 \frametitle{}
 \begin{itemize}
-	\item blah
+	\item KB = knowledge base
 \end{itemize}
 \end{frame}
 
@@ -455,7 +440,11 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \begin{frame}
 \frametitle{Rules 和 facts 的区别}
 \begin{itemize}
-	\item blah
+	\item Rule = 条件命题，包含 $\Rightarrow$，通常也包含 \textbf{变量}
+	\item Fact = grounded 命题，没有 $\Rightarrow$，也不含 \textbf{变量}
+	\item 例： $\heartsuit$(我,你) is a fact
+	\item $ \forall X,Y. \; \heartsuit(X,Y) \wedge \heartsuit(Y,X) \Rightarrow \smiley(X) $ is a rule
+	\item Rules 是推动 逻辑引擎 运行的「原材料」
 \end{itemize}
 \end{frame}
 
@@ -496,14 +485,14 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \begin{frame}
 \frametitle{同一化 (unification) 算法}
 \begin{itemize}
-	\item 
+	\item 将两个（包含变量）的 terms，通过代入 (substitutions)，变成一样
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{加速： ``rete'' 算法}
 \begin{itemize}
-	\item 
+	\item 将一堆 rules 组织成 \textbf{树状}网络，加快 rules 的 matching
 \end{itemize}
 \end{frame}
 
@@ -514,7 +503,7 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \begin{frame}
 \frametitle{贝叶斯 (Bayesian) 网络}
 \begin{itemize}
-	\item blah
+	\item 计算命题之间的概率的严格方法
 \end{itemize}
 \end{frame}
 
@@ -553,11 +542,9 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 
 \begin{frame}
 \frametitle{?}
-\Wider[1em]{
 \begin{itemize}
 	\item
 \end{itemize}
-}
 	\begin{center}
 		多谢收看 \smiley{}
 	\end{center}
