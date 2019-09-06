@@ -100,7 +100,18 @@ $\times$   & $\times$ & $\bigcirc$
 \end{tabular}
 \end{equation}
 
+一条 logic rule 可以是这样：
+\begin{equation}
+\label{logic-rule-example}
+X(x, y) \wedge X(w, y) \wedge \neq(x,w) \Rightarrow \text{ColumnWin}(,)
+\end{equation}
+表示如果有两个 X 在同一直行，则这一行可以赢。
 
+其实我也不知道 打井游戏 的正确 rules 是怎样，这要等 learn 出来之后看看。 
+
+在 (\ref{logic-rule-example}) 式里我用了 $\neq$ 这个 关系 (relation) 或 谓词 (predicate)，其实是要额外定义的 (externally defined)。 详细来说这就像一种 programming language.
+
+用读者的想像力脑补一下，可以明白到，这种逻辑引擎，基本上是可以解决任何问题的。 
 
 \subsection{Rete algorithm}
 
