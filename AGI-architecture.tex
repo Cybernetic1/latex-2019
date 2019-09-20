@@ -1,7 +1,13 @@
-% TO-DO:  Kolmogorov complexity
-
 \documentclass[15pt]{beamer}
+
+\ifdefined\chinchin
 \usepackage[CJKspace]{xeCJK}
+\setCJKmainfont[BoldFont=SimHei,ItalicFont=AR PL KaitiM GB]{SimSun}
+\newcommand{\cc}[2]{#1}
+\else
+\newcommand{\cc}[2]{#2}
+\fi
+
 %\usepackage{newtxtext,newtxmath}	% use Times Roman font
 %\usefonttheme{serif}
 \usefonttheme{professionalfonts}
@@ -54,7 +60,7 @@
 %\usecolortheme{wolverine}
 
 %\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
-%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
 \setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
 }
 
@@ -104,9 +110,10 @@
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 
-\title[On AGI architecture]{\Huge《论 AGI 的架构》\\{\footnotesize \today 中期报告}} % The short title appears at the bottom of every slide, the full title is only on the title page
+\title[On AGI architecture]{\cc{\Huge《论 AGI 的架构》\\{\footnotesize \today 中期报告}}
+	{On AGI architecture \\{\footnotesize \today \ mid-term report}}}
 
-\author{YKY 甄景贤} % Your name
+\author{\cc{YKY 甄景贤}{YKY}} % Your name
 \institute[] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
 {
 Independent researcher, Hong Kong \\ % Your institution for the title page
@@ -124,10 +131,17 @@ Independent researcher, Hong Kong \\ % Your institution for the title page
 \frametitle{Table of contents}
 \listofframes
 \vspace*{0.5cm}
+\cc{
 Hello 各位朋友 \smiley
 
 近来有些进展，但只能算是「中段结果」，和大家分享一下。 \\
 也希望能找到合作者。
+}{
+Hello friends \smiley
+
+I have made some intermediate progress recently, which I share below, \\
+and also hope to find collaborators.
+}
 \end{frame}
 
 %---------------- this is for when you're using \part's ----------------------------------
@@ -156,7 +170,7 @@ Hello 各位朋友 \smiley
 %\frame{\sectionpage}
 \frameinlbftrue
 \begin{frame}
-\frametitle{最简单的 AGI 架构}
+\frametitle{\cc{最简单的 AGI 架构}{The simplest AGI architecture}}
 \begin{itemize}
 	\item 最简单的 AGI 架构是这样的：（它包含一个 recurrent \textbf{回路}）
 		\begin{equation}
@@ -184,7 +198,7 @@ Hello 各位朋友 \smiley
 \begin{frame}
 \frametitle{「双回路」架构}
 \begin{itemize}
-	\item 假设 working memory 是由分离的 \textbf{命题} (\red{\textbullet}) 构成的，可以提出一个「双回路」的架构： （回路在时间中运行）
+	\item 假设 working memory 是由分离的 \textbf{命题} (\red{\textbullet}) 构成的，可以提出一个「双回路」的架构： (这意思是，例如回路中载有10个命题，则它运转10次，隐状态即「浓缩」了这10个命题的资讯，然后输出一个新命题)
 	\begin{equation}
 	\vcenter{\hbox{\includegraphics[scale=0.5]{double-loop-architecture.png}}}
 	\label{double-loop-arch-1}
