@@ -139,8 +139,8 @@ Hello 各位朋友 \smiley
 }{
 Hello friends \smiley
 
-I have made some intermediate progress recently, which I share below, \\
-and also hope to find collaborators.
+I have made some intermediate progress recently, which I share below. \\
+I am also looking for collaborators.
 }
 \end{frame}
 
@@ -172,12 +172,19 @@ and also hope to find collaborators.
 \begin{frame}
 \frametitle{\cc{最简单的 AGI 架构}{The simplest AGI architecture}}
 \begin{itemize}
-	\item 最简单的 AGI 架构是这样的：（它包含一个 recurrent \textbf{回路}）
+	\item \cc{
+	最简单的 AGI 架构是这样的：（它包含一个 recurrent \textbf{回路}）}{
+	The simplest AGI architecture consists of a single recurrent loop:}
 		\begin{equation}
 		\vcenter{\hbox{\includegraphics[scale=0.5]{minimal-architecture.png}}}
 		\end{equation}
-	\item 它在 \textbf{强化学习} 的框架下，根据 Bellman 最优化条件，将 奖励 最大化
-	\item Transition function $F$ 可以用一个 神经网络 实现
+	\item \cc{
+	它在 \textbf{强化学习} 的框架下，根据 Bellman 最优化条件，将 奖励 最大化}{
+	It operates under reinforcement learning, maximizing rewards by the Bellman optimality condition}
+	\item \cc{
+	Transition function $F$ 可以用一个 神经网络 实现}{
+	}
+	
 	\item 根据我先前解释过的 no free lunch 理论，这个架构的问题是缺乏 inductive bias，学习太慢
 \end{itemize}
 \end{frame}
