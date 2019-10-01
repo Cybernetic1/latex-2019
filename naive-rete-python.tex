@@ -33,6 +33,30 @@ Beta memories store sets of \textbf{tokens}, each token representing a sequence 
 
 \textbf{Right} activation = activation of some node from the \textbf{alpha} network
 
+\textbf{Tokens} = conjunctions of WMEs.  It's stored as a tree with each node holding 1 new WME and its parent.
+
+Token has \textbf{join\_results} which is specifically for \textit{negative} nodes.  Negative nodes are just like ordinary join nodes, but instead of propagating the results of the join down the network, it stores them in the ``results'' memory in each token.  A token is thus propagated down the network if and only if its local result memory is \textit{empty}, since this indicates the absence of any such WME in working memory.
+
+The \textbf{join\_results} store NegativeJoinResults.  Each NJR has a WME and its owner which is a token.
+
+WMEs also have a field to store NJRs.  This is for handling WME \textit{removal}.
+
+\section{Bug re: remove(x) but x not in list}
+
+Seems that wme.negative\_join\_results does not contain enough NJRs for removal.  The fix is ``pop()''.
+
+\section{Bug re ncc\_results: token.owner = None}
+
+token.node = NCC Partner node
+
+token.owner = None \hspace{2cm} \{ the token whose local memory this result resides \}
+
+Solution: condition ``else'' not handled correctly in NCC partner left-activation.
+
+\section{Bug: child.amem.successors.remove(child), child not in list}
+
+Currently solution is to comment out this part of the code.  (For some unknown reason this part is not implemented by the NaiveRete author).
+
 \section{Fixing the within-condition variable-binding problem}
 
 Starts with:

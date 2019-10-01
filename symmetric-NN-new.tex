@@ -42,7 +42,16 @@ There appears to be several ways to achieve permutation invariance in neural net
 
 \section{Prior art}
 
-Symmetric NNs have been proposed in \cite{Gens2014} \cite{Bie2019} \cite{Ravanbakhsh2016} \cite{Ravanbakhsh2017} \cite{Qi2016} \cite{Qi2017} \cite{Zaheer2017}.
+Symmetric NNs have been proposed in:
+\begin{itemize}
+	\item \cite{Gens2014}
+	\item \cite{Bie2019}
+	\item \cite{Ravanbakhsh2016}
+	\item \cite{Ravanbakhsh2017}
+	\item \cite{Qi2016}
+	\item \cite{Qi2017} 
+	\item \cite{Zaheer2017}
+\end{itemize}
 
 \subsection{Simple symmetrization is too inefficient}
 
@@ -60,7 +69,7 @@ where $\mathfrak{S}_k$ is the symmetric group of $k$ elements, and $\vect{x} = \
 
 So we would not use this idea, but it is illustrative of the problem.
 
-\renewcommand{\thesection}{(\Alph{section})}
+% \renewcommand{\thesection}{(\Alph{section})}
 \section{Permutation-invariant polynomial neural networks}
 
 Traditional neural network:
@@ -92,15 +101,27 @@ where the 2 summations can be \textbf{interchanged}.
 
 Let $y = F(x)$ denote the (overall) neural network function.  In our case $F(x)$ is a polynomial $\in \mathbb{R}[x]^{\mathfrak{S}_n}$ where $\mathfrak{S}_n$ is the symmetric group of $n$ elements.
 
-This is one quadratic layer with $i > j$ edges deleted (because $x_i x_j = x_j x_i$):
-\begin{equation}
-\vcenter{\hbox{\includegraphics[scale=0.75]{quadratic-NN-2.png}}}
-\end{equation}
-The link in red is $W_{11}^1$.
+\subsection{Redundant terms or coefficients}
 
-This is one network layer complete with quadratic, linear, and constant terms:
+This is a quadratic layer, fully connected with all $W_{ij}$ links:
 \begin{equation}
-\vcenter{\hbox{\includegraphics[scale=0.75]{quadratic-NN-3.png}}}
+\vcenter{\hbox{\includegraphics[scale=0.7]{quadratic-NN.png}}}
+\end{equation}
+but some coefficients are \textbf{redundant} because $x_i x_j = x_j x_i$.
+
+One can eliminate redundant edges by imposing $i > j$:
+\begin{equation}
+\vcenter{\hbox{\includegraphics[scale=0.7]{quadratic-NN-2.png}}}
+\end{equation}
+For example, the link in red is $W_{11}^1$.  However, as we shall see below, this method creates constraints with rather complicated indices.  It appears that the first method with redundant weights is algebraically more elegant.
+
+\subsection{Making all terms homogeneous}
+
+In a ``quadratic'' layer there would still be linear and constant terms.  But we can absorb them all into a single matrix $W$, making all terms homogeneous of the form: $W_{ij} x_i x_j$.
+
+For example, this is one component with quadratic, linear, and constant terms:
+\begin{equation}
+\vcenter{\hbox{\includegraphics[scale=0.7]{quadratic-NN-3.png}}}
 \end{equation}
 Notice that this block should be repeated for each output $y_1, ..., y_3$.
 
@@ -130,7 +151,71 @@ In other words, the matrix $W$ is of the form:
 W = \alpha I + \beta 1 1^T .
 \end{equation}
 
-\subsection{Quadratic case: $y_k = W_k x \cdot x$}
+\subsection{Quadratic case: $y_k = W_k x \cdot x$ (with redundant indices)}
+
+The general form of a ``quadratic'' vector function is:
+\begin{equation}
+y = (A x) \cdot x + B x + C .
+\end{equation}
+
+We just focus on the quadratic term $(A x) \cdot x$:
+\begin{equation}
+\boxed{\mbox{original}} \quad y_k = \sum_j \left[ \sum_i a_{ij}^k x_i \right] x_j .
+\end{equation}
+Note that the matrix $A$ is ``3D'' and has $N \times N \times N$ entries.
+
+Equivariance implies:
+\begin{equation}
+\boxed{\mbox{swapped}} \quad y_k ( \sigma(x_k \; x_h) \cdot x) = \sigma \cdot y_k = y_h \quad \boxed{\mbox{original}}
+% \sum_{j \neq h,k} \sum_{i \neq h,k} a_{ij}^k x_i x_j + a_{hh}^k x_k^2 + a_{kh}^k x_h x_k + a_{hk}^k x_k x_h + a_{kk}^k x_h^2 &=& \sum_{j \neq h,k} \sum_{i \neq h,k} a_{ij}^h x_i x_j + a_{hh}^h x_h^2 + a_{kh}^h x_k x_h + a_{hk}^h x_h x_k + a_{kk}^h x_k^2 \nonumber
+\end{equation}
+
+\begin{eqnarray}
+LHS &=& \sum_j \left[ \sum_{i \neq h,k} a^k_{ij} x_i + a^k_{hj} x_k + a^k_{kj} x_h \right] \sigma \cdot x_j \nonumber \\
+&=& \sum_{j \neq h,k} \left[ \sum_{i \neq h,k} a^k_{ij} x_i + a^k_{hj} x_k + a^k_{kj} x_h \right] x_j
++ \left[ \sum_{i \neq h,k} a^k_{ih} x_i + a^k_{hh} x_k + a^k_{kh} x_h \right] x_k
++ \left[ \sum_{i \neq h,k} a^k_{ik} x_i + a^k_{hk} x_k + a^k_{kk} x_h \right] x_h \nonumber \\
+&=& \sum_{j \neq h,k} \sum_{i \neq h,k} a^k_{ij} x_i x_j + \sum_{j \neq h,k} a^k_{hj} x_k x_j + \sum_{j \neq h,k} a^k_{kj} x_h x_j \nonumber \\
+&& + \sum_{i \neq h,k} a^k_{ih} x_i x_k + a^k_{hh} x^2_k + a^k_{kh} x_h x_k \nonumber \\
+&& + \sum_{i \neq h,k} a^k_{ik} x_i x_h + a^k_{hk} x_k x_h + a^k_{kk} x^2_h \nonumber \\
+RHS &=& \sum_j \left[ \sum_i a_{ij}^h x_i \right] x_j \nonumber \\
+&=& \sum_{j \neq h,k} \sum_{i \neq h,k} a^h_{ij} x_i x_j + \sum_{j \neq h,k} a^h_{kj} x_k x_j + \sum_{j \neq h,k} a^h_{hj} x_h x_j \nonumber \\
+&& + \sum_{i \neq h,k} a^h_{ik} x_i x_k + a^h_{kk} x^2_k + a^h_{hk} x_h x_k \nonumber \\
+&& + \sum_{i \neq h,k} a^h_{ih} x_i x_h + a^h_{kh} x_k x_h + a^h_{hh} x^2_h
+\end{eqnarray}
+
+Comparing coefficients yields:
+\begin{alignat}{3}
+a_{ij}^h &= a_{ij}^k && \forall \; h,k, (i \neq h,k, j \neq h,k) \nonumber \\
+a_{kj}^h &= a_{hj}^k && \forall \; h,k, (j \neq h,k) \nonumber \\
+a_{hj}^h &= a_{kj}^k && \forall \; h,k, (j \neq h,k) \nonumber \\
+a_{ik}^h &= a_{ih}^k && \forall \; h,k, (i \neq h,k) \nonumber \\
+a_{ih}^h &= a_{ik}^k && \forall \; h,k, (i \neq h,k) \nonumber \\
+a_{kk}^h &= a_{hh}^k && \forall \; h,k \nonumber \\
+a_{hh}^h &= a_{kk}^k && \forall \; h,k \nonumber \\
+a_{hk}^h + a_{kh}^h &= a_{hk}^k + a_{kh}^k \quad && \forall \; h,k .
+\end{alignat}
+
+How many different colors?
+\begin{equation}
+\begin{tabular}{c c c c}
+$N = 2$ .... & 6 & / 8 & = 75\% \\
+$N = 3$ .... & 9 & / 27 & = 33.3\% \\
+$N = 4$ .... & 11 & / 64 & = 17/2\% \\
+$N = 5$ .... & 13 & / 125 & = 10.4\% \\
+$N = 6$ .... & 15 & / 216 & = 6.9\%
+\end{tabular}
+\end{equation}
+
+There would be $N$ \textbf{blocks} of $N \times N$ matrices.
+
+All diagonals consists of 2 colors, regardless of $N$ (from 2nd and 3rd equations).  This leaves $N (N - 1)$ non-diagonal entries per block.
+
+Non-diagonal entries of different blocks are equal, if the block indices are different from the row and column indices.  Out of $N$ blocks there would be 2 different sets of non-diagonal weights.  (This comes from the 1st equation.)
+
+The last equation causes non-diagonal weights to have a certain symmetry about the diagonal.  
+
+\subsection{Quadratic case: $y_k = W_k x \cdot x$ with ordered indices}
 
 The general form of a ``quadratic'' vector function is:
 \begin{equation}
@@ -342,7 +427,7 @@ Our algorithm can be compared the classic back-prop algorithm:
 
 \subsubsection{Shared weights}
 
-For our purpose, it is good to know that all the weight-sharing occurs \textbf{within} each layer, never across layers.
+For the single-layer (stacked) case, it is good to know that all the weight-sharing occurs \textbf{within} each layer, never across layers.
 
 The coefficient of $x_i x_j$ is $W_{i j}$, for the $y_k$ component.  For each weight $W_{ij}^k$ we need to calculate the gradient $\displaystyle \frac{\partial E}{\partial W_{ij}^k}$, but the weights are in equivalence classes.
 
