@@ -119,12 +119,15 @@ For example, the link in red is $W_{11}^1$.  However, as we shall see below, thi
 
 In a ``quadratic'' layer there would still be linear and constant terms.  But we can absorb them all into a single matrix $W$, making all terms homogeneous of the form: $W_{ij} x_i x_j$.
 
-For example, this is one component with quadratic, linear, and constant terms: (Notice that this block should be repeated for each output $y_1, ..., y_3$)
+For example, the following shows part of the network with quadratic, linear, and constant terms.  The linear terms are in blue and the constant term is in green.  Notice that this block should be repeated for each output $y_1, ..., y_3$:
 \begin{equation}
 \vcenter{\hbox{\includegraphics[scale=0.7]{quadratic-NN-3.png}}}
 \end{equation}
 
-Homogenization means adding a new input $x_4 \equiv 1$.
+Homogenization means adding a new input $x_4 \equiv 1$, similar to the ``bias'' term in traditional neural networks.  All the terms (quadratic, linear, constant) would be absorbed into a single matrix $W$:
+\begin{equation}
+\vcenter{\hbox{\includegraphics[scale=0.7]{quadratic-NN-4.png}}}
+\end{equation}
 
 \subsection{Linear case: $y = W x$}
 
@@ -159,7 +162,7 @@ The general form of a ``quadratic'' vector function is:
 y = (A x) \cdot x + B x + C .
 \end{equation}
 
-We just focus on the quadratic term $(A x) \cdot x$:
+As described above, we abosrb all weights into a single matrix, giving $(A x) \cdot x$:
 \begin{equation}
 \boxed{\mbox{original}} \quad y_k = \sum_j \left[ \sum_i a_{ij}^k x_i \right] x_j .
 \end{equation}
