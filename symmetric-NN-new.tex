@@ -119,11 +119,12 @@ For example, the link in red is $W_{11}^1$.  However, as we shall see below, thi
 
 In a ``quadratic'' layer there would still be linear and constant terms.  But we can absorb them all into a single matrix $W$, making all terms homogeneous of the form: $W_{ij} x_i x_j$.
 
-For example, this is one component with quadratic, linear, and constant terms:
+For example, this is one component with quadratic, linear, and constant terms: (Notice that this block should be repeated for each output $y_1, ..., y_3$)
 \begin{equation}
 \vcenter{\hbox{\includegraphics[scale=0.7]{quadratic-NN-3.png}}}
 \end{equation}
-Notice that this block should be repeated for each output $y_1, ..., y_3$.
+
+Homogenization means adding a new input $x_4 \equiv 1$.
 
 \subsection{Linear case: $y = W x$}
 
