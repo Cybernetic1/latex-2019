@@ -102,6 +102,7 @@ where the 2 summations can be \textbf{interchanged}.
 Let $y = F(x)$ denote the (overall) neural network function.  In our case $F(x)$ is a polynomial $\in \mathbb{R}[x]^{\mathfrak{S}_n}$ where $\mathfrak{S}_n$ is the symmetric group of $n$ elements.
 
 \subsection{Redundant terms or coefficients}
+\label{redundant-weights}
 
 This is a quadratic layer, fully connected with all $W_{ij}$ links:
 \begin{equation}
@@ -116,6 +117,7 @@ One can eliminate redundant edges by imposing $i > j$:
 For example, the link in red is $W_{11}^1$.  However, as we shall see below, this method creates constraints with rather complicated indices.  It appears that the first method with redundant weights is algebraically more elegant.
 
 \subsection{Making all terms homogeneous}
+\label{homogenization}
 
 In a ``quadratic'' layer there would still be linear and constant terms.  But we can absorb them all into a single matrix $W$, making all terms homogeneous of the form: $W_{ij} x_i x_j$.
 
@@ -162,7 +164,7 @@ The general form of a ``quadratic'' vector function is:
 y = (A x) \cdot x + B x + C .
 \end{equation}
 
-As described above, we abosrb all weights into a single matrix, giving $(A x) \cdot x$:
+As described in \S\ref{homogenization}, we abosrb all weights into a single matrix, giving $(A x) \cdot x$:
 \begin{equation}
 \boxed{\mbox{original}} \quad y_k = \sum_j \left[ \sum_i a_{ij}^k x_i \right] x_j .
 \end{equation}
@@ -200,6 +202,8 @@ a_{hh}^h &= a_{kk}^k && \forall \; h,k \nonumber \\
 a_{hk}^h + a_{kh}^h &= a_{hk}^k + a_{kh}^k \quad && \forall \; h,k .
 \end{alignat}
 
+The last equation above is not a simple equality of weights.  It arised because $x_h x_k = x_k x_h$, a consequence of the \textbf{redundancy} of the weights as explained in \S\ref{redundant-weights}.
+
 How many different colors?
 \begin{equation}
 \begin{tabular}{c c c c}
@@ -221,16 +225,13 @@ The last equation causes non-diagonal weights to have a certain symmetry about t
 
 \subsection{Quadratic case: $y_k = W_k x \cdot x$ with ordered indices}
 
-The general form of a ``quadratic'' vector function is:
-\begin{equation}
-y = (A x) \cdot x + B x + C .
-\end{equation}
+As I said in \S\ref{redundant-weights}, ordering the weights eliminates redundancy but also leads to complicated indexing.
 
-We just focus on the quadratic term $(W x) \cdot x$:
+Recall the general form $(W x) \cdot x$:
 \begin{equation}
 \boxed{\mbox{original}} \quad y_k = \sum_j \left[ \sum_{i \le j} W_{ij}^k x_i \right] x_j .
 \end{equation}
-Note that the matrix $W$ is ``3-dimensional'' and has $N \times N \times N$ entries.
+The matrix $W$ is ``3-dimensional'' and has $N \times N \times N$ entries.
 
 Let $\sigma := (x_k \rightleftharpoons x_h)$, meaning \textbf{transposition} of the two elements.  Equivariance implies:
 \begin{equation}
@@ -248,8 +249,8 @@ Let $\sigma := (x_k \rightleftharpoons x_h)$, meaning \textbf{transposition} of 
 	+ \left[ \sum_{i < k \atop i \neq h} W^k_{ik} x_i + \underbracket[1pt]{W^k_{hk} x_k}_{\text{if } h \le k} + W^k_{kk} x_h \right] x_h \nonumber \\
 % 
 &= \sum_{j \neq h,k} \sum_{i \le j \atop i \neq h,k} W^k_{ij} x_i x_j + {\color{olive}\sum_{j > h} W^k_{hj} x_k x_j} + {\color{cyan}\sum_{j > k} W^k_{kj} x_h x_j} \nonumber \\
-& \quad \quad + {\color{blue}\sum_{i < h \atop i \neq k} W^k_{ih} x_i x_k} + W^k_{hh} x_k^2 + {\color{red}  \underbracket[1pt]{W^k_{kh} x_h x_k}_{\text{if } k \le h}} \nonumber \\
-& \quad \quad + {\color{red}\sum_{i < k \atop i \neq h} W^k_{ik} x_i x_h} + {\color{blue} \underbracket[1pt]{W^k_{hk} x_k x_h}_{\text{if } h \le k} } + W^k_{kk} x_h^2 \nonumber \\
+& \quad \quad + {\color{blue}\sum_{i < h \atop i \neq k} W^k_{ih} x_i x_k} + W^k_{hh} x_k^2 + {\color{green}  \underbracket[1pt]{W^k_{kh} x_h x_k}_{\text{if } k \le h}} \nonumber \\
+& \quad \quad + {\color{red}\sum_{i < k \atop i \neq h} W^k_{ik} x_i x_h} + {\color{violet} \underbracket[1pt]{W^k_{hk} x_k x_h}_{\text{if } h \le k} } + W^k_{kk} x_h^2 \nonumber \\
 % 
 % ============================================================================================
 % 
@@ -262,8 +263,8 @@ Let $\sigma := (x_k \rightleftharpoons x_h)$, meaning \textbf{transposition} of 
 + \left[ \sum_{i < k \atop i \neq h} W^h_{ik} x_i + \underbracket[1pt]{W^h_{hk} x_h}_{\text{if } h \le k} + W^h_{kk} x_k \right] x_k \nonumber \\
 % 
 &= \sum_{j \neq h,k} \sum_{i \le j \atop i \neq h,k} W^h_{ij} x_i x_j + {\color{cyan}\sum_{j > h} W^h_{hj} x_h x_j} + {\color{olive}\sum_{j > k} W^h_{kj} x_k x_j} \nonumber \\
-& + {\color{red}\sum_{i < h \atop i \neq k} W^h_{ih} x_i x_h} + W^h_{hh} x_h^2 + {\color{red} \underbracket[1pt]{W^h_{kh} x_k x_h}_{\text{if } k \le h}} \nonumber \\
-& + {\color{blue}\sum_{i < k \atop i \neq h} W^h_{ik} x_i x_k} + {\color{blue}\underbracket[1pt]{W^h_{hk} x_h x_k}_ {\text{if } h \le k} } + W^h_{kk} x_k^2
+& + {\color{red}\sum_{i < h \atop i \neq k} W^h_{ih} x_i x_h} + W^h_{hh} x_h^2 + {\color{green} \underbracket[1pt]{W^h_{kh} x_k x_h}_{\text{if } k \le h}} \nonumber \\
+& + {\color{blue}\sum_{i < k \atop i \neq h} W^h_{ik} x_i x_k} + {\color{violet}\underbracket[1pt]{W^h_{hk} x_h x_k}_ {\text{if } h \le k} } + W^h_{kk} x_k^2
 \end{align}
 
 Comparing coefficients yields the following equations (except for the ``colorful'' ones):
@@ -286,6 +287,7 @@ The following diagram shows the situation of the index $j$ in the {\color{cyan}c
 \vcenter{\hbox{\includegraphics[scale=0.6]{index-j-diagram.png}}}
 \end{equation}
 
+The first case is for $k > h$ and the second case is for $h > k$:
 \begin{equation}
 \vcenter{\hbox{\includegraphics[scale=0.6]{index-grid-2D.png}}}
 \end{equation}
