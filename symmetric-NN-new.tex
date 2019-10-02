@@ -265,11 +265,12 @@ Let $\sigma := (x_k \rightleftharpoons x_h)$, meaning \textbf{transposition} of 
 &= \sum_{j \neq h,k} \sum_{i \le j \atop i \neq h,k} W^h_{ij} x_i x_j + {\color{cyan}\sum_{j > h} W^h_{hj} x_h x_j} + {\color{olive}\sum_{j > k} W^h_{kj} x_k x_j} \nonumber \\
 & + {\color{red}\sum_{i < h \atop i \neq k} W^h_{ih} x_i x_h} + W^h_{hh} x_h^2 + {\color{green} \underbracket[1pt]{W^h_{kh} x_k x_h}_{\text{if } k \le h}} \nonumber \\
 & + {\color{blue}\sum_{i < k \atop i \neq h} W^h_{ik} x_i x_k} + {\color{violet}\underbracket[1pt]{W^h_{hk} x_h x_k}_ {\text{if } h \le k} } + W^h_{kk} x_k^2
+\label{eqn:colorful}
 \end{align}
 
 Comparing coefficients yields the following equations (except for the ``colorful'' ones):
 \begin{alignat}{3}
-W_{ij}^h &= W_{ij}^k \quad \quad && \forall \; h,k. \; j \neq h,k; \; i \le j; \; i \neq h,k \nonumber \\
+W_{ij}^h &= W_{ij}^k \quad \quad && \forall \; i,j,h,k. \; i,j \neq h,k; \; i \le j \nonumber \\
 %{\color{cyan}W_{hj}^h} &= {\color{cyan}W_{kj}^k} && \forall \; h,k. \; j > \max(h,k) \nonumber \\
 %{\color{olive}W_{kj}^h} &= {\color{olive}W_{hj}^k} && \forall \; h,k. \; j > \max(h,k) \nonumber \\
 %{\color{cyan}W_{hj}^h} &= {\color{olive}W_{hj}^k} = 0 \quad && \forall \; h,k. \; h < j \le k \nonumber \\
@@ -282,12 +283,35 @@ W_{hh}^k &= W_{kk}^h && \forall \; h,k. \nonumber \\
 W_{kk}^k &= W_{hh}^h && \forall \; h,k.
 \end{alignat}
 
+Surprisingly, Python experiments show that the ``colored'' terms in equation (\ref{eqn:colorful}) do not contribute to constraints for equivariance.  In other words, they can be ignored.
+
+Specifically, the colored terms lead to these constraints:
+\begin{alignat}{3}
+\mbox{cases} & && h < k: \nonumber \\
+\mbox{{\color{cyan}cyan} = {\color{cyan}cyan}} \quad \quad W^k_{ki} &= W^h_{hi} \quad \quad && \forall \; i,h,k. \; i > k \nonumber \\
+\mbox{{\color{olive}olive} = {\color{olive}olive}} \quad \quad W^k_{hi} &= W^h_{ki} \quad \quad && \forall \; i,h,k. \; i > k \nonumber \\
+\mbox{{\color{red}red} = {\color{red}red}} \quad \quad W^k_{ik} &= W^h_{ih} \quad \quad && \forall \; i,h,k. \; i < h \nonumber \\
+\mbox{{\color{blue}blue} = {\color{blue}blue}} \quad \quad W^k_{ih} &= W^h_{ik} \quad \quad && \forall \; i,h,k. \; i < h \nonumber \\
+\mbox{{\color{red}red} = {\color{cyan}cyan}} \quad \quad W^k_{ik} &= W^h_{hi} \quad \quad && \forall \; i,h,k. \; h < i < k \nonumber \\
+\mbox{{\color{olive}olive} = {\color{blue}blue}} \quad \quad W^k_{hi} &= W^h_{ik} \quad \quad && \forall \; i,h,k. \; h < i < k \nonumber \\
+\mbox{{\color{violet}violet} = {\color{violet}violet}} \quad \quad W^h_{hk} &= W^k_{hk} \quad \quad && \forall \; h,k. \; h < k \nonumber \\
+%
+\mbox{cases} & && k < h: \nonumber \\
+\mbox{{\color{cyan}cyan} = {\color{cyan}cyan}} \quad \quad W^k_{ki} &= W^h_{hi} \quad \quad && \forall \; i,h,k. \; i > h \nonumber \\
+\mbox{{\color{olive}olive} = {\color{olive}olive}} \quad \quad W^k_{hi} &= W^h_{ki} \quad \quad && \forall \; i,h,k. \; i > h \nonumber \\
+\mbox{{\color{red}red} = {\color{red}red}} \quad \quad W^k_{ik} &= W^h_{ih} \quad \quad && \forall \; i,h,k. \; i < k \nonumber \\
+\mbox{{\color{blue}blue} = {\color{blue}blue}} \quad \quad W^k_{ih} &= W^h_{ik} \quad \quad && \forall \; i,h,k. \; i < k \nonumber \\
+\mbox{{\color{cyan}cyan} = {\color{red}red}} \quad \quad W^k_{ki} &= W^h_{ih} \quad \quad && \forall \; i,h,k. \; k < i < h \nonumber \\
+\mbox{{\color{blue}blue} = {\color{olive}olive}} \quad \quad W^k_{ih} &= W^h_{ki} \quad \quad && \forall \; i,h,k. \; k < i < h \nonumber \\
+\mbox{{\color{green}green} = {\color{green}green}} \quad \quad W^h_{kh} &= W^k_{kh} \quad \quad && \forall \; h,k. \; k < h
+\end{alignat}
+
 The following diagram shows the situation of the index $j$ in the {\color{cyan}cyan} and {\color{olive}olive} cases:
 \begin{equation}
 \vcenter{\hbox{\includegraphics[scale=0.6]{index-j-diagram.png}}}
 \end{equation}
 
-The first case is for $k > h$ and the second case is for $h > k$:
+The following diagram shows the indexing situation for the colored terms in equation (\ref{eqn:colorful}).  The LHS and RHS of this equation has terms with different indexings.
 \begin{equation}
 \vcenter{\hbox{\includegraphics[scale=0.6]{index-grid-2D.png}}}
 \end{equation}
