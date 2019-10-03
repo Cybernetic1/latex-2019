@@ -106,13 +106,13 @@ Let $y = F(x)$ denote the (overall) neural network function.  In our case $F(x)$
 
 This is a quadratic layer, fully connected with all $W_{ij}$ links:
 \begin{equation}
-\vcenter{\hbox{\includegraphics[scale=0.7]{quadratic-NN.png}}}
+\vcenter{\hbox{\includegraphics[scale=0.6]{quadratic-NN.png}}}
 \end{equation}
 but some coefficients are \textbf{redundant} because $x_i x_j = x_j x_i$.
 
 One can eliminate redundant edges by imposing $i > j$:
 \begin{equation}
-\vcenter{\hbox{\includegraphics[scale=0.7]{quadratic-NN-2.png}}}
+\vcenter{\hbox{\includegraphics[scale=0.6]{quadratic-NN-2.png}}}
 \end{equation}
 For example, the link in red is $W_{11}^1$.  However, as we shall see below, this method creates constraints with rather complicated indices.  It appears that the first method with redundant weights is algebraically more elegant.
 
@@ -123,12 +123,12 @@ In a ``quadratic'' layer there would still be linear and constant terms.  But we
 
 For example, the following shows part of the network with quadratic, linear, and constant terms.  The linear terms are in blue and the constant term is in green.  Notice that this block should be repeated for each output $y_1, ..., y_3$:
 \begin{equation}
-\vcenter{\hbox{\includegraphics[scale=0.7]{quadratic-NN-3.png}}}
+\vcenter{\hbox{\includegraphics[scale=0.6]{quadratic-NN-3.png}}}
 \end{equation}
 
 Homogenization means adding a new input $x_4 \equiv 1$, similar to the ``bias'' term in traditional neural networks.  All the terms (quadratic, linear, constant) would be absorbed into a single matrix $W$:
 \begin{equation}
-\vcenter{\hbox{\includegraphics[scale=0.7]{quadratic-NN-4.png}}}
+\vcenter{\hbox{\includegraphics[scale=0.6]{quadratic-NN-4.png}}}
 \end{equation}
 
 \subsection{Linear case: $y = W x$}
@@ -139,13 +139,13 @@ Homogenization means adding a new input $x_4 \equiv 1$, similar to the ``bias'' 
 
 Equivariance implies:
 \begin{eqnarray}
-\boxed{\mbox{swapped}} \quad y_j ( \sigma(x_j \; x_k) x) &=& \sigma \cdot y_j = y_k \quad \boxed{\mbox{original}} \\
+\boxed{\mbox{LHS}} \quad y_j ( \sigma(x_j \; x_k) x) &=& \sigma \cdot y_j = y_k \quad \boxed{\mbox{RHS}} \\
 \sum_{i \neq j,k} W_{ij} x_i + W_{kj} x_j + W_{jj} x_k &=& \sum_{i \neq j,k} W_{ik} x_i + W_{jk} x_j + W_{kk} x_k . \nonumber
 \end{eqnarray}
 
 % for $(j \; k) \in \mathfrak{S}_n$.
 
-Comparing coefficients yields:
+Comparing coefficients on the LHS and RHS yields:
 \begin{eqnarray}
 W_{ij} &=& W_{ik} \quad \quad \forall \; j, k, (i \neq j, k) \nonumber \\
 W_{kj} &=& W_{jk} \quad \quad \forall \; j, k \nonumber \\
@@ -172,7 +172,7 @@ Note that the matrix $A$ is ``3D'' and has $N \times N \times N$ entries.
 
 Equivariance implies:
 \begin{equation}
-\boxed{\mbox{swapped}} \quad y_k ( \sigma(x_k \; x_h) \cdot x) = \sigma \cdot y_k = y_h \quad \boxed{\mbox{original}}
+\boxed{\mbox{LHS}} \quad y_k ( \sigma(x_k \; x_h) \cdot x) = \sigma \cdot y_k = y_h \quad \boxed{\mbox{RHS}}
 % \sum_{j \neq h,k} \sum_{i \neq h,k} a_{ij}^k x_i x_j + a_{hh}^k x_k^2 + a_{kh}^k x_h x_k + a_{hk}^k x_k x_h + a_{kk}^k x_h^2 &=& \sum_{j \neq h,k} \sum_{i \neq h,k} a_{ij}^h x_i x_j + a_{hh}^h x_h^2 + a_{kh}^h x_k x_h + a_{hk}^h x_h x_k + a_{kk}^h x_k^2 \nonumber
 \end{equation}
 
@@ -190,7 +190,7 @@ RHS &=& \sum_j \left[ \sum_i a_{ij}^h x_i \right] x_j \nonumber \\
 && + \sum_{i \neq h,k} a^h_{ih} x_i x_h + a^h_{kh} x_k x_h + a^h_{hh} x^2_h
 \end{eqnarray}
 
-Comparing coefficients yields:
+Comparing coefficients on the LHS and RHS yields:
 \begin{alignat}{3}
 a_{ij}^h &= a_{ij}^k && \forall \; h,k, (i \neq h,k, j \neq h,k) \nonumber \\
 a_{kj}^h &= a_{hj}^k && \forall \; h,k, (j \neq h,k) \nonumber \\
@@ -201,10 +201,9 @@ a_{kk}^h &= a_{hh}^k && \forall \; h,k \nonumber \\
 a_{hh}^h &= a_{kk}^k && \forall \; h,k \nonumber \\
 a_{hk}^h + a_{kh}^h &= a_{hk}^k + a_{kh}^k \quad && \forall \; h,k .
 \end{alignat}
+The last constraint is not a simple equality of weights.  It arises because $x_h x_k = x_k x_h$, a consequence of the \textbf{redundancy} of the weights as explained in \S\ref{redundant-weights}.
 
-The last equation above is not a simple equality of weights.  It arised because $x_h x_k = x_k x_h$, a consequence of the \textbf{redundancy} of the weights as explained in \S\ref{redundant-weights}.
-
-How many different colors?
+How many distinct weights?
 \begin{equation}
 \begin{tabular}{c c c c}
 $N = 2$ .... & 6 & / 8 & = 75\% \\
@@ -241,10 +240,10 @@ Let $\sigma := (x_k \rightleftharpoons x_h)$, meaning \textbf{transposition} of 
 
 \begin{align}
 \boxed{\mbox{LHS}} &= y_k ( \sigma \cdot x ) = \sum_j \left[ \sum_{i \le j} W_{ij}^k  \; \sigma \cdot x_i \right] \sigma \cdot x_j \nonumber \\
-&= \sum_j \left[ \sum_{i \le j \atop i \neq h,k} W^k_{ij} x_i + \underbracket[1pt]{W^k_{hj} x_k}_{\text{if } h \le j} + \underbracket[1pt]{W^k_{kj} x_h}_{\text{if } k \le j} \right] \sigma \cdot x_j \quad \quad \boxed{\text{apply } \sigma \cdot x_i} \nonumber \\
+&= \sum_j \left[ \sum_{i \le j \atop i \neq h,k} W^k_{ij} x_i + \underbracket[1pt]{W^k_{hj} x_k}_{\text{if } h \le j} + \underbracket[1pt]{W^k_{kj} x_h}_{\text{if } k \le j} \right] \sigma \cdot x_j \quad \quad \boxed{\text{applied } \sigma \cdot x_i} \nonumber \\
 % 
 &= \sum_{j \neq h,k} \left[ \sum_{i \le j \atop i \neq h,k} W^k_{ij} x_i + \underbracket[1pt]{W^k_{hj} x_k}_{\text{if } h \le j} + \underbracket[1pt]{W^k_{kj} x_h}_{\text{if } k \le j} \right] x_j 
-	\quad \quad \quad \boxed{\text{apply } \sigma \cdot x_j} \nonumber \\
+	\quad \quad \quad \boxed{\text{applied } \sigma \cdot x_j} \nonumber \\
 	& \quad \quad + \left[ \sum_{i < h \atop i \neq k} W^k_{ih} x_i + W^k_{hh} x_k + \underbracket[1pt]{W^k_{kh} x_h}_{\text{if } k \le h} \right] x_k
 	+ \left[ \sum_{i < k \atop i \neq h} W^k_{ik} x_i + \underbracket[1pt]{W^k_{hk} x_k}_{\text{if } h \le k} + W^k_{kk} x_h \right] x_h \nonumber \\
 % 
@@ -279,11 +278,12 @@ W_{ij}^h &= W_{ij}^k \quad \quad && \forall \; i,j,h,k. \; i,j \neq h,k; \; i \l
 %{\color{blue}W_{ik}^h} &= {\color{blue}W_{ih}^k} && \forall \; h,k. \; i \le h; \; i \neq k \nonumber \\
 %{\color{red}W_{kh}^h} &= {\color{red}W_{kh}^k} && \forall \; h,k. \; k \le h \nonumber \\
 %{\color{blue}W_{hk}^h} &= {\color{blue}W_{hk}^k} && \forall \; h,k. \; h \le k \nonumber \\
-W_{hh}^k &= W_{kk}^h && \forall \; h,k. \nonumber \\
+\boxed{\mbox{``Black'' equations}} \quad \quad W_{hh}^k &= W_{kk}^h && \forall \; h,k. \nonumber \\
 W_{kk}^k &= W_{hh}^h && \forall \; h,k.
+\label{eqn:black-ones}
 \end{alignat}
 
-Surprisingly, Python experiments show that the ``colored'' terms in equation (\ref{eqn:colorful}) do not contribute to constraints for equivariance.  In other words, they can be ignored.
+\uline{Surprisingly}, Python experiments show that the ``colored'' terms in equation (\ref{eqn:colorful}) do not contribute to constraints for equivariance.  In other words, they can be ignored.  Only the ``black'' equations (\ref{eqn:black-ones}) are required for equivariance.
 
 Specifically, the colored terms lead to these constraints:
 \begin{alignat}{3}
@@ -303,8 +303,11 @@ Specifically, the colored terms lead to these constraints:
 \mbox{{\color{blue}blue} = {\color{blue}blue}} \quad \quad W^k_{ih} &= W^h_{ik} \quad \quad && \forall \; i,h,k. \; i < k \nonumber \\
 \mbox{{\color{cyan}cyan} = {\color{red}red}} \quad \quad W^k_{ki} &= W^h_{ih} \quad \quad && \forall \; i,h,k. \; k < i < h \nonumber \\
 \mbox{{\color{blue}blue} = {\color{olive}olive}} \quad \quad W^k_{ih} &= W^h_{ki} \quad \quad && \forall \; i,h,k. \; k < i < h \nonumber \\
-\mbox{{\color{green}green} = {\color{green}green}} \quad \quad W^h_{kh} &= W^k_{kh} \quad \quad && \forall \; h,k. \; k < h
+\mbox{{\color{green}green} = {\color{green}green}} \quad \quad W^h_{kh} &= W^k_{kh} \quad \quad && \forall \; h,k. \; k < h 
 \end{alignat}
+where notations such as ``{\color{red}red} = {\color{red}red}'' mean that the term of the first color on the LHS is compared to the term of the second color on the RHS.
+
+Python experiments show that the ``colored'' equations actually \uline{reduce} the number of weights (ie, reduce the degree of freedom in the weights) but they are \uline{unnecessary} for equivariance.  So they are not just redundant but actually \uline{incorrect}.
 
 The following diagram shows the situation of the index $j$ in the {\color{cyan}cyan} and {\color{olive}olive} cases:
 \begin{equation}
@@ -316,7 +319,7 @@ The following diagram shows the indexing situation for the colored terms in equa
 \vcenter{\hbox{\includegraphics[scale=0.6]{index-grid-2D.png}}}
 \end{equation}
 
-How many different colors?
+How many distinct weights?
 \begin{equation}
 \begin{tabular}{l l l l}
 $N = 1$ .... & 1 & / 1 & = 100\% \\
