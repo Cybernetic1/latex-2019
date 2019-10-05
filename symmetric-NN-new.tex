@@ -283,9 +283,7 @@ W_{kk}^k &= W_{hh}^h && \forall \; h,k.
 \label{eqn:black-ones}
 \end{alignat}
 
-\uline{Surprisingly}, Python experiments show that the ``colored'' terms in equation (\ref{eqn:colorful}) do not contribute to constraints for equivariance.  In other words, they can be ignored.  Only the ``black'' equations (\ref{eqn:black-ones}) are required for equivariance.
-
-Specifically, the colored terms lead to these constraints:
+The colored terms lead to these constraints:
 \begin{alignat}{3}
 \mbox{cases} & && h < k: \nonumber \\
 \mbox{{\color{cyan}cyan} = {\color{cyan}cyan}} \quad \quad W^k_{ki} &= W^h_{hi} \quad \quad && \forall \; i,h,k. \; i > k \nonumber \\
@@ -307,41 +305,17 @@ Specifically, the colored terms lead to these constraints:
 \end{alignat}
 where notations such as ``{\color{red}red} = {\color{red}red}'' mean that the term of the first color on the LHS is compared to the term of the second color on the RHS.
 
-Python experiments show that the ``colored'' equations actually \uline{reduce} the number of weights (ie, reduce the degree of freedom in the weights) but they are \uline{unnecessary} for equivariance.  So they are not just redundant but actually \uline{incorrect}.
-
-The following diagram shows the situation of the index $j$ in the {\color{cyan}cyan} and {\color{olive}olive} cases:
+The indexing situation can get a bit complicated.  For example, the following diagram shows the situation of $k > h$ with the index $j$:
 \begin{equation}
 \vcenter{\hbox{\includegraphics[scale=0.6]{index-j-diagram.png}}}
 \end{equation}
 
-The following diagram shows the indexing situation for the colored terms in equation (\ref{eqn:colorful}).  The LHS and RHS of this equation has terms with different indexings.
+The following diagram shows the indexing situation for the colored terms in equation (\ref{eqn:colorful}).  The LHS and RHS of this equation has terms with different indexings conditions:
 \begin{equation}
 \vcenter{\hbox{\includegraphics[scale=0.6]{index-grid-2D.png}}}
 \end{equation}
 
-How many distinct weights?
-\begin{equation}
-\begin{tabular}{l l l l}
-$N = 1$ .... & 1 & / 1 & = 100\% \\
-$N = 2$ .... & 4 & / 8 & = 50\% \\
-$N = 3$ .... & 6 & / 27 & = 22.2\% \\
-$N = 4$ .... & 7 & / 64 & = 10.9\% \\
-$N = 5$ .... & 8 & / 125 & = 6.4\% \\
-$N = 6$ .... & 9 & / 216 & = 4.2\% \\
-$N = 7$ .... & 10 & / 343 & = 2.9\% \\
-$N = 8$ .... & 11 & / 512 & = 2.1\% \\
-$N = 9$ .... & 12 & / 729 & = 1.6\% \\
-$N = 10$ .... & 13 & / 1000 & = 1.3\%
-\end{tabular}
-\end{equation}
-
-There would be $N$ \textbf{blocks} of $N \times N$ matrices.
-
-All diagonals consists of 2 colors, regardless of $N$ (from 2nd and 3rd equations).  This leaves $N (N - 1)$ non-diagonal entries per block.
-
-Non-diagonal entries of different blocks are equal, if the block indices are different from the row and column indices.  Out of $N$ blocks there would be 2 different sets of non-diagonal weights.  (This comes from the 1st equation.)
-
-The last equation causes non-diagonal weights to have a certain symmetry about the diagonal.  
+It is not easy to see how many distinct weights are permitted by the constraints.  Surprisingly, Python experiments suggest that the number of distinct weights $\equiv 4$ for all $N$ (except for $N = 1, 2$ which has only 1 and 3 weights).
 
 For example, the number of monomials in 3 variables and of degree $\le 8$ is:
 \begin{eqnarray}
@@ -359,7 +333,7 @@ On the second layer, the output would be composed of sums and products of polyno
 
 This means that the weights would be in an \textbf{algebraic variety} of reduced dimension.  Our objective is to update / learn the weights \textbf{within} this variety.  
 
-\subsection{Quadratic, multi-layer, unconstrained case}
+\subsection{Quadratic, 2-layer case}
 
 In the last section we have \textbf{equivariant} layers composed together to form a neural network.  Now we relax the constraints so that the multi-layer network is free to have any weights except that the output must be \textbf{invariant}.
 
@@ -509,8 +483,6 @@ In (\ref{eqn:do-k-dW}), for each equivalence class,
 \subsection{Representation theory}
 
 Representation theory seems to be of no use in this situation.  A theorem says that any finite-dimensional irreducible representation (over $\mathbb{C}$) of an Abelian group $G$ is always 1-dimensional.  So $G$ has exactly $|G|$ complex representations \parencite{Qiu2011}.
-
-\hrule
 
 A recent book talks about metric embeddings into Banach space \parencite{Ostrovskii2013}, but the space appears to be infinite-dimensional.  Not sure if it is useful for our purpose.
 
