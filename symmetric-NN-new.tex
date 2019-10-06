@@ -310,7 +310,7 @@ The indexing situation can get a bit complicated.  For example, the following di
 \vcenter{\hbox{\includegraphics[scale=0.6]{index-j-diagram.png}}}
 \end{equation}
 
-The following diagram shows the indexing situation for the colored terms in equation (\ref{eqn:colorful}).  The LHS and RHS of this equation has terms with different indexing conditions:
+The following diagram shows the indexing situation for the colored terms in equation (\ref{eqn:colorful}).  The LHS and RHS of this equation has terms with different indexings conditions:
 \begin{equation}
 \vcenter{\hbox{\includegraphics[scale=0.6]{index-grid-2D.png}}}
 \end{equation}
@@ -335,6 +335,8 @@ This means that the weights would be in an \textbf{algebraic variety} of reduced
 
 \subsection{Quadratic, 2-layer case}
 
+
+
 In the last section we have \textbf{equivariant} layers composed together to form a neural network.  Now we relax the constraints so that the multi-layer network is free to have any weights except that the output must be \textbf{invariant}.
 
 \subsection{Back-propagation algorithm for constrained weights}
@@ -351,7 +353,7 @@ In the last section we have \textbf{equivariant} layers composed together to for
 
 如果想在某个神经网络中的两个权值间建立一种约束关系，这两个权值自然就不再相互独立，可以通过考查整个权值构成的线性空间，秩会变小。约束条件只要不改变连续假设，仍然可以求出带约束条件下的梯度。如果改变了连续假设，则意味着非线性分解不恰当，需要重新分解神经网络的基本结构。
 
-\subsubsection{Classic back-prop with quadratic neurons}
+\subsubsection{Quadratic NN setup}
 
 Traditional neural network:
 \begin{eqnarray}
@@ -362,9 +364,9 @@ Traditional neural network:
 
 Quadratic neural network:
 \begin{eqnarray}
-\boxed{neuron} \quad & y = & W \vect{x} \cdot \vect{x} \nonumber \\
-\boxed{layer} \quad & y = & W \vect{x} \cdot \vect{x} \nonumber \\
-\boxed{network} \quad & y = & W \vect{x} \circ W \vect{x} \; .... \; \vect{x} 
+\boxed{neuron} \quad & y = & \langle W \vect{x}, \vect{x} \rangle \nonumber \\
+\boxed{layer} \quad & y = & \langle W \vect{x}, \vect{x} \rangle \nonumber \\
+\boxed{network} \quad & y = & \langle W \vect{x}, \vect{x} \rangle \circ \langle W \vect{x}, \vect{x} \rangle \; .... \; \vect{x} 
 \end{eqnarray}
 
 Traditionally, each neuron $k$ with output $o_k$ is defined as:
@@ -380,56 +382,103 @@ o_k = {\text{net}}_k = \sum_j \sum_i W_{ij}^k o_i o_j
 \end{equation}
 where the 2 summations can be \textbf{interchanged}.
 
-What follows is just a re-working of traditional back-propagation.
+\subsubsection{Classical back-prop algorithm}
 
-Using the chain rule:
+What follows is just a re-working of traditional back-propagation.  For ease of comparison, let's recall the classic derivation of the back-prop algorithm (from Wikipedia):
+
+The weight update rule is:
+\begin{equation}
+\Delta W_{ij} = - \eta \frac{\partial E}{\partial W_{ij}} = - \eta o_i \delta_j
+\end{equation}
+where $\delta_j$ is the so-called ``local gradient''.  $o_i$ is the $i$-th output, $\eta$ is the learning rate.
+
+The gradient is:
+\begin{equation}
+	\label{eqn:back-prop-chain-rule}
+\frac{\partial E}{\partial W_{ij}}
+= \frac{\partial E}{\partial o_j} \frac{\partial o_j}{\partial W_{ij}}
+= {\color{red} \frac{\partial E}{\partial o_j}} \cdot
+  {\color{olive} \frac{\partial o_j}{\partial \mathrm{net}_j}} \cdot
+  {\color{cyan} \frac{\partial \mathrm{net}_j}{\partial W_{ij}}} .
+\end{equation}
+In the last factor on the RHS, only one term in $\mathrm{net}_j$ depends on $W_{ij}$, so:
+\begin{equation}
+{\color{cyan} \frac{\partial \mathrm{net}_j}{\partial W_{ij}}}
+= \frac{\partial}{\partial W_{ij}} \left( \sum_k W_{kj} o_k \right)
+= \frac{\partial}{\partial W_{ij}} W_{ij} o_i = o_i .
+\end{equation}
+The middle factor on the RHS is the partial derivative of the activation function:
+\begin{equation}
+{\color{olive} \frac{\partial o_j}{\partial \mathrm{net}_j}}
+= \frac{\partial \sigmoid(\mathrm{net}_j)}{\partial \mathrm{net}_j} .
+\end{equation}
+The first factor is easy to evaluate if the neuron is in the output layer:
+\begin{equation}
+{\color{red} \frac{\partial E}{\partial o_j}}
+= \frac{\partial}{\partial o_j} \frac{1}{2} (o^* - o_j)^2 = o_j - o^* = \epsilon
+\end{equation}
+where $\epsilon$ is the error.
+
+Otherwise, assume $\mathcal{C}$ is the set of all child neurons \textbf{receiving} input from neuron $j$, one gets a \textbf{recursive} expression for the derivative:
+\begin{equation}
+{\color{red} \frac{\partial E}{\partial o_j}}
+= \sum_{c \in \mathcal{C}} \left( \frac{\partial E}{\partial \mathrm{net}_c} \frac{\partial \mathrm{net}_c}{\partial o_j} \right)
+= \sum_{c \in \mathcal{C}} \left( \frac{\partial E}{\partial o_c} \frac{\partial o_c}{\partial \mathrm{net}_c} \frac{\partial \mathrm{net}_c}{\partial o_j} \right)
+= \sum_{c \in \mathcal{C}} \left( \frac{\partial E}{\partial o_c} \frac{\partial o_c}{\partial \mathrm{net}_c} W_{jc} \right)
+\end{equation}
+
+So we get the \boxed{\mbox{classic back-prop algorithm}}\ :
+\begin{eqnarray}
+\frac{\partial E}{\partial W_{i j}} &=&  \delta_j \cdot {\color{cyan} o_i} \nonumber \\
+\delta_j &=& {\color{red} \frac{\partial E}{\partial o_j}} \cdot {\color{olive} \frac{\partial o_j}{\partial \mathrm{net}_j}} =
+\begin{cases}
+\displaystyle
+{\color{red} \frac{\partial E}{\partial o_j}} \cdot {\color{olive} \frac{\partial \sigmoid(\mathrm{net}_j)}{\partial \mathrm{net}_j}} & \text{if $j$ = output neuron} \\
+\displaystyle
+{\color{red} \sum_c W_{j c} \cdot \delta_c} \cdot {\color{olive} \frac{\partial \sigmoid(\mathrm{net}_j)}{\partial \mathrm{net}_j}} &  \text{if $j$ = inner neuron} 
+\end{cases}
+\end{eqnarray}
+
+\subsubsection{Quadratic back-prop algorithm}
+
+Applying the chain rule as in (\ref{eqn:back-prop-chain-rule}):
 \begin{equation}
 \frac{\partial E}{\partial W_{ij}^k}
-= \frac{\partial E}{\partial o_k} \frac{\partial o_k}{\partial W_{ij}^k}
+= {\color{red} \frac{\partial E}{\partial o_k}} \cdot {\color{cyan} \frac{\partial o_k}{\partial W_{ij}^k}} .
 \end{equation}
+Notice that we don't use an activation function, so the {\color{olive}olive} factor disappears.
 
 For the RHS's second factor, only one term in the sum depends on $W_{ij}^k$, so:
 \begin{equation}
 	\label{eqn:do-k-dW}
-\frac{\partial o_k}{\partial W_{ij}^k}
+{\color{cyan} \frac{\partial o_k}{\partial W_{ij}^k}}
 = \frac{\partial }{\partial W_{ij}^k} \left( \sum_{i'} \sum_{j'} W_{i' j'}^k o_{i'} o_{j'} \right)
 = \frac{\partial }{\partial W_{ij}^k} W_{ij}^k o_i o_j = o_i o_j .
 \end{equation}
 
-If $k$ is an inner neuron, let $L = \{ u, v, \dots , w \}$ be the \textbf{next layer} of neurons receiving input from neuron $k$.  Consider $E$ as a function with the inputs being all neurons in $L$:
+If $k$ is an inner neuron, let $\mathcal{C} = \{ u, v, \dots , w \}$ be the \textbf{next layer} of neurons receiving input from neuron $k$.  Consider $E$ as a function with the inputs being all neurons in $\mathcal{C}$:
 \begin{eqnarray}
 \frac{\partial E(o_k)}{\partial o_k}
 &=& \frac{\partial E(o_u, o_v, \dots, o_w)}{\partial o_k} \nonumber \\
 \boxed{\mbox{next layer}} \quad
-	o_{\ell} &=& \sum_j \sum_i W_{ij}^{\ell} o_i o_j
-\quad \boxed{\mbox{current layer}}
+	o_c &=& \sum_j \sum_i W_{ij}^c o_i o_j
+\quad \boxed{\mbox{current layer}} .
 \end{eqnarray}
-and take the total derivative with respect to $o_k$.  A \textbf{recursive} expression for the derivative is obtained:
+Then the \textbf{recursive} expression for the derivative is obtained:
 \begin{equation}
 	\label{eqn:dE-do-k}
-\frac{\partial E}{\partial o_k}
-= \sum_{\ell \in L} \left( \frac{\partial E}{\partial o_{\ell}} \frac{\partial o_{\ell}}{\partial o_k} \right)
-= \sum_{\ell \in L} \left( \frac{\partial E}{\partial o_{\ell}} \sum_j W_{kj}^{\ell} o_j \right)
+{\color{red} \frac{\partial E}{\partial o_k}}
+= \sum_{c \in \mathcal{C}} \left( \frac{\partial E}{\partial o_c} \frac{\partial o_c}{\partial o_k} \right)
+= \sum_{c \in \mathcal{C}} \left( \frac{\partial E}{\partial o_c} \sum_j W_{kj}^c o_j \right)
 \end{equation}
 
-Substituting, we obtain:
+Substituting, we obtain the algorithm:
 \begin{eqnarray}
+\boxed{\mbox{quadratic back-prop}} \quad \quad
 \frac{\partial E}{\partial W_{ij}^k}
 &=& \frac{\partial E}{\partial o_k} \frac{\partial o_k}{\partial W_{ij}^k}
-= \frac{\partial E}{\partial o_k} o_i o_j := \delta_k o_i o_j \nonumber \\ 
-\delta_k &=& \sum_{\ell \in L} \left( \delta_{\ell} \sum_j W_{kj}^{\ell} o_j \right)
-\end{eqnarray}
-
-Our algorithm can be compared the classic back-prop algorithm:
-\begin{eqnarray}
-\frac{\partial E}{\partial W_{i j}} &=& \delta_j o_i \nonumber \\
-\delta_j &=& \frac{\partial E}{\partial o_j} \frac{\partial o_j}{\partial \mathrm{net}_j} =
-	\begin{cases}
-	\displaystyle
-	\frac{\partial L}{\partial \sigmoid(o_j)} \frac{\partial \sigmoid(o_j)}{\partial o_j} & \text{if $j$ = output neuron} \\
-	\displaystyle
-	\sum_l W_{j l} \delta_l \frac{\partial \sigmoid(o_j)}{\partial o_j} &  \text{if $j$ = inner neuron} 
-	\end{cases}
+= \frac{\partial E}{\partial o_k} o_i o_j := {\color{red} \delta_k} \cdot {\color{cyan} o_i o_j} \nonumber \\ 
+{\color{red} \delta_k} &:=& {\color{red} \sum_{c \in \mathcal{C}} \left( \delta_c \sum_j W_{kj}^c o_j \right)}
 \end{eqnarray}
 
 \subsubsection{Shared weights}
