@@ -1,0 +1,43 @@
+\input{../YKY-preamble.tex}
+
+\usepackage{xeCJK}
+\setCJKmainfont[BoldFont=SimHei,ItalicFont=KaiTi]{SimSun}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{mathtools}
+
+\title{{\small Research proposal:} \\ Learning algorithms for AGI}
+\author{YKY}
+
+\begin{document}
+\maketitle
+
+Project duration: 3 years.
+
+The bottleneck problem of AGI (artificial general intelligence) \parencite{Goertzel2007} seems to be the lack of an efficient learning algorithm.  To design such an algorithm seems to require specifying the structure of knowledge representation (KR).  Among current AGI theories, the only well-articulated KR schemes are logic-based (graphs and hypergraphs are equivalent to logic).  But symbolic logic may not be the only possible KR scheme.  The biological brain may provide an example of neural representation that is drastically different from symbolic logic, although we still do not know its intricate details.
+
+We may guess at the likely structure of the brain's neural representation and use this insight to shed light on efficient learning algorithms.
+
+In this research we want to explore the efficiency of 2 learning algorithms.  The first idea is based on classical symbolic logic and does not use neural mechanisms.
+
+\begin{enumerate}
+	\item Inductive learning of logic rules using a co-operative genetic algorithm, where individuals are logic rules and the population as a whole is the knowledge base of the intelligent agent.  This idea has been described in \parencite{Freitas2002}.
+	
+	\item A deep-learning algorithm where logic propositions are embedded in vector space and the neural network learns the deductive map from sets of propositions (the premise) to propositions (the conclusion).  Due to the commutativity of logic conjunctions (A and B is equivalent to B and A), the neural network may possess some kind of invariance under permutation of propositional components.  
+	
+	Symmetric neural networks have been proposed in:
+	\begin{itemize}
+		\item \parencite{Gens2014}
+		\item \parencite{Bie2019}
+		\item \parencite{Ravanbakhsh2016}
+		\item \parencite{Ravanbakhsh2017}
+		\item \parencite{Qi2016}
+		\item \parencite{Qi2017} 
+		\item \parencite{Zaheer2017}
+	\end{itemize}
+
+\end{enumerate}
+
+\printbibliography
+
+\end{document}
