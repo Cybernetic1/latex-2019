@@ -1,18 +1,19 @@
 \input{../YKY-preamble.tex}
 
+\usepackage[backend=biber,bibstyle=authoryear,citestyle=../authoryearbrack]{biblatex}
+\bibliography{../AGI-book}
+
 \usepackage[CJKspace]{xeCJK}
 \setCJKmainfont[BoldFont=SimHei,ItalicFont=KaiTi]{SimSun}
 \usepackage{color}
 \usepackage{mathtools}
 \usepackage{hyperref}
 
-\title{Genetic evolution of logic rules \\ {\normalsize research proposal}}
+\title{Co-operative genetic evolution of logic rules \\ {\normalsize white paper}}
 % \author{general.intelligence@gmail.com}
 
 \begin{document}
 \maketitle
-
-The bottleneck of 
 
 系统分为两部分：
 \begin{itemize}
@@ -56,7 +57,23 @@ Logic rule 的学习，即 inductive rule learning 又叫 inductive logic progra
 \quad \quad
 \vcenter{\hbox{\includegraphics[scale=0.4]{relational-knowledge-discovery_COVER.jpg}}}
 \end{equation}
-可以上 \href{https://b-ok.org/}{https://b-ok.org/} 下载。  这本身是一门颇深奥的学问，需要一段时间学习，但暂时不看也罢，只需要知道它是一种 combinatorial search，在 logic rules 的 lattice（格）中搜寻。 这是一种 离散的、符号的空间。
+可以上 \href{https://b-ok.org/}{https://b-ok.org/} 下载。  
+
+Inductive logic learning 的参考书还有：
+\begin{itemize}
+	\item \citetitle{Raedt2008a} \parencite{Raedt2008a}
+	\item \citetitle{Bergadano1996} \parencite{Bergadano1996}
+	\item \citetitle{Lloyd2003} \parencite{Lloyd2003}
+	\item \citetitle{Flach1994} \parencite{Flach1994}
+	\item \citetitle{Fuernkranz2012} \parencite{Fuernkranz2012}
+	\item \citetitle{Muggleton2015} \parencite{Muggleton2015}
+	\item \citetitle{Raedt2016} \parencite{Raedt2016}
+	\item \citetitle{Cussens2000} \parencite{Cussens2000}
+	\item \citetitle{Dzeroski2001a} \parencite{Dzeroski2001a}
+	\item \citetitle{Hitzler2011} \parencite{Hitzler2011}
+\end{itemize}
+
+这本身是一门颇深奥的学问，需要一段时间学习，但暂时不看也罢，只需要知道它是一种 combinatorial search，在 logic rules 的 lattice（格）中搜寻。 这是一种 离散的、符号的空间。
 
 \subsection{Genetic algorithm}
 
@@ -69,6 +86,21 @@ Logic rule 的学习，即 inductive rule learning 又叫 inductive logic progra
 \subsection{协同进化 (co-operative co-evolution)}
 
 这部分是新的。 但它意思很明显，就是说： 进化的目标不只是一个最优的 个体，而是整个 群族。
+
+The idea is first described in \parencite{Freitas2002}:
+\begin{equation}
+\vcenter{\hbox{\includegraphics[scale=2.0]{../../GILR/[Freitas]_quote_1.jpg}}}
+\end{equation}
+
+\begin{equation}
+\vcenter{\hbox{\includegraphics[scale=0.5]{../../GILR/[Freitas]_quote_2.jpg}}}
+\end{equation}
+
+Two very early papers using genetic algorithm to learn logic rules are: \parencite{Giordana1994} and \parencite{Augier1995}.  There is also \parencite{Liu2000} which is an improvement over the SIA approach used in the above 2 papers.
+
+\citetitle{Pietramala2008} \parencite{Pietramala2008} uses genetic algorithm to learn rules for document classification.  However, it uses only simple, propositional rules over $n$-grams.
+
+One problem of genetic algorithms is that the genes represent \textbf{discrete} entities, so that crossing-over and mutations usually result in discrete \textbf{jumps} from one individual to another.  This is in contrast to deep learning where gradient descent is continuous.  Perhaps one way to circumvent this problem is to evolve a massive number of rules, and let the action of the intelligent agent be the \textbf{average} of a number of fired rules.  We will explore this idea.
 
 \section{Logic rule engine}
 
@@ -105,9 +137,9 @@ $\bigcirc$ & $\times$ & $\bigcirc$ \\
 一条 logic rule 可以是这样：
 \begin{equation}
 \label{logic-rule-example}
-X(x, y) \wedge X(w, y) \wedge \neq(x,w) \Rightarrow \text{ColumnWin}(,)
+X(x, y) \wedge X(w, y) \wedge \neq(x,w) \Rightarrow \text{ColumnWin}(x,y)
 \end{equation}
-表示如果有两个 X 在同一直行，则这一行可以赢。
+表示如果有两个 X 在同一直行，则这一行差一步就可以赢。
 
 其实我也不知道 打井游戏 的正确 rules 是怎样，这要等 learn 出来之后看看。 
 
@@ -140,6 +172,39 @@ Rete 的 decision tree，输入是一个新的 WME，从树的 根 出发，比�
 当然 rete 这个 tree 可以有不同的构造方法，类似 decision tree，例如根据 information gain. 
 
 由於 rete 是树状结构，它是 hierarchical（层级化）的。 我们可以利用 rete 的层级化，将 进化算法 变成 层级化的。 这会是论文最大的贡献。
+
+\section{Project status}
+
+Our code is on GitHub: \\
+\href{https://github.com/Cybernetic1/GILR}{https://github.com/Cybernetic1/GILR}
+
+For the Rete algorithm, we adopted a simple open-source implementation called NaiveRete (written in Python) on GitHub.  NaiveRete is based on the PhD thesis of \cite{Doorenbos1995}.  When we fed randomly generated logic formulas into NaiveRete, we discovered some bugs and fixed them.
+
+The Rete algorithm is notoriously difficult to understand and implement.  As a result, it is very difficult to conduct experiments in genetic learning of \textbf{first-order logic} formulas, which require an efficient logic engine to evaluate.  This may explain why this topic is relatively unexplored.
+
+This is a Python example for setting up Rete and invoking it:
+\begin{equation}
+\vcenter{\hbox{\includegraphics[scale=0.6]{../../GILR/Genifer-lovers.png}}}
+\end{equation}
+
+The Rete network gets very big as more rules are added to it.  This is an example Rete network for only 1 rule:
+\begin{equation}
+\vcenter{\hbox{\includegraphics[scale=0.5]{../../GILR/rete_graph_ncc_test.png}}}
+\end{equation}
+
+This is a screenshot of the randomly generated logic rules for Tic-Tac-Toe:
+\begin{equation}
+\vcenter{\hbox{\includegraphics[scale=0.5]{../../GILR/logic_rules_screenshot.png}}}
+\end{equation}
+
+This is the GUI for the Tic-Tac-Toe learner:
+\begin{equation}
+\vcenter{\hbox{\includegraphics[scale=0.6]{../../GILR/GUI-screenshot.png}}}
+\end{equation}
+
+Currently the genetic algorithm fails to converge for Tic-Tac-Toe.  We think this is probably because the rules are ``flat'' in the sense that each rule looks at the board configuration and immediately concludes with a game move.  This class of rules may be inadequate for playing the game.  We think that adding \textbf{predicate invention} and \textbf{multi-step reasoning} would allow this game to be solved perfectly.
+
+Then we will apply this algorithm on more challenging tasks such as natural language processing.
 
 \printbibliography
 
