@@ -72,6 +72,7 @@
 \setbeamertemplate{bibliography item}[text]
 
 \usepackage{graphicx} % Allows including images
+\usepackage{tikz-cd}
 \usepackage[export]{adjustbox}% http://ctan.org/pkg/adjustbox
 \usepackage{verbatim} % comments
 % \usepackage{tikz-cd}  % commutative diagrams
@@ -86,6 +87,8 @@
 \newcommand{\tab}{\hspace*{1cm}}
 \newcommand*\confoundFace{$\vcenter{\hbox{\includegraphics[scale=0.2]{../confounded-face.jpg}}}$}
 \renewcommand{\smiley}{$\vcenter{\hbox{\includegraphics[scale=0.05]{../smiling-face.png}}}$}
+
+%%%%%%%% Make table of contents %%%%%%%
 
 \makeatletter
 \renewcommand{\boxed}[1]{\fbox{\m@th$\displaystyle\scalebox{0.9}{#1}$} \,}
@@ -149,6 +152,7 @@
 \frameinlbftrue
 \begin{frame}
 \frametitle{普选／民主制度 未必适合 香港}
+
 \begin{itemize}
 	\item 民主 令社会不断 回归到平均值，民主 不适合 人口多、发展中的国家，选举 is a waste of time
 	
@@ -157,7 +161,11 @@
 	\item 西方历史上，民主的发源地 希腊雅典，亦没有因为有民主而免於战败。 民主的 Athens 被 Sparta 打败，即著名的 Pelopponesian War
 	
 	\item 柏拉图、亚里士多德 等哲学家 提出 政治的 \emp{循环} (cycle)： \\
-	\tab mob rule $\Rightarrow$ monarchy $\Rightarrow$ tyranny $\Rightarrow$ aristocracy $\Rightarrow$ oligarchy $\Rightarrow$ democracy $\Rightarrow$ mob rule
+	\begin{tikzcd}[ampersand replacement=\&,arrows=Rightarrow,row sep=0em,column sep=small]
+		\mbox{mob rule} \arrow{r} \& \mbox{monarchy} \arrow{r} \& \mbox{tyranny} \arrow[d,bend left=90] \\
+		\mbox{democracy} \arrow[u,bend left=90] \& \arrow{l} \mbox{oligarchy} \& \arrow{l} \mbox{aristocracy}
+	\end{tikzcd}
+	% \tab mob rule $\Rightarrow$ monarchy $\Rightarrow$ tyranny $\Rightarrow$ aristocracy $\Rightarrow$ oligarchy $\Rightarrow$ democracy $\Rightarrow$ mob rule
 	
 	\item 「中国模式」令中国近10-20年经济起飞，必然做对了某些事。 其实 这证明了民主对於经济进步是不必要的。 印度有民主，但经济一样起唔到飞
 	
@@ -179,6 +187,10 @@
 	
 	\item Deregulation 的做法可以是： 企业联合集资，去除政府管制，并在过渡期获得制度上补偿
 \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{种族歧视 ／ 香港人的民族自卑感}
 \end{frame}
 
 \begin{frame}
