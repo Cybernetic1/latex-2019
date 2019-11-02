@@ -29,13 +29,13 @@
 %\usetheme{Copenhagen}
 %\usetheme{Darmstadt}
 %\usetheme{Dresden}
-\usetheme{Frankfurt}
+%\usetheme{Frankfurt}
 %\usetheme{Goettingen}
 %\usetheme{Hannover}
 %\usetheme{Ilmenau}
 %\usetheme{JuanLesPins}
 %\usetheme{Luebeck}
-%\usetheme{Madrid}
+\usetheme{Madrid}
 %\usetheme{Malmoe}
 %\usetheme{Marburg}
 %\usetheme{Montpellier}
@@ -50,11 +50,11 @@
 %\usecolortheme{beaver}
 %\usecolortheme{beetle}
 %\usecolortheme{crane}
-\usecolortheme{dolphin}
+%\usecolortheme{dolphin}
 %\usecolortheme{dove}
 %\usecolortheme{fly}
 %\usecolortheme{lily}
-%\usecolortheme{orchid}
+\usecolortheme{orchid}
 %\usecolortheme{rose}
 %\usecolortheme{seagull}
 %\usecolortheme{seahorse}
@@ -138,7 +138,7 @@
 \frametitle{Table of contents}
 \listofframes
 \vspace*{0.5cm}
-多谢 各界支持 \smiley
+多谢 支持 \smiley
 \end{frame}
 
 %----------------------------------------------------------------------------------------
@@ -149,17 +149,31 @@
 
 \frameinlbftrue
 \begin{frame}
-\frametitle{BERT architecture}
+\frametitle{BERT 的革命性意义}
 \begin{itemize}
-	\item BERT 的革命性意义 在於： 它利用平常的文本，induce 出知识，而这 representation 是\emp{通用的} (universal):
+	\item BERT 利用平常的文本 induce 出知识，而这 representation 具有 \emp{通用性 (universality)} :
 	\begin{equation}
 	\vcenter{\hbox{\includegraphics[scale=0.6]{BERT-architecture.png}}}
 	\end{equation}
 	换句话说： representation 压缩了句子的意思，而它可以应用在别的场景下
 	
-	\item This implies that human-level AI can be \textit{induced} from existing corpora, 而\emp{不需要重复像婴儿一般的学习阶段}
+	\item This implies that human-level AI can be \textit{induced} from existing corpora, 而\emp{不需要重复像人类婴儿成长的学习阶段}
 	
 	\item Such corpora can include items such as images, movies with dialogues / subtitles.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{馀下的工作}
+\begin{itemize}
+	\item 如何 standardize 输入空间，使之可以接受任何形式的输入?
+	
+	\item BERT 后端的输出可以是 actions，变成一个可以行动的 agent.  如何找大量的资料 训练它？
+
+	\item state $\vec{x}$ 的结构： 用 vector 还是 graph $\cong$ set of logic propositions 比较好？ \\
+	后者有 内在的 逻辑结构，是一种 inductive bias
+
+	\item 现时，所有 知识存在於 BERT 的 weights 里面，可不可以将一部分记忆 转化成 declarative knowledge，储存在 knowledge graph? 这做法有没有好处？ 
 \end{itemize}
 \end{frame}
 
