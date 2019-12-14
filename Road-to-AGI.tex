@@ -196,13 +196,30 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{从 BERT 过渡到 AGI}
+\frametitle{「集」结构 带来麻烦}
 \begin{itemize}
-	\definecolor{darkgreen}{rgb}{0.1, 0.4, 0.2}
-	\item 现时 比较可行的办法，是将 状态 $\vec{x}$ 实现成 一个时间上的 loop，每个 ${\color{darkgreen}\bullet}$ 表示一个命题：
+	\item Word2Vec 也是革命性的； 由 Word2Vec 演变成 Sentence2Vec 则比较容易，基本上只是 向量的延长 (\emp{concatenation})； 逻辑命题 类似於 sentence
+
+	\item 假设 全体逻辑命题的空间是 $\mathbb{P}$，则 \emp{命题集合} 的空间是 $2^{\mathbb{P}}$，后者非常庞大
+	
+	\item 如果限制 状态 $\vec{x}$ = working memory 只有 10 个命题，这空间是 $\mathbb{P}^{10}/\sim$ 其中 $\sim$ 是交换群的等价关系。 这空间虽然是 $\mathbb{P}^{10}$ 的子空间，但 $\sim$ 结构很难用神经网络实现
+
+	\definecolor{darkgreen}{rgb}{0.1, 0.5, 0.2}
+	\item 现时 比较可行的办法，是将 状态 $\vec{x}$ 实现成 一个时间上的「轮盘」，每个 ${\color{darkgreen}\bullet}$ 表示一个命题：
 	\begin{equation}
 	\vcenter{\hbox{\includegraphics[scale=0.5]{BERT-with-carousel-architecture-1.png}}}
 	\end{equation}
+	
+	\item 有趣的是，如果用「轮盘」方法，BERT 的 \emp{注意力机制} 有特殊意义....
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{``Attention is all you need'' 是什么意思？}
+\begin{itemize}
+	\item 注意力机制 最初起源於 Seq2seq architecture，后来 BERT 引入 self-attention
+
+	\item 
 \end{itemize}
 \end{frame}
 
