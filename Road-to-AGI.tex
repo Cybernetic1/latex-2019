@@ -177,10 +177,12 @@
 	\mbox{我} \cdot \mbox{爱} \cdot \mbox{妳} \; \wedge \; \mbox{妳} \cdot \mbox{爱} \cdot \mbox{我}
 	\end{equation}
 
+	\definecolor{darkgreen}{rgb}{0.1, 0.5, 0.2}
 	\item 这种逻辑结构 可以用 \emp{两层} 的 BERT 模型 处理：
 	\begin{equation}
 	\vcenter{\hbox{\includegraphics[scale=0.5]{2-BERT-architecture.png}}}
 	\end{equation}
+	（{\color{red}第一层}似乎可以纳入到{\color{darkgreen}第二层}，简化整个模型）
 
 	\item 我发现 最难处理的问题，是在第2层 的状态 $\vec{x}$.  它是一个 逻辑命题 的 \emp{集合}，集合中元素有可交换性，亦即 \emp{permutation invariance}.  这看似简单的特性，其实带来很大的麻烦
 
@@ -202,34 +204,67 @@
 
 	\item 假设 全体逻辑命题的空间是 $\mathbb{P}$，则 \emp{命题集合} 的空间是 $2^{\mathbb{P}}$，后者非常庞大
 	
-	\item 如果限制 状态 $\vec{x}$ = working memory 只有 10 个命题，这空间是 $\mathbb{P}^{10}/\sim$ 其中 $\sim$ 是交换群的等价关系。 这空间虽然是 $\mathbb{P}^{10}$ 的子空间，但 $\sim$ 结构很难用神经网络实现
+	\item 如果限制 状态 $\vec{x}$ = working memory 只有 10 个命题，这空间是 $\mathbb{P}^{10}/\sim$ 其中 $\sim$ 是对称群 $\mathfrak{S}_{10}$ 的等价关系。 这空间虽然是 $\mathbb{P}^{10}$ 的子空间，但 $\sim$ 结构很难用神经网络实现
 
 	\definecolor{darkgreen}{rgb}{0.1, 0.7, 0.2}
 	\item 现时 比较可行的办法，是将 状态 $\vec{x}$ 实现成 一个时间上的「轮盘」，每个 ${\color{darkgreen}\bullet}$ 表示一个命题：
 	\begin{equation}
 	\vcenter{\hbox{\includegraphics[scale=0.5]{BERT-with-carousel-architecture-1.png}}}
 	\end{equation}
-	
+
 	\item 有趣的是，如果用「轮盘」方法，BERT 的 \emp{注意力机制} 有特殊意义....
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{``Attention is all you need'' 是什么意思？}
+\frametitle{Attention 是什么？}
 \begin{itemize}
 	\item 注意力机制 最初起源於 Seq2seq architecture，后来 BERT 引入 self-attention
 
 	\item 在 Seq2seq 中，编码器 (encoder) 由下式给出，它将输入的词语 $x_i$ 转化成 一连串的 隐状态 $h_i$：
 	\begin{equation}
-	h_t = f(x_t, h_{t-1})
+	h_t = \mbox{RNN}_{encode}(x_t, h_{t-1})
 	\end{equation}
+
+	\item 这些 $h_i$ 可以综合成单一个 隐状态 $c = q(h_1, ..., h_n)$.  这个 $c$ 被「寄予厚望」，它浓缩了整个句子的意义
 	
-	\item 这些 $h_i$ 可以综合成单一个 隐状态 $c = q(h_1, ..., h_n)$.
-	
-	\item 输出的 解码器 类似：
+	\item 解码器 的结构类似，它的隐状态是 $s_t$，输出 $y_t$：
 	\begin{equation}
-	
+	s_t = \mbox{RNN}_{decode}(y_t, s_{t-1}, c_t)
 	\end{equation}
+	
+	\item 注意最后的 $c_t$ 依赖时间，它是隐状态 $h_j$ 的 \emp{加权平均}：
+	\begin{equation}
+	c_t = \sum_j \alpha_{ij} h_j
+	\end{equation}
+	
+	\item 其中 $\alpha_{ij}$ 量度 输入／输出 的隐状态之间的 \emp{相似度}，取其最大值：
+	\begin{equation}
+	\alpha_{ij} = \mbox{softmax} \{ \langle s_i, h_j \rangle \}
+	\end{equation}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Attention 对逻辑的意义}
+\begin{itemize}
+	\item 我这样理解 attention： 翻译时，输入／输出句子中「动词」的位置可以是不同的
+	
+	\item 当 解码器需要一个「动词」时，它的隐状态 $s_t$ 含有「动词」的意思
+	
+	\item Attention 机制 找出最接近「动词」的 编码器的隐状态 （可以 $\ge 1$ 个）$\sum h_j$，交给 解码器
+	
+	\item 例如，将 $M$ 件东西 映射 到 $N$ 件东西，可以有 $N^M$ 个 mappings，这是非常庞大的空间。 但如果这些物件有 \emp{类别}，而\underline{同类只映射到同类}，则可以用 attention 简化 mappings
+	
+	\item 这或许就是 ``attention is all you need'' 这句说话的意思： 它是一种 inductive bias，大大地缩小 mapping 空间
+	
+	\item 在逻辑的场景下，需要的 mapping 是 $f: \mbox{命题集合} \rightarrow \mbox{命题}$
+	
+	\item 逻辑的要求略有不同，不是「同类映射到同类」，而是要在庞大的 logic rules 空间中找到适用的 (applicable) rule
+	
+	\item 隐状态 $s_t$ 代表 ``search state''，注意力 的目的是 select $s_t$ 所需要的那些命题，交给 解码器
+
+	\item 
 \end{itemize}
 \end{frame}
 
