@@ -82,6 +82,7 @@
 \usepackage{wasysym} % frownie face
 \usepackage{newtxtext,newtxmath}	% Times New Roman font
 
+\newcommand{\emp}[1]{{\color{violet}#1}}
 \newcommand{\red}[1]{{\color{red}#1}}
 \newcommand{\vect}[1]{\boldsymbol{#1}}
 \newcommand*\sigmoid{\vcenter{\hbox{\includegraphics{sigmoid.png}}}}
@@ -174,47 +175,86 @@ I am also looking for collaborators.
 \begin{itemize}
 	\item \cc{
 	最简单的 AGI 架构是这样的：（它包含一个 recurrent \textbf{回路}）}{
-	The simplest AGI architecture consists of a single recurrent loop:}
-		\begin{equation}
-		\vcenter{\hbox{\includegraphics[scale=0.5]{minimal-architecture.png}}}
-		\end{equation}
+	The simplest AGI architecture consists of a single recurrent loop:
+	}
+	\begin{equation}
+	\vcenter{\hbox{\includegraphics[scale=0.5]{minimal-architecture.png}}}
+	\end{equation}
+
 	\item \cc{
 	它在 \textbf{强化学习} 的框架下，根据 Bellman 最优化条件，将 奖励 最大化}{
-	It operates under reinforcement learning, maximizing rewards by the Bellman optimality condition}
+	It operates under reinforcement learning, maximizing rewards by the Bellman optimality condition
+	}
+
 	\item \cc{
 	Transition function $F$ 可以用一个 神经网络 实现}{
+	The transition function $F$ can be implemented by a neural network
 	}
 	
-	\item 根据我先前解释过的 no free lunch 理论，这个架构的问题是缺乏 inductive bias，学习太慢
+	\item \cc{
+	根据我先前解释过的 no free lunch 理论，这个架构的问题是缺乏 inductive bias，学习太慢}{
+	According to No Free Lunch theorem, problem with this architecture is lack of inductive bias, learning is too slow
+	}
+	
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{No free lunch (NFL) 的迷思}
+\frametitle{\cc{No free lunch (NFL) 的迷思}{Some musings on No Free Lunch (NFL)}}
 \begin{itemize}
-	\item 根据 no free lunch 哲学，没有所谓「好」与「坏」的归纳偏好
-	\item 只要能加速学习的，但又不完全 切掉 AGI，都是好 bias
-		\begin{equation}
+	\item \cc{
+	根据 no free lunch 哲学，没有所谓「好」与「坏」的归纳偏好}{
+	According to NFL, there is no such things as ``good'' or ``bad'' inductive bias
+	}
+
+	\item \cc{
+	只要能加速学习的，但又不完全 切掉 AGI，都是好 bias}{
+	As long as it accelerates learning, and still accomodates AGI, it is good bias
+	}
+	\begin{equation}
 		\vcenter{\hbox{\includegraphics[scale=0.5]{no-free-lunch.png}}}
-		\end{equation}
-	\item 例如，可以将 $F$ 的神经网络 变 \textbf{稀疏} (sparse)，但保持 深度 (deep)
-	\item 但我之前提议用 \textbf{逻辑结构} 作为 bias，是否\red{多此一举}呢？！ \confoundFace 
+	\end{equation}
+
+	\item \cc{
+	例如，可以将 $F$ 的神经网络 变 \textbf{稀疏} (sparse)，但保持 深度 (deep)}{
+	For example, the neural network $F$ can be made \emp{sparse} while preserving deepness
+	}
+	
+	\item \cc{
+	但我之前提议用 \textbf{逻辑结构} 作为 bias，是否\red{多此一举}呢？！ \confoundFace }{
+	Yet, I proposed earlier to use logic as bias.  Is that redundant? \confoundFace
+	}
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{「双回路」架构}
+\frametitle{\cc{「双回路」架构}{``Double loop'' architecture}}
 \begin{itemize}
-	\item 假设 working memory 是由分离的 \textbf{命题} (\red{\textbullet}) 构成的，可以提出一个「双回路」的架构： (这意思是，例如回路中载有10个命题，则它运转10次，隐状态即「浓缩」了这10个命题的资讯，然后输出一个新命题)
+	\item \cc{
+	假设 working memory 是由分离的 \textbf{命题} (\red{\textbullet}) 构成的，可以提出一个「双回路」的架构： (这意思是，例如回路中载有10个命题，则它运转10次，隐状态即「浓缩」了这10个命题的资讯，然后输出一个新命题)}{
+	Assume \emp{working memory} consists of disparate propositions (\red{\textbullet}), residing in an inner loop.  As this loop is iterated, the propositions are condensed into the hidden state.  Hence the ``double-loop'' architecture
+	}
 	\begin{equation}
 	\vcenter{\hbox{\includegraphics[scale=0.5]{double-loop-architecture.png}}}
 	\label{double-loop-arch-1}
 	\end{equation}
-	\item 这种架构很可能是人脑的架构，因为比较简单，可以进化出来
-	\item 据我所知，BERT 架构含有一个回路／一个隐状态 （BERT 逐个输入句子的单词，然后 隐状态 再将输出的单词 逐个吐出来）
-	\item 似乎 将 BERT 变成「双回路」，可以得到 AGI： （但我不熟悉 BERT）
+
+	\item \cc{
+	这种架构很可能是人脑的架构，因为比较简单，可以进化出来}{
+	This same architecture may be shared by the human brain, as its structure is simple and thus could have been evolved
+	}
+
+	\item \cc{
+	据我所知，BERT 架构含有一个回路／一个隐状态 （BERT 逐个输入句子的单词，然后 隐状态 再将输出的单词 逐个吐出来）}{
+	As far as I know, BERT also contains an implicit recurrence, where words in a sentence are condensed into a hidden state, from which target words are generated one by one
+	}
+	
+	\item \cc{
+	似乎 将 BERT 变成「双回路」，可以得到 AGI： （但我不熟悉 BERT）}{
+	So it seems that if we modify BERT to be a ``double loop'', we can get an AGI:
+	}
 	\begin{equation}
-		\boxed{\text{单词／概念}} \stackrel{\text{loop 1}}{\longrightarrow} \boxed{\text{句子／命题}} \stackrel{\text{loop 2}}{\longrightarrow} \boxed{\text{mental state}}
+		\boxed{\text{\cc{单词／概念}{words / concepts}}} \stackrel{\text{loop 1}}{\longrightarrow} \boxed{\text{\cc{句子／命题}{sentences / propositions}}} \stackrel{\text{loop 2}}{\longrightarrow} \boxed{\text{mental state}}
 	\end{equation}
 \end{itemize}
 \end{frame}
@@ -222,22 +262,35 @@ I am also looking for collaborators.
 \begin{frame}[plain]
 % \frametitle{「双回路」架构}
 \begin{itemize}
-	\item 图 (\ref{double-loop-arch-1}) 不够严谨，详细画出来是这样的：
+	\item \cc{
+	图 (\ref{double-loop-arch-1}) 不够严谨，详细画出来是这样的：}{
+	Diagram (\ref{double-loop-arch-1}) is a bit inaccurate, here is a more detailed diagram:
+	}
 	\begin{equation}
 		\label{double-loop-arch}
 		\vcenter{\hbox{\includegraphics[scale=0.5]{double-loop-architecture-2.png}}}
 	\end{equation}
-	\item 相比之下，如果用了 symmetric NN 则架构更简单：
+
+	\item \cc{
+	相比之下，如果用了 symmetric NN 则架构更简单：}{
+	In contrast, one can use a \emp{symmetric NN} to make the architecture even simpler:
+	}
+	
 	\begin{equation}
 		\label{symNN-arch}
 		\vcenter{\hbox{\includegraphics[scale=0.5]{symNN-architecture.png}}}
 	\end{equation}
-	\item 问题是 (\ref{double-loop-arch}) 和 (\ref{symNN-arch}) 哪个的 学习速度 更快？  但不易判断 \confoundFace
+
+	\item \cc{
+	问题是 (\ref{double-loop-arch}) 和 (\ref{symNN-arch}) 哪个的 学习速度 更快？  但不易判断 \confoundFace}{
+	But it's not easy to decide whether (\ref{double-loop-arch}) or (\ref{symNN-arch}) is faster \confoundFace
+	}
+	
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{强化学习 与 量子力学 之间的联系}
+\frametitle{\cc{强化学习 与 量子力学 之间的联系}{Connection between reinforcement learning \& quantum mechanics}}
 \begin{itemize}
 	\item 强化学习 的最优化条件是 \textbf{Bellman} 方程：
 		\begin{equation}
@@ -278,7 +331,7 @@ I am also looking for collaborators.
 \end{frame}
 
 \begin{frame}
-\frametitle{Topos 理论}
+\frametitle{\cc{Topos 理论}{Topos theory}}
 Topos 是指一个能够在里面「\red{做逻辑}」的范畴，它起源於 Lawvere 于 1950s 将 \textbf{集合论} 表述成 \textbf{范畴论} 的尝试。 \\
 在一个 topos 范畴内的物体 (objects) 可以进行三种运算：
 \begin{itemize}
@@ -291,7 +344,7 @@ Topos 理论的重要性在於： 它概括了哪些数学结构有进行 \textb
 \end{frame}
 
 \begin{frame}
-\frametitle{交换不变性 (permutation invariance)}
+\frametitle{\cc{交换不变性 (permutation invariance)}{Permutation invariance}}
 \begin{itemize}
 	\item 最近有個颇厉害的想法，将 Word2Vec 嵌入到 Poincar\'{e} disc / hyperbolic space \parencite{Nickel2017}
 	\item 类似地，能不能将 逻辑物体 的 vectors 嵌入到 hyperbolic space？ 
