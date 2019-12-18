@@ -283,7 +283,7 @@ I am also looking for collaborators.
 
 	\item \cc{
 	问题是 (\ref{double-loop-arch}) 和 (\ref{symNN-arch}) 哪个的 学习速度 更快？  但不易判断 \confoundFace}{
-	But it's not easy to decide whether (\ref{double-loop-arch}) or (\ref{symNN-arch}) is faster \confoundFace
+	But it's not easy to decide whether (\ref{double-loop-arch}) or (\ref{symNN-arch}) learns faster \confoundFace
 	}
 	
 \end{itemize}
@@ -291,71 +291,154 @@ I am also looking for collaborators.
 
 \begin{frame}
 \frametitle{\cc{强化学习 与 量子力学 之间的联系}{Connection between reinforcement learning \& quantum mechanics}}
+
 \begin{itemize}
-	\item 强化学习 的最优化条件是 \textbf{Bellman} 方程：
+	\item \cc{
+	强化学习 的最优化条件是 \textbf{Bellman} 方程：}{
+	The optimal condition for reinforcement learning is the \emp{Bellman} equation:
+	}
 		\begin{equation}
 			\boxed{\mbox{Bellman}} \quad S_t(x) = \max_u \{ L(x,u) + \gamma S_{t+1}(x) \}
 		\end{equation}
-	\item 而 Bellman 方程 的 微分形式，是经典分析力学中的 \textbf{Hamilton-Jacobi} 方程 （这点在 1970s 已经为 Kalman 和 Pontryagin 等人认识），现代叫这方程为 Hamilton-Jacobi-Bellman (HJB) 方程：
+		
+	\item \cc{
+	而 Bellman 方程 的 微分形式，是经典分析力学中的 \textbf{Hamilton-Jacobi} 方程 （这点在 1970s 已经为 Kalman 和 Pontryagin 等人认识），现代叫这方程为 Hamilton-Jacobi-Bellman (HJB) 方程：}{
+	The differential version of Bellman equation is the \emp{Hamilton-Jacobi} equation in classical analytic mechanics (This has been recognized in 1970's by Kalman, Pontryagin and others):
+	}
 		\begin{equation}
 			\boxed{\mbox{Hamilton-Jacobi}} \quad \frac{\partial S(x, t)}{\partial t} = -H
 		\end{equation}
-	\item 其中 Lagrangian $L$ 和 Hamiltonian $H$ 之间有关系：
+		
+	\item \cc{
+	其中 Lagrangian $L$ 和 Hamiltonian $H$ 之间有关系：}{
+	The Lagrangian $L$ and Hamiltionian $H$ are closely related:
+	}
 	\begin{equation}
 		L = \text{K.E.} - \text{P.E.} \quad , \quad H = \text{K.E.} + \text{P.E.}
 	\end{equation}
 		$\text{K.E.}$ = kenetic energy, $\text{P.E.}$ = potential energy.
-	\item 至此，我们将一条 \textbf{离散}方程 变为 连续函数的\textbf{微分}方程，但\red{没有得益}
+
+	\item \cc{
+	至此，我们将一条 \textbf{离散}方程 变为 连续函数的\textbf{微分}方程，但\red{没有得益}}{
+	Up to now, we changed a \emp{discrete} equation to a continuos \emp{differential} equation, but that has not yielded any advantage
+	}
+	
 \end{itemize}
 \end{frame}
 
 \begin{frame}[plain]
 \begin{itemize}
-	\item 我最近独立发现了从经典力学的 Hamilton-Jacobi 方程 过渡到 Schr\"{o}dinger 方程的 exact 形式，关键是透过 $\Psi = e^{-i \hbar S}$ 此一代入：
+	\item \cc{
+	我最近独立发现了从经典力学的 Hamilton-Jacobi 方程 过渡到 Schr\"{o}dinger 方程的 exact 形式，关键是透过 $\Psi = e^{-i \hbar S}$ 此一代入：}{
+	Recently I independently discovered an exact way to go from the classical Hamilton-Jacobi equation to the Schr\"{o}dinger equation via the substitution $\Psi = e^{-i \hbar S}$:
+	}
 		\begin{equation}
 		\boxed{\mbox{Hamilton-Jacobi}} \quad \frac{\partial S}{\partial t} = - H \quad
 		\Rightarrow
 		\quad i \hbar \frac{\partial \Psi}{\partial t} = H \Psi \quad \boxed{\mbox{Schr\"{o}dinger}}
 		\end{equation} 
-	\item 一直以来，量子力学的教科书 认为这种 量子化 (quantization) 过程 只能够是近似性的。  后有朋友告诉我 \parencite{Field2010} 已导出了这结果。
-	\item 从 AI 的角度来看，这结果表示： \red{强化学习 可以 转化为 在 Hilbert 空间中求解 Schr\"{o}dinger 方程！}
-	\item 而，Schrodinger 方程可以透过 \textbf{虚数时间} (imaginary time) 转化为 热力学的 \textbf{扩散} (diffusion) 方程
+		
+	\item \cc{
+	一直以来，量子力学的教科书 认为这种 量子化 (quantization) 过程 只能够是近似性的。  后有朋友告诉我 \parencite{Field2010} 已导出了这结果。}{
+	We have always been told in textbooks that such a process of \emp{quantization} can only be achieved heuristically, but some friend informed me that \parencite{Field2010} has derived this result.
+	}
+	
+	\item \cc{
+	从 AI 的角度来看，这结果表示： \red{强化学习 可以 转化为 在 Hilbert 空间中求解 Schr\"{o}dinger 方程！}}{
+	From the perpective of AI, this means that \red{solving the reinforcement learning problem is equivalent to solving the Schr\"{o}dinger equation} in Hilbert space!
+	}
+	
+	\item \cc{
+	而，Schr\"{o}dinger 方程可以透过 \textbf{虚数时间} (imaginary time) 转化为 热力学的 \textbf{扩散} (diffusion) 方程}{
+	Moreover, the Schr\"{o}dinger equation can be transformed into the \emp{diffusion} / heat equation via the introduction of \emp{imaginary time}:
+	}
 		\begin{equation}
 			\boxed{\mbox{wave eqn.}} \quad \frac{\partial \Psi}{\partial t} + i \Delta \Psi = 0
 			\quad \leftrightsquigarrow \quad
 			\frac{\partial u}{\partial t} + \Delta u = 0 \quad \boxed{\mbox{heat eqn.}}
 		\end{equation}
-	\item 但应用到 AI 上需要 \textbf{离散化}，特别是利用 discrete Laplacian $\Delta$ 或 discrete Schr\"{o}dinger operators 作用在 \red{graph} 上（状态空间是 graph）
-	\item 暂未知这方向有没有好处 \confoundFace
+
+	\item \cc{
+	但应用到 AI 上需要 \textbf{离散化}，特别是利用 discrete Laplacian $\Delta$ 或 discrete Schr\"{o}dinger operators 作用在 \red{graph} 上（状态空间是 graph）}{
+	Yet, if this is to be applicable to AGI, we need to \emp{discretize} the state space (which becomes a graph), and use the discrete Laplacian $\Delta$ or discrete Schr\"{o}dinger operators to act on graphs
+	}
+	
+	\item \cc{
+	暂未知这方向有没有好处 \confoundFace}{
+	At this point I'm still unsure if this direction is fruitful or not \confoundFace
+	}
+	
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{\cc{Topos 理论}{Topos theory}}
-Topos 是指一个能够在里面「\red{做逻辑}」的范畴，它起源於 Lawvere 于 1950s 将 \textbf{集合论} 表述成 \textbf{范畴论} 的尝试。 \\
-在一个 topos 范畴内的物体 (objects) 可以进行三种运算：
+
+\cc{
+Topos 是指一个能够在里面「\red{做逻辑}」的范畴，它起源於 Lawvere 于 1950s 将 \textbf{集合论} 表述成 \textbf{范畴论} 的尝试。 \\}{
+A topos is a category in which one can ``do logic''.  The idea originated in 1950's when Lawvere tried to re-formulate the foundation of mathematics / set theory in the new language of category theory. \\
+}
+\cc{
+在一个 topos 范畴内的物体 (objects) 可以进行三种运算：}{
+In a topos, 3 operations are allowed between objects:
+}
 \begin{itemize}
-	\item Cartesian product $A \times B$（对应命题逻辑的 $A \wedge B$）
-	\item exponentiation $A \rightarrow B = B^A$ （对应命题逻辑的 $A \Rightarrow B$）
-	\item subobject classifier $A \hookrightarrow B$ （表示 \textbf{子集} $A \subseteq B$ 的概念）
+	\item Cartesian product $A \times B$ \cc{
+	（对应命题逻辑的 $A \wedge B$）}{
+	(corresponding to $A \wedge B$ in propositional logic)
+	}
+	\item exponentiation $A \rightarrow B = B^A$ \cc{
+	 （对应命题逻辑的 $A \Rightarrow B$）}{
+	(corresponding to $A \Rightarrow B$ in propositional logic)
+	}
+	\item subobject classifier $A \hookrightarrow B$  \cc{
+	（表示 \textbf{子集} $A \subseteq B$ 的概念）}{
+	(corresponding to the subset notion $A \subseteq B$)
+	}
 \end{itemize}
-Topos 理论的重要性在於： 它概括了哪些数学结构有进行 \textbf{逻辑} 的能力，例如一些 relation graphs，algebras 等。 \\
-在我的理论里，神经网络 $F$ 负责 $U \stackrel{F}{\rightarrow} V$ 即 exponentiation $V^U$ 这部分，而 $U, V$ 是向量空间。 这至少要求我们将 $A \times B$ 的结构 embed 到向量空间中。 由於 $A \times B = B \times A$ 是\textbf{可交换}的，这促使我看了一下 Abel 群的理论。
+\cc{
+Topos 理论的重要性在於： 它概括了哪些数学结构有进行 \textbf{逻辑} 的能力，例如一些 relation graphs，algebras 等。 \\}{
+The significance of topos theory is that it distills which mathematical structures are able to carry on \emp{logic} operations, e.g. relation graphs, algebras, etc. \\
+}
+\cc{
+在我的理论里，神经网络 $F$ 负责 $U \stackrel{F}{\rightarrow} V$ 即 exponentiation $V^U$ 这部分，而 $U, V$ 是向量空间。 这至少要求我们将 $A \times B$ 的结构 embed 到向量空间中。 由於 $A \times B = B \times A$ 是\textbf{可交换}的，这促使我看了一下 Abel 群的理论。}{
+In my theory, the neural network $F$ implements $U \stackrel{F}{\rightarrow} V$ which is the exponentiation $V^U$, where $U, V$ are vector spaces.  This requires, at least, to embed the structure of $A \times B$ into vector space.  However $A \times B = B \times A$ is \emp{commutative}, which leads me to consider Abelian group theory....
+}
 \end{frame}
 
 \begin{frame}
 \frametitle{\cc{交换不变性 (permutation invariance)}{Permutation invariance}}
 \begin{itemize}
-	\item 最近有個颇厉害的想法，将 Word2Vec 嵌入到 Poincar\'{e} disc / hyperbolic space \parencite{Nickel2017}
-	\item 类似地，能不能将 逻辑物体 的 vectors 嵌入到 hyperbolic space？ 
-	\item 自由群 $F_2$ 的 Cayley 图是\textbf{树}，但 \red{交换}自由群的 Cayley 图是\textbf{格状}的： 
+	
+	\item \cc{
+	最近有個颇厉害的想法，将 Word2Vec 嵌入到 Poincar\'{e} disc / hyperbolic space \parencite{Nickel2017}}{
+	Recently a nice idea has been proposed to embed Word2Vec into Poincar\'{e} disc / hyperbolic space \parencite{Nickel2017}
+	}
+	
+	\item \cc{
+	类似地，能不能将 逻辑物体 的 vectors 嵌入到 hyperbolic space？ }{
+	Can we similarly embed logic structures (as vectors) into hyperbolic space?
+	}
+	
+	\item \cc{
+	自由群 $F_2$ 的 Cayley 图是\textbf{树}，但 \red{交换}自由群的 Cayley 图是\textbf{格状}的： }{
+	Cayley graph of the free group $F_2$ is a \emp{tree}, but Cayley graph of the \red{Abelian} free group is \emp{grid}-like:
+	}
 		\begin{equation}
 		\vcenter{\hbox{\includegraphics[scale=0.3]{Cayley-graph-F2.png}}}
 		\quad \quad \quad
 		\vcenter{\hbox{\includegraphics[scale=0.3]{Cayley-graph-Z2.png}}}
 		\end{equation}
-	\item 一般来说，自由群 $F_n$ 的 Cayley 图可以嵌入到（平面的）hyperbolic disc 上，但 $F_n$ 的 Abelianization $F_n^{\text{Ab}} \cong \mathbb{Z}^n = \mathbb{Z} \times ... \mathbb{Z}$ 是一个 \red{$n$-维} 空间的 grid，似乎不可能嵌入到平面上
-	\item 就算考虑 表示论 (representation theory)，所有 Abel 群的不可约复表示 都是 1-维的。 $F_n^{\text{Ab}}$ 的表示，恰好是 $n$ 个 1-维 表示的直和。 没卵用！
+		
+	\item \cc{
+	一般来说，自由群 $F_n$ 的 Cayley 图可以嵌入到（平面的）hyperbolic disc 上，但 $F_n$ 的 Abelianization $F_n^{\text{Ab}} \cong \mathbb{Z}^n = \mathbb{Z} \times ... \mathbb{Z}$ 是一个 \red{$n$-维} 空间的 grid，似乎不可能嵌入到平面上}{
+	Generally, the free group $F_n$'s Cayley graph can be embedded into the (planar) hyperbolic disc, but the Abelianization of $F_n = F_n^{\text{Ab}} \cong \mathbb{Z}^n = \mathbb{Z} \times ... \mathbb{Z}$ is a \red{$n$-dimensional} grid, which seems impossible to embed on a plane.
+	}
+	\item \cc{
+	就算考虑 表示论 (representation theory)，所有 Abel 群的不可约复表示 都是 1-维的。 $F_n^{\text{Ab}}$ 的表示，恰好是 $n$ 个 1-维 表示的直和。 没卵用！}{
+	Even considering representation theory, all irreducible representations of Abelian groups are 1-dimensional.  The representation of $F_n^{\text{Ab}}$ is precisely the direct sum of $n$ copies of dim-1 representations.  Useless!
+	}
+	
 \end{itemize}
 \end{frame}
 
@@ -363,11 +446,23 @@ Topos 理论的重要性在於： 它概括了哪些数学结构有进行 \textb
 % \frametitle{交换不变的 神经网络}
 \begin{itemize}
 	% \item 就算考虑 表示论 (representation theory)，所有 Abel 群的不可约复表示 都是 1-维的。 $F_n^{\text{Ab}}$ 的表示，恰好是 $n$ 个 1-维 表示的直和。 没卵用！
-	\item 上页结论是： $\mathbb{Z}^n$ 不可能嵌入到更低维的空间内，除非使用某种 \red{fractal} 方法。  然而，fractals 恰好是 神经网络 这件武器的「射程范围」之外！ 
-	\item 换个想法，通过 类似 weights-sharing 的 \textbf{约束}，令 神经网络 变成 permutation invariant (= \red{Symmetric NN})
+	\item \cc{
+	上页结论是： $\mathbb{Z}^n$ 不可能嵌入到更低维的空间内，除非使用某种 \red{fractal} 方法。  然而，fractals 恰好是 神经网络 这件武器的「射程范围」之外！ }{
+	We conclude from above that $\mathbb{Z}^n$ cannot be embedded into lower dimensions, unless we use some kind of \emp{fractal} structure.  However, fractals are exactly the realm that is out-of-reach of the universal approximating power of neural networks!
+	}
+	
+	\item \cc{
+	换个想法，通过 类似 weights-sharing 的 \textbf{约束}，令 神经网络 变成 permutation invariant (= \red{Symmetric NN})}{
+	
+	}
+	
+	
 	\item 这方法 必需设 activation function = polynomial
+	
 	\item 缺点是： 约束的数量 随著 层数 增加而 指数式增长，暂时只能做 1-2 层的，每层 = 2次多项式
+	
 	\item 优点是： 反正我们希望 神经网络 是 sparse（减少权重空间的自由度），而这个做法同时具有逻辑 bias
+	
 	\item 细节我会在另一篇论文讲述
 \end{itemize}
 \printbibliography
