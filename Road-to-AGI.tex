@@ -248,7 +248,7 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Attention 对逻辑的意义}
+\frametitle{Attention 在逻辑中的用处}
 \begin{itemize}
 	\item 我这样理解 attention： 翻译时，输入／输出句子中「动词」的位置可以是不同的
 	
@@ -258,20 +258,20 @@
 	
 	\item 例如，将 $M$ 件东西 映射 到 $N$ 件东西，可以有 $N^M$ 个 mappings，这是非常庞大的空间。 但如果这些物件有 \emp{类别}，而\underline{同类只映射到同类}，则可以用 attention 简化 mappings
 	
-	\item 这或许就是 ``attention is all you need'' 这句说话的意思： 它是一种 inductive bias，大大地缩小 mapping 空间
+	\item 这或许就是 ``attention is all you need'' 的意思： 它是一种 inductive bias，大大地缩小 mapping 空间
 	
 	\item 在逻辑的场景下，需要的 mapping 是 $f: \mbox{命题集合} \rightarrow \mbox{命题}$
 	
-	\item 逻辑的要求略有不同，不是「同类映射到同类」，而是要在庞大的 logic rules 空间中找到适用(applicable)的 rule
+	\item 逻辑的要求略有不同，不是「同类映射到同类」，而是要在庞大的 logic rules 空间中找到适用(applicable)的 rules
 	
-	\item 隐状态 $s_t$ 代表 ``search state''，注意力 的目的是「选择」$s_t$ 所需要的那些命题，交给 解码器
+	\item 隐状态 $s_t$ 代表 ``search state''，注意力 的目的是 ``选择'' $s_t$ 所需要的那些命题，交给 解码器
 
 	\item 
 \end{itemize}
 \end{frame}
 
 \frame[allowframebreaks]{
-多谢收看 \smiley
+\cc{多谢收看}{Thanks for watching} \smiley
 % \frametitle{References}
 \printbibliography
 }

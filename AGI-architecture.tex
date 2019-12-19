@@ -209,7 +209,7 @@ I am also looking for collaborators.
 
 	\item \cc{
 	只要能加速学习的，但又不完全 切掉 AGI，都是好 bias}{
-	As long as it accelerates learning, and still accomodates AGI, it is good bias
+	As long as it accelerates learning, and still accomodates AGI, it is good bias:
 	}
 	\begin{equation}
 		\vcenter{\hbox{\includegraphics[scale=0.5]{no-free-lunch.png}}}
@@ -311,12 +311,12 @@ I am also looking for collaborators.
 		
 	\item \cc{
 	其中 Lagrangian $L$ 和 Hamiltonian $H$ 之间有关系：}{
-	The Lagrangian $L$ and Hamiltionian $H$ are closely related:
+	The Hamiltionian $H$ arises when trying to maximize the Lagrangian $L$ using Lagrangian multipliers.  Such multipliers have the interpretation of \emp{momentum}.
 	}
 	\begin{equation}
-		L = \text{K.E.} - \text{P.E.} \quad , \quad H = \text{K.E.} + \text{P.E.}
+		L = \text{KE} - \text{PE} \quad , \quad H = \text{KE} + \text{PE}
 	\end{equation}
-		$\text{K.E.}$ = kenetic energy, $\text{P.E.}$ = potential energy.
+	where $\text{KE}$ = kenetic energy, $\text{PE}$ = potential energy.
 
 	\item \cc{
 	至此，我们将一条 \textbf{离散}方程 变为 连续函数的\textbf{微分}方程，但\red{没有得益}}{
@@ -345,7 +345,7 @@ I am also looking for collaborators.
 	
 	\item \cc{
 	从 AI 的角度来看，这结果表示： \red{强化学习 可以 转化为 在 Hilbert 空间中求解 Schr\"{o}dinger 方程！}}{
-	From the perpective of AI, this means that \red{solving the reinforcement learning problem is equivalent to solving the Schr\"{o}dinger equation} in Hilbert space!
+	From the perpective of AI, this means that \red{solving the reinforcement learning problem is equivalent to solving the Schr\"{o}dinger equation in Hilbert space!}
 	}
 	
 	\item \cc{
@@ -360,12 +360,12 @@ I am also looking for collaborators.
 
 	\item \cc{
 	但应用到 AI 上需要 \textbf{离散化}，特别是利用 discrete Laplacian $\Delta$ 或 discrete Schr\"{o}dinger operators 作用在 \red{graph} 上（状态空间是 graph）}{
-	Yet, if this is to be applicable to AGI, we need to \emp{discretize} the state space (which becomes a graph), and use the discrete Laplacian $\Delta$ or discrete Schr\"{o}dinger operators to act on graphs
+	Yet, if this is to be applicable to AGI, we need to \emp{discretize} the state space (which becomes a graph), and use the discrete Laplacian $\Delta$ or discrete Schr\"{o}dinger operator to act on graphs
 	}
 	
 	\item \cc{
 	暂未知这方向有没有好处 \confoundFace}{
-	At this point I'm still unsure if this direction is fruitful or not \confoundFace
+	Impressive as it may sound, this may be of low practical value \confoundFace
 	}
 	
 \end{itemize}
@@ -376,7 +376,7 @@ I am also looking for collaborators.
 
 \cc{
 Topos 是指一个能够在里面「\red{做逻辑}」的范畴，它起源於 Lawvere 于 1950s 将 \textbf{集合论} 表述成 \textbf{范畴论} 的尝试。 \\}{
-A topos is a category in which one can ``do logic''.  The idea originated in 1950's when Lawvere tried to re-formulate the foundation of mathematics / set theory in the new language of category theory. \\
+A topos is a category in which one can ``\red{do logic}''.  The idea originated in 1950's when Lawvere tried to re-formulate the foundation of mathematics / \emp{set theory} in the new language of \emp{category theory}. \\
 }
 \cc{
 在一个 topos 范畴内的物体 (objects) 可以进行三种运算：}{
@@ -402,7 +402,7 @@ The significance of topos theory is that it distills which mathematical structur
 }
 \cc{
 在我的理论里，神经网络 $F$ 负责 $U \stackrel{F}{\rightarrow} V$ 即 exponentiation $V^U$ 这部分，而 $U, V$ 是向量空间。 这至少要求我们将 $A \times B$ 的结构 embed 到向量空间中。 由於 $A \times B = B \times A$ 是\textbf{可交换}的，这促使我看了一下 Abel 群的理论。}{
-In my theory, the neural network $F$ implements $U \stackrel{F}{\rightarrow} V$ which is the exponentiation $V^U$, where $U, V$ are vector spaces.  This requires, at least, to embed the structure of $A \times B$ into vector space.  However $A \times B = B \times A$ is \emp{commutative}, which leads me to consider Abelian group theory....
+In my theory, the neural network $F$ implements $U \stackrel{F}{\rightarrow} V$ which is the exponentiation $V^U$, where $U, V$ are vector spaces.  This requires, at least, to embed the structure of $A \times B$ into vector space.  However $A \times B = B \times A$ is \emp{commutative}, which led me to consider Abelian group theory....
 }
 \end{frame}
 
@@ -448,26 +448,39 @@ In my theory, the neural network $F$ implements $U \stackrel{F}{\rightarrow} V$ 
 	% \item 就算考虑 表示论 (representation theory)，所有 Abel 群的不可约复表示 都是 1-维的。 $F_n^{\text{Ab}}$ 的表示，恰好是 $n$ 个 1-维 表示的直和。 没卵用！
 	\item \cc{
 	上页结论是： $\mathbb{Z}^n$ 不可能嵌入到更低维的空间内，除非使用某种 \red{fractal} 方法。  然而，fractals 恰好是 神经网络 这件武器的「射程范围」之外！ }{
-	We conclude from above that $\mathbb{Z}^n$ cannot be embedded into lower dimensions, unless we use some kind of \emp{fractal} structure.  However, fractals are exactly the realm that is out-of-reach of the universal approximating power of neural networks!
+	Seems that $\mathbb{Z}^n$ cannot be embedded into lower dimensions, unless we use some kind of \emp{fractal} structure.  However, fractals are exactly the realm that is out-of-reach of the universal approximating power of neural networks!
 	}
 	
 	\item \cc{
 	换个想法，通过 类似 weights-sharing 的 \textbf{约束}，令 神经网络 变成 permutation invariant (= \red{Symmetric NN})}{
-	
+	Another strategy is to create \emp{symmetric} neural networks whose output is invariant when the input is permuted.  This could be achieved by ``weight-sharing''.
 	}
 	
 	
-	\item 这方法 必需设 activation function = polynomial
+	\item \cc{
+	这方法 必需设 activation function = polynomial}{
+	For this to work, the activation function must be \emp{polynomials}.
+	}
 	
-	\item 缺点是： 约束的数量 随著 层数 增加而 指数式增长，暂时只能做 1-2 层的，每层 = 2次多项式
+	\item \cc{
+	缺点是： 约束的数量 随著 层数 增加而 指数式增长，暂时只能做 1-2 层的，每层 = 2次多项式}{
+	A drawback of this approach is when \# layers grow, \# constraints also grow exponentially, making it hard to build deep (many-layer) networks
+	}
+
+	\item \cc{
+	优点是： 反正我们希望 神经网络 是 sparse（减少权重空间的自由度），而这个做法同时具有逻辑 bias}{
+	An advantage is that the resulting NN is very sparse in terms of \# weights.  This is a form of inductive bias.
+	}
 	
-	\item 优点是： 反正我们希望 神经网络 是 sparse（减少权重空间的自由度），而这个做法同时具有逻辑 bias
-	
-	\item 细节我会在另一篇论文讲述
+	\item \cc{
+	细节我会在另一篇论文讲述}{
+	As of this writing, I am yet exploring another approach that is inspired by Google's BERT.  More on this later.
+	}
+
 \end{itemize}
 \printbibliography
 \begin{center}
-	多谢收看 \smiley
+	\cc{多谢收看}{Thanks for watching} \smiley
 \end{center}
 \end{frame}
 
