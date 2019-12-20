@@ -204,7 +204,7 @@
 
 	\item 假设 全体逻辑命题的空间是 $\mathbb{P}$，则 \emp{命题集合} 的空间是 $2^{\mathbb{P}}$，非常庞大
 	
-	\item 如果限制 状态 $\vec{x}$ = working memory 只有 10 个命题，$\vec{x}$ 的空间是 $\mathbb{P}^{10}/\sim$ 其中 $\sim$ 是对称群 $\mathfrak{S}_{10}$ 的等价关系。 换句话说 $ 2^{\mathbb{P}} \cong \prod_{n=0}^{\infty} \; \mathbb{P}^n / \mathfrak{S}_n $
+	\item 如果限制 状态 $\vec{x}$ = working memory 只有 10 个命题，$\vec{x}$ 的空间是 $\mathbb{P}^{10}/\sim$ 其中 $\sim$ 是对称群 $\mathfrak{S}_{10}$ 的等价关系。 换句话说 $ 2^{\mathbb{P}} \cong \coprod_{n=0}^{\infty} \; \mathbb{P}^n / \mathfrak{S}_n $
 	
 	\item $\mathbb{P}^n / \mathfrak{S}_n$ 虽然是 $\mathbb{P}^n$ 的商空间，但 $\mathfrak{S}_n$-不变性 很难用神经网络实现
 
@@ -221,14 +221,16 @@
 \begin{frame}
 \frametitle{Attention 是什么？}
 \begin{itemize}
-	\item 注意力机制 最初起源於 Seq2seq architecture，后来 BERT 引入 self-attention
+	\item 注意力 最初起源於 Seq2seq，后来 BERT 引入 self-attention
 
 	\item 在 Seq2seq 中，编码器 (encoder) 由下式给出，它将输入的词语 $x_i$ 转化成 一连串的 隐状态 $h_i$：
 	\begin{equation}
 	h_t = \mbox{RNN}_{encode}(x_t, h_{t-1})
 	\end{equation}
 
-	\item 这些 $h_i$ 可以综合成单一个 隐状态 $c = q(h_1, ..., h_n)$.  这个 $c$ 被「寄予厚望」，它浓缩了整个句子的意义
+	\item 这些 $h_i$ 可以综合成单一个 隐状态 $c = q(h_1, ..., h_n)$. 
+
+	\item 这个 $c$ 被「寄予厚望」，它浓缩了整个句子的意义
 	
 	\item 解码器 的结构类似，它的隐状态是 $s_t$，输出 $y_t$：
 	\begin{equation}
@@ -237,20 +239,22 @@
 	
 	\item 注意最后的 $c_t$ 依赖时间，它是隐状态 $h_j$ 的 \emp{加权平均}：
 	\begin{equation}
-	c_t = \sum_j \alpha_{ij} h_j
+	c_i = \sum_j \alpha_{ij} h_j
 	\end{equation}
 	
 	\item 其中 $\alpha_{ij}$ 量度 输入／输出 的隐状态之间的 \emp{相似度}，取其最大值：
 	\begin{equation}
 	\alpha_{ij} = \mbox{softmax} \{ \langle s_i, h_j \rangle \}
 	\end{equation}
+	换句话说，$\alpha_{ij}$ \emp{选择} 最接近 $h_j$ 的 $s_i$
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Attention 在逻辑中的用处}
+我这样理解 attention：
 \begin{itemize}
-	\item 我这样理解 attention： 翻译时，输入／输出句子中「动词」的位置可以是不同的
+	\item 例如，翻译时，输入／输出句子中「动词」的位置可以是不同的
 	
 	\item 当 解码器需要一个「动词」时，它的隐状态 $s_t$ 含有「动词」的意思
 	
@@ -258,15 +262,28 @@
 	
 	\item 例如，将 $M$ 件东西 映射 到 $N$ 件东西，可以有 $N^M$ 个 mappings，这是非常庞大的空间。 但如果这些物件有 \emp{类别}，而\underline{同类只映射到同类}，则可以用 attention 简化 mappings
 	
-	\item 这或许就是 ``attention is all you need'' 的意思： 它是一种 inductive bias，大大地缩小 mapping 空间
-	
-	\item 在逻辑的场景下，需要的 mapping 是 $f: \mbox{命题集合} \rightarrow \mbox{命题}$
-	
-	\item 逻辑的要求略有不同，不是「同类映射到同类」，而是要在庞大的 logic rules 空间中找到适用(applicable)的 rules
-	
-	\item 隐状态 $s_t$ 代表 ``search state''，注意力 的目的是 ``选择'' $s_t$ 所需要的那些命题，交给 解码器
+	\item 所以 attention 是一种 inductive bias，它大大地缩小 mapping 空间
 
-	\item 
+	\item 在逻辑的场景下，需要的 mapping 是 $f: \mbox{命题集合} \rightarrow \mbox{命题}$
+	\begin{equation}
+	\vcenter{\hbox{\includegraphics[scale=0.5]{attention-in-logic.png}}}
+	\end{equation}
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}[plain]
+\frametitle{要设计一种新的 attention}
+\begin{itemize}
+	\item 逻辑 attention 和 传统 attention 要求略有不同，这是关键的一步
+
+	\item 不是「同类映射到同类」，而是要在庞大的 logic rules 空间中找到适用(applicable)的 rules
+
+	\item 隐状态 $s_t$ 代表 ``search state''，注意力 的目的是 \emp{选择} $s_t$ 所需要的那些命题，交给 解码器
+
+	\item 注意： 逻辑 attention 从 $M$ 个命题中 选择 $N$ 个命题，$M > N$. 这是 inductive bias. \ 而 Symmetric NN 的做法，只是要求 $M$ 个命题 的 \emp{置换不变性}，所以它浪费了资源在很多 ``don't care'' 的命题上
+
+	\item 换句话说，selection 所带来的 bias 如果足够强，似乎不需要 symmetric. \  很巧合地，再次应验了 ``attention is all you need'' 这句话
 \end{itemize}
 \end{frame}
 
