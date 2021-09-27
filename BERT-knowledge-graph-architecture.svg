@@ -29,12 +29,12 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1"
      inkscape:cx="377.22676"
-     inkscape:cy="-407.18249"
+     inkscape:cy="792.81751"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1050"
-     inkscape:window-height="1659"
+     inkscape:window-width="1920"
+     inkscape:window-height="1059"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -2199,7 +2199,10 @@
        style="font-style:normal;font-weight:normal;font-size:4.93888855px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="24.554255"
        y="117.70422"
-       id="text3956"><tspan
+       id="text3956"
+       inkscape:export-filename="/home/yky/latex/2021/BERT-training.png"
+       inkscape:export-xdpi="576"
+       inkscape:export-ydpi="576"><tspan
          sodipodi:role="line"
          x="24.554255"
          y="117.70422"
@@ -2294,7 +2297,10 @@
     </g>
     <g
        transform="matrix(0.75000001,0,0,0.75000001,25.89609,8.0049509)"
-       id="g19-7">
+       id="g19-7"
+       inkscape:export-filename="/home/yky/latex/2021/BERT-training.png"
+       inkscape:export-xdpi="576"
+       inkscape:export-ydpi="576">
       <rect
          style="fill:none;stroke:#0000ff;stroke-width:1.32291663;stroke-miterlimit:4;stroke-dasharray:none"
          id="rect14-5"
@@ -2320,7 +2326,10 @@
        d="m 33.226568,102.9601 h 19.86995"
        id="path4928"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cc" />
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/yky/latex/2021/BERT-training.png"
+       inkscape:export-xdpi="576"
+       inkscape:export-ydpi="576" />
     <image
        y="92.613075"
        x="14.873225"
@@ -2329,10 +2338,16 @@
        style="filter:url(#filter203);image-rendering:optimizeSpeed"
        preserveAspectRatio="none"
        height="20.32"
-       width="20.32" />
+       width="20.32"
+       inkscape:export-filename="/home/yky/latex/2021/BERT-training.png"
+       inkscape:export-xdpi="576"
+       inkscape:export-ydpi="576" />
     <g
        transform="matrix(0.5,0,0,0.5,22.768901,66.43904)"
-       id="g108">
+       id="g108"
+       inkscape:export-filename="/home/yky/latex/2021/BERT-training.png"
+       inkscape:export-xdpi="576"
+       inkscape:export-ydpi="576">
       <g
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:normal;word-spacing:normal;text-anchor:start;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10.43299961;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
          id="g106"
@@ -2397,7 +2412,10 @@
        inkscape:connector-curvature="0"
        id="rect234"
        d="m 24.471949,92.766569 v -4.399321 c 0,-4.664121 3.75487,-8.41899 8.41899,-8.41899 h 50.701022 c 4.664122,0 8.418992,3.754869 8.418992,8.41899 v 5.986812 c 0,4.664093 -3.75487,8.41896 -8.418992,8.41896 h -3.654678"
-       style="fill:none;stroke:#000000;stroke-width:0.5291667;stroke-miterlimit:4;stroke-dasharray:none;marker-start:url(#Arrow1Mstart)" />
+       style="fill:none;stroke:#000000;stroke-width:0.5291667;stroke-miterlimit:4;stroke-dasharray:none;marker-start:url(#Arrow1Mstart)"
+       inkscape:export-filename="/home/yky/latex/2021/BERT-training.png"
+       inkscape:export-xdpi="576"
+       inkscape:export-ydpi="576" />
     <path
        sodipodi:nodetypes="cssssssc"
        inkscape:connector-curvature="0"
@@ -2409,7 +2427,10 @@
        style="font-style:normal;font-weight:normal;font-size:4.93888855px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="57.659668"
        y="77.218887"
-       id="text3956-0"><tspan
+       id="text3956-0"
+       inkscape:export-filename="/home/yky/latex/2021/BERT-training.png"
+       inkscape:export-xdpi="576"
+       inkscape:export-ydpi="576"><tspan
          sodipodi:role="line"
          x="57.659668"
          y="77.218887"
@@ -2420,7 +2441,10 @@
        style="font-style:normal;font-weight:normal;font-size:4.93888855px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="66.983757"
        y="132.10925"
-       id="text3956-0-7"><tspan
+       id="text3956-0-7"
+       inkscape:export-filename="/home/yky/latex/2021/BERT-training.png"
+       inkscape:export-xdpi="576"
+       inkscape:export-ydpi="576"><tspan
          sodipodi:role="line"
          x="66.983757"
          y="132.10925"
