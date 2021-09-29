@@ -29,12 +29,12 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1"
      inkscape:cx="377.22676"
-     inkscape:cy="-687.18249"
+     inkscape:cy="792.81751"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1050"
-     inkscape:window-height="1659"
+     inkscape:window-width="1920"
+     inkscape:window-height="1059"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -2187,7 +2187,8 @@
        style="font-style:normal;font-weight:normal;font-size:4.93888855px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="121.02232"
        y="54.872868"
-       id="text3956-0-7-7"><tspan
+       id="text3956-0-7-7"
+       inkscape:export-filename="/home/yky/latex/2020/BERT-architecture.png"><tspan
          sodipodi:role="line"
          x="121.02232"
          y="54.872868"
@@ -2198,7 +2199,10 @@
        style="font-style:normal;font-weight:normal;font-size:4.93888855px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="24.554255"
        y="117.70422"
-       id="text3956"><tspan
+       id="text3956"
+       inkscape:export-filename="/home/yky/latex/2021/BERT-training.png"
+       inkscape:export-xdpi="576"
+       inkscape:export-ydpi="576"><tspan
          sodipodi:role="line"
          x="24.554255"
          y="117.70422"
@@ -2293,7 +2297,10 @@
     </g>
     <g
        transform="matrix(0.75000001,0,0,0.75000001,25.89609,8.0049509)"
-       id="g19-7">
+       id="g19-7"
+       inkscape:export-filename="/home/yky/latex/2021/BERT-training.png"
+       inkscape:export-xdpi="576"
+       inkscape:export-ydpi="576">
       <rect
          style="fill:none;stroke:#0000ff;stroke-width:1.32291663;stroke-miterlimit:4;stroke-dasharray:none"
          id="rect14-5"
@@ -2319,7 +2326,10 @@
        d="m 33.226568,102.9601 h 19.86995"
        id="path4928"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cc" />
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/yky/latex/2021/BERT-training.png"
+       inkscape:export-xdpi="576"
+       inkscape:export-ydpi="576" />
     <image
        y="92.613075"
        x="14.873225"
@@ -2328,10 +2338,16 @@
        style="filter:url(#filter203);image-rendering:optimizeSpeed"
        preserveAspectRatio="none"
        height="20.32"
-       width="20.32" />
+       width="20.32"
+       inkscape:export-filename="/home/yky/latex/2021/BERT-training.png"
+       inkscape:export-xdpi="576"
+       inkscape:export-ydpi="576" />
     <g
        transform="matrix(0.5,0,0,0.5,22.768901,66.43904)"
-       id="g108">
+       id="g108"
+       inkscape:export-filename="/home/yky/latex/2021/BERT-training.png"
+       inkscape:export-xdpi="576"
+       inkscape:export-ydpi="576">
       <g
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:normal;word-spacing:normal;text-anchor:start;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10.43299961;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
          id="g106"
@@ -2396,7 +2412,10 @@
        inkscape:connector-curvature="0"
        id="rect234"
        d="m 24.471949,92.766569 v -4.399321 c 0,-4.664121 3.75487,-8.41899 8.41899,-8.41899 h 50.701022 c 4.664122,0 8.418992,3.754869 8.418992,8.41899 v 5.986812 c 0,4.664093 -3.75487,8.41896 -8.418992,8.41896 h -3.654678"
-       style="fill:none;stroke:#000000;stroke-width:0.5291667;stroke-miterlimit:4;stroke-dasharray:none;marker-start:url(#Arrow1Mstart)" />
+       style="fill:none;stroke:#000000;stroke-width:0.5291667;stroke-miterlimit:4;stroke-dasharray:none;marker-start:url(#Arrow1Mstart)"
+       inkscape:export-filename="/home/yky/latex/2021/BERT-training.png"
+       inkscape:export-xdpi="576"
+       inkscape:export-ydpi="576" />
     <path
        sodipodi:nodetypes="cssssssc"
        inkscape:connector-curvature="0"
@@ -2408,7 +2427,10 @@
        style="font-style:normal;font-weight:normal;font-size:4.93888855px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="57.659668"
        y="77.218887"
-       id="text3956-0"><tspan
+       id="text3956-0"
+       inkscape:export-filename="/home/yky/latex/2021/BERT-training.png"
+       inkscape:export-xdpi="576"
+       inkscape:export-ydpi="576"><tspan
          sodipodi:role="line"
          x="57.659668"
          y="77.218887"
@@ -2419,7 +2441,10 @@
        style="font-style:normal;font-weight:normal;font-size:4.93888855px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="66.983757"
        y="132.10925"
-       id="text3956-0-7"><tspan
+       id="text3956-0-7"
+       inkscape:export-filename="/home/yky/latex/2021/BERT-training.png"
+       inkscape:export-xdpi="576"
+       inkscape:export-ydpi="576"><tspan
          sodipodi:role="line"
          x="66.983757"
          y="132.10925"
@@ -2443,7 +2468,8 @@
        style="font-style:normal;font-weight:normal;font-size:4.93888855px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="53.98653"
        y="55.203068"
-       id="text3956-6"><tspan
+       id="text3956-6"
+       inkscape:export-filename="/home/yky/latex/2020/BERT-architecture.png"><tspan
          sodipodi:role="line"
          x="53.98653"
          y="55.203068"
@@ -2458,7 +2484,8 @@
        height="16.191763"
        width="18.51338"
        id="rect14-5-2"
-       style="fill:none;stroke:#000000;stroke-width:0.9921875;stroke-miterlimit:4;stroke-dasharray:none" />
+       style="fill:none;stroke:#000000;stroke-width:0.9921875;stroke-miterlimit:4;stroke-dasharray:none"
+       inkscape:export-filename="/home/yky/latex/2020/BERT-architecture.png" />
     <text
        inkscape:export-ydpi="576"
        inkscape:export-xdpi="576"
@@ -2466,7 +2493,8 @@
        y="28.041519"
        x="86.703781"
        style="font-style:normal;font-weight:normal;font-size:7.9375px;line-height:1;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.1984375"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/home/yky/latex/2020/BERT-architecture.png"><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';text-align:center;text-anchor:middle;fill:#ff0000;stroke-width:0.1984375"
          y="28.041519"
          x="86.703781"
@@ -2476,7 +2504,7 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';text-align:center;text-anchor:middle;fill:#ff0000;stroke-width:0.1984375"
          y="35.979019"
          x="86.703781"
-         sodipodi:role="line">(frontend)</tspan></text>
+         sodipodi:role="line">(encoder)</tspan></text>
     <path
        inkscape:export-ydpi="576"
        inkscape:export-xdpi="576"
@@ -2484,7 +2512,8 @@
        d="M 62.658842,39.55456 H 108.98713"
        id="path4928-9"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cc" />
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/yky/latex/2020/BERT-architecture.png" />
     <image
        inkscape:export-ydpi="576"
        inkscape:export-xdpi="576"
@@ -2495,13 +2524,15 @@
        style="filter:url(#filter203-7);image-rendering:optimizeSpeed"
        preserveAspectRatio="none"
        height="20.32"
-       width="20.32" />
+       width="20.32"
+       inkscape:export-filename="/home/yky/latex/2020/BERT-architecture.png" />
     <g
        inkscape:export-ydpi="576"
        inkscape:export-xdpi="576"
        style="fill:#000000"
        transform="matrix(0.50000001,0,0,0.50000001,78.659521,2.5043333)"
-       id="g108-6">
+       id="g108-6"
+       inkscape:export-filename="/home/yky/latex/2020/BERT-architecture.png">
       <g
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:normal;word-spacing:normal;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10.43299961;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
          id="g106-0"
@@ -2530,7 +2561,8 @@
        inkscape:connector-curvature="0"
        id="rect234-6"
        d="m 53.904223,30.94853 v -5.98682 c 0,-4.66412 3.75487,-8.41899 8.41899,-8.41899 H 165.41181 c 4.66413,0 8.419,3.75487 8.419,8.41899 v 5.98681 c 0,4.66409 -3.75487,8.41896 -8.419,8.41896 h -35.93385"
-       style="fill:none;stroke:#0000ff;stroke-width:0.52916676;stroke-miterlimit:4;stroke-dasharray:none;marker-start:url(#Arrow1Mstart-3)" />
+       style="fill:none;stroke:#0000ff;stroke-width:0.52916676;stroke-miterlimit:4;stroke-dasharray:none;marker-start:url(#Arrow1Mstart-3)"
+       inkscape:export-filename="/home/yky/latex/2020/BERT-architecture.png" />
     <text
        inkscape:export-ydpi="576"
        inkscape:export-xdpi="576"
@@ -2538,7 +2570,8 @@
        style="font-style:normal;font-weight:normal;font-size:4.93888855px;line-height:1;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="38.144032"
        y="21.750858"
-       id="text3956-0-1"><tspan
+       id="text3956-0-1"
+       inkscape:export-filename="/home/yky/latex/2020/BERT-architecture.png"><tspan
          sodipodi:role="line"
          x="38.144032"
          y="21.750858"
@@ -2561,19 +2594,20 @@
        y="28.041519"
        x="149.49164"
        style="font-style:normal;font-weight:normal;font-size:7.9375px;line-height:1;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:0.1984375"
-       xml:space="preserve"><tspan
+       xml:space="preserve"
+       inkscape:export-filename="/home/yky/latex/2020/BERT-architecture.png"><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';text-align:center;text-anchor:middle;fill:#0000ff;stroke-width:0.1984375"
          y="28.041519"
          x="149.49164"
          id="tspan10-5-0-2"
          sodipodi:role="line">BERT<tspan
    id="tspan3680"
-   style="font-size:65%;baseline-shift:super">-1</tspan></tspan><tspan
+   style="font-size:64.99999762%;baseline-shift:super">-1</tspan></tspan><tspan
          id="tspan161-3"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';text-align:center;text-anchor:middle;fill:#0000ff;stroke-width:0.1984375"
          y="35.979019"
          x="149.49164"
-         sodipodi:role="line">(backend)</tspan></text>
+         sodipodi:role="line">(decoder)</tspan></text>
     <path
        inkscape:export-ydpi="576"
        inkscape:export-xdpi="576"
@@ -2581,7 +2615,8 @@
        inkscape:connector-curvature="0"
        id="path97"
        d="M 125.01562,31.622918 C 129.77813,26.860417 127.80695,20.760866 120.38541,20.775 107.33734,20.79985 114.3,30.829168 114.3,30.829168"
-       style="fill:none;stroke:#ff0000;stroke-width:0.5291667;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker996)" />
+       style="fill:none;stroke:#ff0000;stroke-width:0.5291667;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker996)"
+       inkscape:export-filename="/home/yky/latex/2020/BERT-architecture.png" />
     <rect
        inkscape:export-ydpi="576"
        inkscape:export-xdpi="576"
