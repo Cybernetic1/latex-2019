@@ -29,8 +29,8 @@
 \bibliography{../AGI-book}
 
 % *************** Delete when not using Chinese or colors **********************
-\usepackage{xeCJK}
-\setCJKmainfont[BoldFont=SimHei,ItalicFont=KaiTi]{SimSun}
+%\usepackage{xeCJK}
+%\setCJKmainfont[BoldFont=SimHei,ItalicFont=KaiTi]{SimSun}
 \usepackage{color}
 %\newcommand{\emp}[1]{\textbf{\textcolor{blue}{#1}}}
 \newcommand{\emp}[1]{\textbf{#1}}
@@ -67,6 +67,11 @@
 		\tikz[scale=.3,thick]{
 			\draw (0.3,0) to (0,0) to ++(-0.4,-1.1) to ++(-0.3,0);
 			\draw (-0.6,-0.3) to ++(0.9,0);}%
+}}
+\newcommand\squareF{\hspace*{-1pt}\raisebox{-1pt}{
+		\tikz[scale=.3,thick]{
+			\draw (0.6,0) to (0,0) to ++(-0.2,-1);
+			\draw (-0.1,-0.4) to ++(0.6,0);}%
 }}
 
 % ***** Boxed variables inside math equations
@@ -208,16 +213,17 @@ Traditionally, RL deals with acting in an \textit{external} environment; value /
 
 Our system consists of two main algorithms:
 \begin{enumerate}
-	\item Learning the transition function $\vdash$ or $\vect{F}: \vect{x} \mapsto \vect{x}'$.  $\vect{F}$ represents the \textbf{knowledge} that constrains thinking.  In other words, the learning of $\vect{F}$ is the learning of ``static'' knowledge.
+	\item Learning the transition function $\vdash$ or $\squareF: \vect{x} \mapsto \vect{x}'$.  $\squareF$ represents the \textbf{knowledge} that constrains thinking.  In other words, the learning of $\squareF$ is the learning of ``static'' knowledge.
 	\item Finding the optimal trajectory of the state $\vect{x}$.  This corresponds to optimal ``thinking'' under the constraints of static knowledge.
 \end{enumerate}
 
-In our architecture, $\vect{F}$ can implemented as a simple feed-forward neural network (where ``deep'' simply means ``many layers''):
+In our architecture, $\squareF$ can implemented as a simple feed-forward neural network (where ``deep'' simply means ``many layers''):
 \begin{equation}
 \vcenter{\hbox{\includegraphics[scale=0.7]{genifer-model-00.png}}}
+% the SVG file is in latex/AGI-16/
 \end{equation}
 
-In traditional reinforcement learning (left view), the system chooses an action $\vect{a}$, and the transition function $\vect{F}$ gives the probability of reaching each state $\vect{x}$ given action $\vect{a}$.  In our model (right view), all possible cognitive states are potentially \textbf{reachable} from any other state, and therefore the action $\vect{a}$ coincides with the next state $\vect{x}'$.
+In traditional reinforcement learning (left view), the system chooses an action $\vect{a}$, and the transition function $\squareF$ gives the probability of reaching each state $\vect{x}$ given action $\vect{a}$.  In our model (right view), all possible cognitive states are potentially \textbf{reachable} from any other state, and therefore the action $\vect{a}$ coincides with the next state $\vect{x}'$.
 \begin{equation}
 \vcenter{\hbox{\includegraphics[scale=0.75]{Q-learning-2-views.png}}}
 \end{equation}
@@ -228,7 +234,7 @@ AIXI's environmental setting is the same as ours, but its agent's internal model
 
 \subsection{Infinite-dimensional control}
 
-The cognitive state is a vector $\vect{x} \in \mathbb{X}$ where $\mathbb{X}$ is the space of all possible cognitive states, the reasoning operator $\vdash$ or $\vect{F}$ is an \textbf{endomorphism} (an \textbf{iterative map}) $\mathbb{X} \rightarrow \mathbb{X}$.
+The cognitive state is a vector $\vect{x} \in \mathbb{X}$ where $\mathbb{X}$ is the space of all possible cognitive states, the reasoning operator $\vdash$ or $\squareF$ is an \textbf{endomorphism} (an \textbf{iterative map}) $\mathbb{X} \rightarrow \mathbb{X}$.
 
 Mathematically this is a \emp{dynamical system} that can be defined by:
 \begin{eqnarray}
@@ -237,7 +243,7 @@ Mathematically this is a \emp{dynamical system} that can be defined by:
 \end{eqnarray}
 %($\vect{F}$ is implemented as the deep learning network in our approach.)
 where $\vect{f}$ and $\vect{\squaref}$ are different but related
-\footnote{They are related by: $\vect{x}(t + 1) = \vect{x}(t) + \squaref(\vect{x}(t))$, $\displaystyle \vect{x}^{-1}(\vect{x}(t)) = t =  \int^{\vect{x}_t}_{\vect{x}_0} \frac{d\vect{x}}{\vect{f}(\vect{x}(t))}$, and $\displaystyle \vect{f}(\vect{x}) = \frac{1}{(\vect{x}^{-1})'(\vect{x}(t))}$.  So we can just solve the functional equation $\vect{x}^{-1}(\vect{x} + \squaref(\vect{x})) - \vect{x}^{-1}(\vect{x}) = 1$. See \cite{Dolotin2007} \S8.2.3.
+\footnote{They are related by: $\vect{x}(t + 1) = \vect{x}(t) + \squaref(\vect{x}(t))$, $\displaystyle \vect{x}^{-1}(\vect{x}(t)) = t =  \int^{\vect{x}_t}_{\vect{x}_0} \frac{d\vect{x}}{\vect{f}(\vect{x}(t))}$, and $\displaystyle \vect{f}(\vect{x}) = \frac{1}{(\vect{x}^{-1})'(\vect{x}(t))}$, where $()'$ denotes derivative w.r.t. $\vect{x}$.  So we can just solve the functional equation $\vect{x}^{-1}(\vect{x} + \squaref(\vect{x})) - \vect{x}^{-1}(\vect{x}) = 1$. See \cite{Dolotin2007} \S8.2.3.
 }.
 For ease of discussion, sometimes I mix discrete-time and continuous-time notations.
 
@@ -248,11 +254,11 @@ A \emp{control system} is a dynamical system added with the control vector $\vec
 The goal of control theory is to find the optimal $\vect{u}^*(t)$ function, such that the system moves from the initial state $\vect{x}_0$ to the terminal state $\vect{x_\bot}$.
 
 A typical control-theory problem is described by:
-\begin{eqnarray}
+\begin{align}
 \boxed{\mbox{state equation}} \quad & \dot{\vect{x}}(t) = \vect{f}[\vect{x}(t), \vect{u}(t), t] \label{eqn1}\\
 \boxed{\mbox{boundary condition}} \quad & \vect{x}(t_0) = \vect{x}_0 \,,\, \vect{x}(t_\bot) = \vect{x}_\bot \\
 \boxed{\mbox{objective function}} \quad & J = \int_{t_0}^{t_\bot} L[\vect{x}(t), \vect{u}(t), t] dt
-\end{eqnarray}
+\end{align}
 and we seek the optimal control $\vect{u}^*(t)$.
 
 
@@ -430,11 +436,11 @@ Hamilton's \emp{principle of least action} says that the trajectories of dynamic
 From this we see that the Lagrangian corresponds to the instantaneous ``rewards'' of our system.  It is perhaps not a coincidence that the Lagrangian has units of \textbf{energy}, in accordance with the folk psychology notion of ``positive energy'' when we talk about desirable things.
 
 The \emp{Hamiltonian} $H$ arises when we consider a typical control theory problem;  The system is defined via:
-\begin{eqnarray}
+\begin{align}
 \mbox{state equation:} \quad & \dot{\vect{x}}(t) = \vect{f}[\vect{x}(t), \vect{u}(t), t] \\
 \mbox{boundary condition:} \quad & \vect{x}(t_0) = \vect{x}_0 \,,\, \vect{x}(t_\bot) = \vect{x}_\bot \\
 \mbox{objective function:} \quad & J = \int_{t_0}^{t_\bot} L[\vect{x}(t), \vect{u}(t), t] dt
-\end{eqnarray}
+\end{align}
 The goal is to find the optimal control $\vect{u}^*(t)$.
 
 Now apply the technique of \emp{Lagrange multipliers} for finding the maximum of a function, this leads to the new objective function:
