@@ -25,6 +25,8 @@
 	basicstyle=\footnotesize\ttfamily,
 	mathescape
 }
+\usepackage[backend=biber]{biblatex}
+\bibliography{../AGI-book}
 
 % *************** Delete when not using Chinese or colors **********************
 \usepackage{xeCJK}
@@ -61,6 +63,11 @@
 \newcommand*\rectifier{\vcenter{\hbox{\includegraphics{rectifier.png}}}}
 \newcommand{\dashh}{\textemdash~}
 \newcommand{\english}[1]{\rmfamily \textit{``#1''}\rmfamily}
+\newcommand\squaref{\hspace*{-4pt}\raisebox{-2pt}{
+		\tikz[scale=.3,thick]{
+			\draw (0.3,0) to (0,0) to ++(-0.4,-1.1) to ++(-0.3,0);
+			\draw (-0.6,-0.3) to ++(0.9,0);}%
+}}
 
 % ***** Boxed variables inside math equations
 % \newcommand*{\boxedcolor}{black}
@@ -225,12 +232,12 @@ The cognitive state is a vector $\vect{x} \in \mathbb{X}$ where $\mathbb{X}$ is 
 
 Mathematically this is a \emp{dynamical system} that can be defined by:
 \begin{eqnarray}
-\boxed{\mbox{discrete time}} \quad \quad & \vect{x}_{t+1} = \vect{F}(\vect{x}_t) \label{eqn0}\\
-\mbox{or } \boxed{\mbox{continuous time}} \quad \quad & \dot{\vect{x}} = \vect{f}(\vect{x}) \label{eqn1}
+\boxed{\mbox{discrete time}} \quad \quad \vect{x}_{t+1} & = & \vect{\squaref}(\vect{x}_t) \label{eqn0}\\
+\mbox{or } \boxed{\mbox{continuous time}} \quad \quad \dot{\vect{x}} & = & \vect{f}(\vect{x}) \label{eqn1}
 \end{eqnarray}
 %($\vect{F}$ is implemented as the deep learning network in our approach.)
-where $\vect{f}$ and $\vect{F}$ are different but related
-\footnote{They are related by: $\vect{x}(t + 1) = \vect{F}(\vect{x}(t))$, $\vect{x}^{-1}(\vect{x}(t)) = t =  \int^{\vect{x}_t}_{\vect{x}_0} \frac{d\vect{x}}{\vect{f}(\vect{x}(t))}$, and $f(\vect{x}) = \frac{1}{(\vect{x}^{-1})'(\vect{x}(t))}$.  So we can just solve the functional equation $\vect{x}^{-1}(\vect{F}(\vect{x})) - \vect{x}^{-1}(\vect{x}) = 1$. See \cite{Dolotin2007} \S8.2.3.
+where $\vect{f}$ and $\vect{\squaref}$ are different but related
+\footnote{They are related by: $\vect{x}(t + 1) = \vect{x}(t) + \squaref(\vect{x}(t))$, $\displaystyle \vect{x}^{-1}(\vect{x}(t)) = t =  \int^{\vect{x}_t}_{\vect{x}_0} \frac{d\vect{x}}{\vect{f}(\vect{x}(t))}$, and $\displaystyle \vect{f}(\vect{x}) = \frac{1}{(\vect{x}^{-1})'(\vect{x}(t))}$.  So we can just solve the functional equation $\vect{x}^{-1}(\vect{x} + \squaref(\vect{x})) - \vect{x}^{-1}(\vect{x}) = 1$. See \cite{Dolotin2007} \S8.2.3.
 }.
 For ease of discussion, sometimes I mix discrete-time and continuous-time notations.
 
@@ -770,7 +777,7 @@ For \# Iteration = 0, output is immediately known, so potentially the training c
 %==================================================================================
 \end{comment}
 
-\bibliographystyle{plain} % or number or aaai ...
-\bibliography{../AGI-book}
+% \bibliographystyle{plain} % or number or aaai ...
+\printbibliography
 
 \end{document}
